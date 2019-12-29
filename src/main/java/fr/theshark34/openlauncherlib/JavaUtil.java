@@ -34,6 +34,7 @@ import java.lang.reflect.Field;
 public class JavaUtil
 {
     private static String javaCommand;
+
     /**
      * Return the special default VM arguments
      *

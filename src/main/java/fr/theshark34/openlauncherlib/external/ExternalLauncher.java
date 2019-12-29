@@ -61,7 +61,7 @@ public class ExternalLauncher
     /**
      * Vm argument
      */
-    private ArrayList<String> vmArgs;
+    private ArrayList<String> vmArgs = new ArrayList<>();
 
     /**
      * The External Launcher
