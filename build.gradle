@@ -4,11 +4,11 @@ apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
 group = 'fr.litarvan'
-version = '3.0.5'
+version = '3.0.5-FLOWARGVERSION'
 archivesBaseName = 'openlauncherlib'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 compileJava.options.encoding = 'Cp1252'
 
@@ -17,43 +17,56 @@ jar {
     from "LICENSE.LESSER"
 }
 
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
-}
-
 task sourcesJar(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
 }
 
 artifacts {
-    archives javadocJar, sourcesJar
+    archives sourcesJar
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId group
-            artifactId archivesBaseName
-            version = version
+publishing
+        {
+            publications
+                    {
+                        mavenJava(MavenPublication)
+                                {
+                                    pom
+                                            {
+                                                groupId = 'fr.litarvan'
+                                                version = '3.0.5-FLOWARGVERSION'
+                                                artifactId = 'openlauncherlib'
+                                                name = 'openlauncherlib'
+                                                description = 'A simple modern java launching library with minecraft support '
+                                                url = 'https://github.com/FlowArg/OpenLauncherLib'
 
-            from components.java
+                                                issueManagement
+                                                        {
+                                                            system = 'github'
+                                                            url = 'https://github.com/FlowArg/OpenLauncherLib/issues'
+                                                        }
 
-            artifact sourcesJar {
-                classifier 'sources'
-            }
-
-            artifact javadocJar
+                                                licenses
+                                                        {
+                                                            license
+                                                                    {
+                                                                        name = 'LICENSE'
+                                                                        url = 'https://github.com/FlowArg/OpenLauncherLib/blob/master/LICENSE'
+                                                                        distribution = 'repo'
+                                                                    }
+                                                        }
+                                            }
+                                }
+                    }
+            repositories
+                    {
+                        maven
+                                {
+                                    url "https://flowarg.github.io/maven/"
+                                }
+                    }
         }
-    }
-
-    repositories {
-        maven {
-            url "$buildDir/repo"
-        }
-    }
-}
 
 repositories {
     jcenter()
