@@ -33,6 +33,7 @@ import java.lang.reflect.Field;
  */
 public class JavaUtil
 {
+    private static String javaCommand;
     /**
      * Return the special default VM arguments
      *
@@ -62,10 +63,22 @@ public class JavaUtil
      */
     public static String getJavaCommand()
     {
-        if (System.getProperty("os.name").toLowerCase().contains("win"))
-            return "\"" + System.getProperty("java.home") + "\\bin\\java" + "\"";
+        if(javaCommand == null)
+        {
+            if (System.getProperty("os.name").toLowerCase().contains("win")) return "\"" + System.getProperty("java.home") + "\\bin\\java" + "\"";
+            else return System.getProperty("java.home") + "/bin/java";
+        }
+        else return javaCommand;
+    }
 
-        return System.getProperty("java.home") + "/bin/java";
+    /**
+     * Set the java executable path
+     *
+     * @param javaCommandPath The java command
+     */
+    public static void setJavaCommand(String javaCommandPath)
+    {
+        javaCommand = javaCommandPath;
     }
 
     /**

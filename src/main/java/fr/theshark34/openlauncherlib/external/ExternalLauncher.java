@@ -59,6 +59,11 @@ public class ExternalLauncher
     private boolean logsEnabled = true;
 
     /**
+     * Vm argument
+     */
+    private ArrayList<String> vmArgs;
+
+    /**
      * The External Launcher
      *
      * @param profile The launch profile
@@ -115,22 +120,21 @@ public class ExternalLauncher
         LogUtil.info("hi-ext");
 
         ProcessBuilder builder = new ProcessBuilder();
-        ArrayList<String> commands = new ArrayList<String>();
-        commands.add(JavaUtil.getJavaCommand());
-        commands.addAll(Arrays.asList(JavaUtil.getSpecialArgs()));
+        vmArgs.add(JavaUtil.getJavaCommand());
+        vmArgs.addAll(Arrays.asList(JavaUtil.getSpecialArgs()));
 
         if (profile.getMacDockName() != null && System.getProperty("os.name").toLowerCase().contains("mac"))
-            commands.add(JavaUtil.macDockName(profile.getMacDockName()));
+            vmArgs.add(JavaUtil.macDockName(profile.getMacDockName()));
         if (profile.getVmArgs() != null)
-            commands.addAll(profile.getVmArgs());
+            vmArgs.addAll(profile.getVmArgs());
 
-        commands.add("-cp");
-        commands.add(profile.getClassPath());
+        vmArgs.add("-cp");
+        vmArgs.add(profile.getClassPath());
 
-        commands.add(profile.getMainClass());
+        vmArgs.add(profile.getMainClass());
 
         if (profile.getArgs() != null)
-            commands.addAll(profile.getArgs());
+            vmArgs.addAll(profile.getArgs());
 
         if (profile.getDirectory() != null)
             builder.directory(profile.getDirectory());
@@ -141,10 +145,10 @@ public class ExternalLauncher
         if (launchingEvent != null)
             launchingEvent.onLaunching(builder);
 
-        builder.command(commands);
+        builder.command(vmArgs);
 
         String entireCommand = "";
-        for (String command : commands)
+        for (String command : vmArgs)
             entireCommand += command + " ";
 
         LogUtil.info("ent", ":", entireCommand);
@@ -215,5 +219,15 @@ public class ExternalLauncher
     public void setProfile(ExternalLaunchProfile profile)
     {
         this.profile = profile;
+    }
+
+    public ArrayList<String> getVmArgs()
+    {
+        return vmArgs;
+    }
+
+    public void setVmArgs(ArrayList<String> vmArgs)
+    {
+        this.vmArgs = vmArgs;
     }
 }
