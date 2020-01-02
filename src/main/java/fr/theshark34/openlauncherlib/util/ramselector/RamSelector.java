@@ -18,6 +18,7 @@
  */
 package fr.theshark34.openlauncherlib.util.ramselector;
 
+import fr.theshark34.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.util.CrashReporter;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 import java.io.BufferedReader;
@@ -40,6 +41,7 @@ import javax.swing.JFrame;
  * @version 3.0.2-BETA
  * @since 3.0.0-BETA
  */
+@SuppressWarnings({"rawtypes", "unused"})
 public class RamSelector
 {
 
@@ -87,10 +89,10 @@ public class RamSelector
         if (frame == null)
             try
             {
-                Constructor[] contructors = frameClass.getDeclaredConstructors();
+                Constructor[] constructors = frameClass.getDeclaredConstructors();
 
                 Constructor constructor = null;
-                for (Constructor c : contructors)
+                for (Constructor c : constructors)
                     if (c.getParameterTypes().length == 1 && c.getParameterTypes()[0] == RamSelector.class)
                         constructor = c;
 
@@ -118,10 +120,13 @@ public class RamSelector
      *
      * @return An array of two strings containing the arguments
      */
+    @ModifiedByFlow
     public String[] getRamArguments()
     {
         int maxRam = Integer.parseInt(frame == null ? RAM_ARRAY[readRam()].replace("Go", "") : RAM_ARRAY[frame.getSelectedIndex()].replace("Go", "")) * 1024;
         int minRam = maxRam - 512;
+
+        if(maxRam - 512 <= 0) minRam = 128;
 
         return new String[]{"-Xms" + minRam + "M", "-Xmx" + maxRam + "M"};
     }

@@ -33,6 +33,7 @@ import java.lang.reflect.Field;
  */
 public class JavaUtil
 {
+    @ModifiedByFlow
     private static String javaCommand;
 
     /**
@@ -59,9 +60,10 @@ public class JavaUtil
 
     /**
      * Return the java executable path
-     *
+     *  Modified by Flow
      * @return The java command
      */
+    @ModifiedByFlow
     public static String getJavaCommand()
     {
         if(javaCommand == null)
@@ -77,6 +79,7 @@ public class JavaUtil
      *
      * @param javaCommandPath The java command
      */
+    @ModifiedByFlow
     public static void setJavaCommand(String javaCommandPath)
     {
         javaCommand = javaCommandPath;

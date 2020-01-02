@@ -20,6 +20,7 @@ package fr.theshark34.openlauncherlib.external;
 
 import fr.theshark34.openlauncherlib.JavaUtil;
 import fr.theshark34.openlauncherlib.LaunchException;
+import fr.theshark34.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 import fr.theshark34.openlauncherlib.util.ProcessLogManager;
 import java.io.IOException;
@@ -59,8 +60,9 @@ public class ExternalLauncher
     private boolean logsEnabled = true;
 
     /**
-     * Vm argument
+     * Vm arguments
      */
+    @ModifiedByFlow
     private ArrayList<String> vmArgs = new ArrayList<>();
 
     /**
@@ -115,6 +117,7 @@ public class ExternalLauncher
      *
      * @throws LaunchException If it failed something
      */
+    @ModifiedByFlow
     public Process launch() throws LaunchException
     {
         LogUtil.info("hi-ext");
@@ -221,11 +224,13 @@ public class ExternalLauncher
         this.profile = profile;
     }
 
+    @ModifiedByFlow
     public ArrayList<String> getVmArgs()
     {
         return vmArgs;
     }
 
+    @ModifiedByFlow
     public void setVmArgs(ArrayList<String> vmArgs)
     {
         this.vmArgs = vmArgs;
