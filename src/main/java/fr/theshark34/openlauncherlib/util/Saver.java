@@ -19,10 +19,9 @@
 package fr.theshark34.openlauncherlib.util;
 
 import fr.theshark34.openlauncherlib.FailException;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
+import fr.theshark34.openlauncherlib.ModifiedByFlow;
+
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -53,13 +52,23 @@ public class Saver
      *
      * @param file The file where to save the things
      */
+    @ModifiedByFlow
     public Saver(File file)
     {
         this.file = file;
         this.properties = new Properties();
 
-        if (file.exists())
-            load();
+        if (file.exists()) load();
+        else
+        {
+            try
+            {
+                file.createNewFile();
+            } catch (Throwable e)
+            {
+                throw new FailException("Can't create properties file.");
+            }
+        }
     }
 
     /**

@@ -124,9 +124,9 @@ public class RamSelector
     public String[] getRamArguments()
     {
         int maxRam = Integer.parseInt(frame == null ? RAM_ARRAY[readRam()].replace("Go", "") : RAM_ARRAY[frame.getSelectedIndex()].replace("Go", "")) * 1024;
-        int minRam = maxRam - 512;
+        int minRam = maxRam - 1024;
 
-        if(maxRam - 512 <= 0) minRam = 128;
+        if(maxRam - 1024 <= 0) minRam = 128;
 
         return new String[]{"-Xms" + minRam + "M", "-Xmx" + maxRam + "M"};
     }
