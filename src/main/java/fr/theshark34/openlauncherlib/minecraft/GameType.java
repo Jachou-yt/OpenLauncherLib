@@ -18,8 +18,11 @@
  */
 package fr.theshark34.openlauncherlib.minecraft;
 
+import fr.theshark34.openlauncherlib.ModifiedByFlow;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Game Type
@@ -276,7 +279,7 @@ public abstract class GameType
 		@Override
 		public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
 		{
-			ArrayList<String> arguments = new ArrayList<String>();
+			ArrayList<String> arguments = new ArrayList<>();
 
 			arguments.add("--username=" + authInfos.getUsername());
 
@@ -330,6 +333,58 @@ public abstract class GameType
 			return arguments;
 		}
 	};
+
+	@ModifiedByFlow
+	public static final GameType V_1_14_4 = new GameType()
+    {
+        @Override
+        public String getName()
+        {
+            return "1.14.4";
+        }
+
+        @Override
+        public String getMainClass(GameInfos infos)
+        {
+            return "net.minecraft.client.main.Main";
+        }
+
+        @Override
+        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+        {
+            final ArrayList<String> arguments = new ArrayList<>();
+
+            arguments.add("--username");
+            arguments.add(authInfos.getUsername());
+
+            arguments.add("--version");
+            arguments.add(infos.getGameVersion().getName());
+
+            arguments.add("--gameDir");
+            arguments.add(infos.getGameDir().getAbsolutePath());
+
+            arguments.add("--assetsDir");
+            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
+            arguments.add(assetsDir.getAbsolutePath());
+
+            arguments.add("--assetIndex");
+            arguments.add("1.14");
+
+            arguments.add("--uuid");
+            arguments.add(authInfos.getUuid());
+
+            arguments.add("--accessToken");
+            arguments.add(authInfos.getAccessToken());
+
+            arguments.add("--userType");
+            arguments.add("mojang");
+
+            arguments.add("--versionType");
+            arguments.add("release");
+
+            return arguments;
+        }
+    };
 
     /**
      * The name of the Game Type
