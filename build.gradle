@@ -8,7 +8,7 @@ apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
 group = 'fr.litarvan'
-version = '3.0.5-FLOWARGVERSION'
+version = '3.0.6-FLOWARGVERSION'
 archivesBaseName = 'openlauncherlib'
 
 sourceCompatibility = 1.8
@@ -39,7 +39,7 @@ publishing
                                     pom
                                             {
                                                 groupId = 'fr.litarvan'
-                                                version = '3.0.5-FLOWARGVERSION'
+                                                version = '3.0.6-FLOWARGVERSION'
                                                 artifactId = 'openlauncherlib'
                                                 name = 'openlauncherlib'
                                                 description = 'A simple modern java launching library with minecraft support '
