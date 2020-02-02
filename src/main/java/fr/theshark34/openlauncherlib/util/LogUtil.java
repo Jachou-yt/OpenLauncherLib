@@ -18,6 +18,7 @@
  */
 package fr.theshark34.openlauncherlib.util;
 
+import fr.theshark34.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.configuration.core.DefaultConfigurationManager;
 import fr.theshark34.openlauncherlib.language.api.LanguageInfo;
 import fr.theshark34.openlauncherlib.language.api.LanguageManager;
@@ -94,17 +95,18 @@ public final class LogUtil
      * @param err      If it is an error message
      * @param messages All the strings keys to translate
      */
-    public static void message(boolean err, String... messages)
+    @ModifiedByFlow
+    public static String message(boolean err, String... messages)
     {
-        StringBuilder builder = new StringBuilder("[OpenLauncherLib]");
+        final StringBuilder builder = new StringBuilder("[OpenLauncherLib]");
         for(String node : messages){
             builder.append(" ").append(LANGUAGE_MANAGER.getDefaultLanguage().get(IDENTIFIER, node));
         }
 
-        if (err)
-            System.err.println(builder.toString());
-        else
-            System.out.println(builder.toString());
+        if (err) System.err.println(builder.toString());
+        else System.out.println(builder.toString());
+
+        return builder.toString();
     }
 
     /**
