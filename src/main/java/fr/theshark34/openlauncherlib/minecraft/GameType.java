@@ -385,6 +385,7 @@ public abstract class GameType
         }
     };
 
+	@ModifiedByFlow
 	public static final GameType V_1_14_4_FORGE = new GameType()
     {
         @Override
@@ -445,6 +446,122 @@ public abstract class GameType
 
             arguments.add("--fml.mcpVersion");
             arguments.add("20190829.143755");
+            return arguments;
+        }
+    };
+
+	@ModifiedByFlow
+	public static final GameType V_1_15_2 = new GameType()
+    {
+        @Override
+        public String getName()
+        {
+            return "1.15.2";
+        }
+
+        @Override
+        public String getMainClass(GameInfos infos)
+        {
+            return "net.minecraft.client.main.Main";
+        }
+
+        @Override
+        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+        {
+            final ArrayList<String> arguments = new ArrayList<>();
+            arguments.add("--username");
+            arguments.add(authInfos.getUsername());
+
+            arguments.add("--version");
+            arguments.add(infos.getGameVersion().getName());
+
+            arguments.add("--gameDir");
+            arguments.add(infos.getGameDir().getAbsolutePath());
+
+            arguments.add("--assetsDir");
+            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
+            arguments.add(assetsDir.getAbsolutePath());
+
+            arguments.add("--assetIndex");
+            arguments.add("1.15");
+
+            arguments.add("--uuid");
+            arguments.add(authInfos.getUuid());
+
+            arguments.add("--accessToken");
+            arguments.add(authInfos.getAccessToken());
+
+            arguments.add("--userType");
+            arguments.add("mojang");
+
+            arguments.add("--versionType");
+            arguments.add("release");
+
+            return arguments;
+        }
+    };
+
+	@ModifiedByFlow
+	public static final GameType V_1_15_2_FORGE = new GameType()
+    {
+        @Override
+        public String getName()
+        {
+            return "1.15.2 with Forge";
+        }
+
+        @Override
+        public String getMainClass(GameInfos infos)
+        {
+            return "cpw.mods.modlauncher.Launcher";
+        }
+
+        @Override
+        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+        {
+            final ArrayList<String> arguments = new ArrayList<>();
+            arguments.add("--username");
+            arguments.add(authInfos.getUsername());
+
+            arguments.add("--version");
+            arguments.add(infos.getGameVersion().getName());
+
+            arguments.add("--gameDir");
+            arguments.add(infos.getGameDir().getAbsolutePath());
+
+            arguments.add("--assetsDir");
+            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
+            arguments.add(assetsDir.getAbsolutePath());
+
+            arguments.add("--assetIndex");
+            arguments.add("1.15");
+
+            arguments.add("--uuid");
+            arguments.add(authInfos.getUuid());
+
+            arguments.add("--accessToken");
+            arguments.add(authInfos.getAccessToken());
+
+            arguments.add("--userType");
+            arguments.add("mojang");
+
+            arguments.add("--versionType");
+            arguments.add("release");
+
+            arguments.add("--launchTarget");
+            arguments.add("fmlclient");
+
+            arguments.add("--fml.forgeVersion");
+            arguments.add("31.1.0");
+
+            arguments.add("--fml.mcVersion");
+            arguments.add("1.15.2");
+
+            arguments.add("--fml.forgeGroup");
+            arguments.add("net.minecraftforge");
+
+            arguments.add("--fml.mcpVersion");
+            arguments.add("20200122.131323");
             return arguments;
         }
     };

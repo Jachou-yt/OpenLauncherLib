@@ -46,7 +46,11 @@ public abstract class GameTweak
     /**
      * The Forge GameTweak
      *
-     * NOTE : IF YOU ALREADY USE THE {@link GameType#V1_13_FORGE} DON'T ADD THE FORGE TWEAK !
+     * NOTE : IF YOU ALREADY USE :
+     * - {@link GameType#V_1_14_4_FORGE}
+     * - {@link GameType#V1_13_FORGE}
+     * - {@link GameType#V_1_15_2_FORGE}
+     * DON'T ADD THE FORGE TWEAK !
      *
      */
     @ModifiedByFlow
@@ -63,9 +67,10 @@ public abstract class GameTweak
         {
             if (infos.getGameVersion().getGameType().equals(GameType.V1_8_HIGHER))
                 return "net.minecraftforge.fml.common.launcher.FMLTweaker";
-            else if (infos.getGameVersion().getGameType().equals(GameType.V_1_14_4))
+            else if (infos.getGameVersion().getGameType().equals(GameType.V_1_14_4_FORGE) || infos.getGameVersion().getGameType().equals(GameType.V_1_15_2_FORGE))
             {
-                LogUtil.err("no-tweak");
+                LogUtil.err("no-tweak-forge");
+                System.exit(0);
                 return "";
             }
             else

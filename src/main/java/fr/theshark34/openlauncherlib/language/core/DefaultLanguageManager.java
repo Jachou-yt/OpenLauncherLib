@@ -135,7 +135,7 @@ public class DefaultLanguageManager extends LanguageManager
     public void registerLanguage(LanguageInfo identify, LanguageInfo name, String path)
     {
         try {
-            Configuration configuration = new SimpleConfiguration(configurationManager.getLogger(), new BufferedReader(new InputStreamReader(DefaultLanguageManager.class.getResourceAsStream(path+name.get()+".json"), StandardCharsets.UTF_8)));
+            Configuration configuration = new SimpleConfiguration(configurationManager.getLogger(), new BufferedReader(new InputStreamReader(DefaultLanguageManager.class.getResourceAsStream(path + name.get() + ".json"), StandardCharsets.UTF_8)));
             if(!langMap.containsKey(name.get().toLowerCase())){
                 langMap.put(name.get().toLowerCase(), new SimpleLanguage(name, this, identify, configuration));
             }else {
