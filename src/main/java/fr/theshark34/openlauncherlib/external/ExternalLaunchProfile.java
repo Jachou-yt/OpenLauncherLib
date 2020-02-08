@@ -59,7 +59,7 @@ public class ExternalLaunchProfile
     /**
      * If the error stream need to be redirected
      */
-    private boolean redirectErrorStream = true;
+    private boolean redirectErrorStream;
 
     /**
      * The mac dock name (optional)

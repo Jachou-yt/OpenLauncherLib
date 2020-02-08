@@ -18,12 +18,8 @@
  */
 package fr.theshark34.openlauncherlib.util;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * The Splash Screen

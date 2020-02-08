@@ -19,9 +19,12 @@
 package fr.theshark34.openlauncherlib.util;
 
 import fr.theshark34.openlauncherlib.FailException;
-import fr.theshark34.openlauncherlib.ModifiedByFlow;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.util.Properties;
 
 /**

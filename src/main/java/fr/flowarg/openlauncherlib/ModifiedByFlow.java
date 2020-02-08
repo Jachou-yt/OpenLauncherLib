@@ -1,4 +1,4 @@
-package fr.theshark34.openlauncherlib;
+package fr.flowarg.openlauncherlib;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

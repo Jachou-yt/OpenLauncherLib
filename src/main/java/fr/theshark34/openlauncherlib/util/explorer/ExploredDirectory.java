@@ -110,7 +110,7 @@ public class ExploredDirectory
     public FileList subs()
     {
         File[] files = FilesUtil.list(this.directory);
-        ArrayList<File> dirs = new ArrayList<File>();
+        ArrayList<File> dirs = new ArrayList<>();
 
         for (File f : files)
             if (f.isDirectory())
@@ -127,7 +127,7 @@ public class ExploredDirectory
     public FileList files()
     {
         File[] files = FilesUtil.list(this.directory);
-        ArrayList<File> fs = new ArrayList<File>();
+        ArrayList<File> fs = new ArrayList<>();
 
         for (File f : files)
             if (!f.isDirectory())

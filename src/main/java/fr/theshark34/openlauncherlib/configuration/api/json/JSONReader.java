@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public final class JSONReader
 
     public JSONReader(Logger logger, File file) throws IOException
     {
-        this(logger, new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")));
+        this(logger, new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
     }
 
     public JSONReader(Logger logger, Reader reader) throws IOException
@@ -60,7 +60,7 @@ public final class JSONReader
 
     public static <E> List<E> toList(Logger logger, File file)
     {
-        if(!file.exists()) return new ArrayList<E>();
+        if(!file.exists()) return new ArrayList<>();
         try
         {
             return toList(logger, new InputStreamReader(new FileInputStream(file)));
@@ -69,7 +69,7 @@ public final class JSONReader
         {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        return new ArrayList<E>();
+        return new ArrayList<>();
     }
 
     public static <E> List<E> toList(Logger logger, Reader reader)
@@ -79,7 +79,7 @@ public final class JSONReader
 
     public static <E> List<E> toList(Logger logger, BufferedReader bufferedReader)
     {
-        List<E> list= new ArrayList<E>();
+        List<E> list= new ArrayList<>();
 
         try
         {
@@ -90,7 +90,7 @@ public final class JSONReader
                 try
                 {
                     list.add((E) array.get(i));
-                }catch(ClassCastException e){}
+                }catch(ClassCastException ignored){}
             }
         }
         catch(IOException e)
@@ -108,7 +108,7 @@ public final class JSONReader
 
     public static <V> Map<String, V> toMap(Logger logger, File file)
     {
-        if(!file.exists()) return new HashMap<String, V>();
+        if(!file.exists()) return new HashMap<>();
         try
         {
             return toMap(logger, new InputStreamReader(new FileInputStream(file)));
@@ -117,7 +117,7 @@ public final class JSONReader
         {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        return new HashMap<String, V>();
+        return new HashMap<>();
     }
 
     public static <V> Map<String, V> toMap(Logger logger, Reader reader)
@@ -127,7 +127,7 @@ public final class JSONReader
 
     public static <V> Map<String, V> toMap(Logger logger, BufferedReader bufferedReader)
     {
-        Map<String, V> map = new HashMap<String, V>();
+        Map<String, V> map = new HashMap<>();
 
         try
         {
@@ -135,12 +135,11 @@ public final class JSONReader
             JSONObject object = reader.toJSONObject();
             for(String key : object.keySet())
             {
-                Object obj = object.get(key);
                 try
                 {
                     map.put(key, (V) object.get(key));
                 }
-                catch(ClassCastException e) {}
+                catch(ClassCastException ignored) {}
             }
         }
         catch(IOException e)
@@ -159,5 +158,10 @@ public final class JSONReader
     public JSONObject toJSONObject()
     {
         return new JSONObject(json);
+    }
+
+    public Logger getLogger()
+    {
+        return logger;
     }
 }

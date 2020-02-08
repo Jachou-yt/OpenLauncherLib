@@ -18,7 +18,7 @@
  */
 package fr.theshark34.openlauncherlib.util;
 
-import fr.theshark34.openlauncherlib.ModifiedByFlow;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.configuration.core.DefaultConfigurationManager;
 import fr.theshark34.openlauncherlib.language.api.LanguageInfo;
 import fr.theshark34.openlauncherlib.language.api.LanguageManager;
@@ -51,14 +51,7 @@ public final class LogUtil
     /**
      * Instance of Identifier.
      */
-    private static final LanguageInfo IDENTIFIER = new LanguageInfo()
-    {
-        @Override
-        public String get()
-        {
-            return "OpenLauncherLib";
-        }
-    };
+    private static final LanguageInfo IDENTIFIER = () -> "OpenLauncherLib";
 
     static {
         LANGUAGE_MANAGER.registerLanguage(IDENTIFIER, LanguageTypes.EN, "/assets/languages/");

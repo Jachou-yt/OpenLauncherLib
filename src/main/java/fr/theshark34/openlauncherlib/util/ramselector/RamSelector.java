@@ -18,17 +18,13 @@
  */
 package fr.theshark34.openlauncherlib.util.ramselector;
 
-import fr.theshark34.openlauncherlib.ModifiedByFlow;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.util.CrashReporter;
 import fr.theshark34.openlauncherlib.util.LogUtil;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import javax.swing.*;
+import java.io.*;
 import java.lang.reflect.Constructor;
-import javax.swing.JFrame;
 
 /**
  * The RAM Selector

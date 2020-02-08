@@ -20,9 +20,10 @@ package fr.theshark34.openlauncherlib.external;
 
 import fr.theshark34.openlauncherlib.JavaUtil;
 import fr.theshark34.openlauncherlib.LaunchException;
-import fr.theshark34.openlauncherlib.ModifiedByFlow;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 import fr.theshark34.openlauncherlib.util.ProcessLogManager;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,11 +151,11 @@ public class ExternalLauncher
 
         builder.command(vmArgs);
 
-        String entireCommand = "";
+        StringBuilder entireCommand = new StringBuilder();
         for (String command : vmArgs)
-            entireCommand += command + " ";
+            entireCommand.append(command).append(" ");
 
-        LogUtil.info("ent", ":", entireCommand);
+        LogUtil.info("ent", ":", entireCommand.toString());
         LogUtil.info("start", profile.getMainClass());
 
         try

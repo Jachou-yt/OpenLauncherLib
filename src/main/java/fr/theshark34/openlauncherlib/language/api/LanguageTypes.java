@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2019 NeutronStars
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,24 +24,10 @@ public class LanguageTypes
     /**
      * Retrieve the name of language french.
      */
-    public static final LanguageInfo FR = new LanguageInfo()
-    {
-        @Override
-        public String get()
-        {
-            return "fr";
-        }
-    };
+    public static final LanguageInfo FR = () -> "fr";
 
     /**
      * Retrieve the name of language english.
      */
-    public static final LanguageInfo EN = new LanguageInfo()
-    {
-        @Override
-        public String get()
-        {
-            return "en";
-        }
-    };
+    public static final LanguageInfo EN = () -> "en";
 }

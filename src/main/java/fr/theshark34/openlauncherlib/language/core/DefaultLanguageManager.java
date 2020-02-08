@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2019 NeutronStars
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,8 +25,11 @@ import fr.theshark34.openlauncherlib.language.api.LanguageManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +44,7 @@ public class DefaultLanguageManager extends LanguageManager
     /**
      * Map of Language registered.
      */
-    private final Map<String, Language> langMap = new HashMap<String, Language>();
+    private final Map<String, Language> langMap = new HashMap<>();
 
     /**
      * Instance of ConfigurationManger.
@@ -65,7 +68,7 @@ public class DefaultLanguageManager extends LanguageManager
      */
     @Override
     public List<Language> getLanguages(){
-        return new ArrayList<Language>(langMap.values());
+        return new ArrayList<>(langMap.values());
     }
 
     /**
@@ -132,7 +135,7 @@ public class DefaultLanguageManager extends LanguageManager
     public void registerLanguage(LanguageInfo identify, LanguageInfo name, String path)
     {
         try {
-            Configuration configuration = new SimpleConfiguration(configurationManager.getLogger(), new BufferedReader(new InputStreamReader(DefaultLanguageManager.class.getResourceAsStream(path+name.get()+".json"), Charset.forName("UTF-8"))));
+            Configuration configuration = new SimpleConfiguration(configurationManager.getLogger(), new BufferedReader(new InputStreamReader(DefaultLanguageManager.class.getResourceAsStream(path+name.get()+".json"), StandardCharsets.UTF_8)));
             if(!langMap.containsKey(name.get().toLowerCase())){
                 langMap.put(name.get().toLowerCase(), new SimpleLanguage(name, this, identify, configuration));
             }else {

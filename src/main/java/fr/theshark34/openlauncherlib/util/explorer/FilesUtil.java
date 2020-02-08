@@ -19,6 +19,7 @@
 package fr.theshark34.openlauncherlib.util.explorer;
 
 import fr.theshark34.openlauncherlib.FailException;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public class FilesUtil
      */
     public static ArrayList<File> listRecursive(File directory)
     {
-        ArrayList<File> files = new ArrayList<File>();
+        ArrayList<File> files = new ArrayList<>();
         File[] fs = directory.listFiles();
         if (fs == null)
             return files;

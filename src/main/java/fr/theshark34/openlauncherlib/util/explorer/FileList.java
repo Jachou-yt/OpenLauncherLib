@@ -48,7 +48,7 @@ public class FileList
      */
     public FileList()
     {
-        this.files = new ArrayList<File>();
+        this.files = new ArrayList<>();
     }
 
     /**
@@ -101,7 +101,7 @@ public class FileList
      */
     public FileList match(String regex)
     {
-        ArrayList<File> matching = new ArrayList<File>();
+        ArrayList<File> matching = new ArrayList<>();
 
         for (File f : files)
             if (f.getName().matches(regex))
@@ -118,7 +118,7 @@ public class FileList
      */
     public FileList dirs()
     {
-        ArrayList<File> dirs = new ArrayList<File>();
+        ArrayList<File> dirs = new ArrayList<>();
 
         for (File f : files)
             if (f.isDirectory())
@@ -135,7 +135,7 @@ public class FileList
      */
     public FileList files()
     {
-        ArrayList<File> files = new ArrayList<File>();
+        ArrayList<File> files = new ArrayList<>();
 
         for (File f : this.files)
             if (!f.isDirectory())

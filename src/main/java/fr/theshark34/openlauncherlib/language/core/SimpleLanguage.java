@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2019 NeutronStars
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,8 +67,7 @@ public class SimpleLanguage implements Language
         if(nodes.length == 0) return identify.get();
         String[] buildNodes = new String[nodes.length+1];
         buildNodes[0] = identify.get();
-        for(int i = 0; i < nodes.length; i++)
-            buildNodes[i+1] = nodes[i];
+        System.arraycopy(nodes, 0, buildNodes, 1, nodes.length);
 
         StringBuilder builder = new StringBuilder();
         for(String node : nodes) {

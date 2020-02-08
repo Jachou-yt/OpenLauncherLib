@@ -20,6 +20,7 @@ package fr.theshark34.openlauncherlib.internal;
 
 import fr.theshark34.openlauncherlib.LaunchException;
 import fr.theshark34.openlauncherlib.util.LogUtil;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

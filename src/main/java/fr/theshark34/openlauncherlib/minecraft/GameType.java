@@ -18,11 +18,10 @@
  */
 package fr.theshark34.openlauncherlib.minecraft;
 
-import fr.theshark34.openlauncherlib.ModifiedByFlow;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The Game Type
@@ -60,7 +59,7 @@ public abstract class GameType
         @Override
         public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            ArrayList<String> arguments = new ArrayList<String>();
+            ArrayList<String> arguments = new ArrayList<>();
 
             arguments.add(authInfos.getUsername());
 
@@ -97,7 +96,7 @@ public abstract class GameType
         @Override
         public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            ArrayList<String> arguments = new ArrayList<String>();
+            ArrayList<String> arguments = new ArrayList<>();
 
             arguments.add("--username=" + authInfos.getUsername());
 
@@ -147,7 +146,7 @@ public abstract class GameType
         @Override
         public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            ArrayList<String> arguments = new ArrayList<String>();
+            ArrayList<String> arguments = new ArrayList<>();
 
             arguments.add("--username=" + authInfos.getUsername());
 
@@ -206,7 +205,7 @@ public abstract class GameType
         @Override
         public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            ArrayList<String> arguments = new ArrayList<String>();
+            ArrayList<String> arguments = new ArrayList<>();
 
             arguments.add("--username=" + authInfos.getUsername());
 
@@ -262,7 +261,7 @@ public abstract class GameType
 	/**
 	 * This is a workaround until a new version of the lib using versions JSON is published
 	 */
-	public static final GameType V1_13_HIGHER_FORGE = new GameType()
+	public static final GameType V1_13_FORGE = new GameType()
 	{
 		@Override
 		public String getName()
@@ -382,6 +381,70 @@ public abstract class GameType
             arguments.add("--versionType");
             arguments.add("release");
 
+            return arguments;
+        }
+    };
+
+	public static final GameType V_1_14_4_FORGE = new GameType()
+    {
+        @Override
+        public String getName()
+        {
+            return "1.14.4 with Forge";
+        }
+
+        @Override
+        public String getMainClass(GameInfos infos)
+        {
+            return "cpw.mods.modlauncher.Launcher";
+        }
+
+        @Override
+        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+        {
+            final ArrayList<String> arguments = new ArrayList<>();
+            arguments.add("--username");
+            arguments.add(authInfos.getUsername());
+
+            arguments.add("--version");
+            arguments.add(infos.getGameVersion().getName());
+
+            arguments.add("--gameDir");
+            arguments.add(infos.getGameDir().getAbsolutePath());
+
+            arguments.add("--assetsDir");
+            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
+            arguments.add(assetsDir.getAbsolutePath());
+
+            arguments.add("--assetIndex");
+            arguments.add("1.14");
+
+            arguments.add("--uuid");
+            arguments.add(authInfos.getUuid());
+
+            arguments.add("--accessToken");
+            arguments.add(authInfos.getAccessToken());
+
+            arguments.add("--userType");
+            arguments.add("mojang");
+
+            arguments.add("--versionType");
+            arguments.add("release");
+
+            arguments.add("--launchTarget");
+            arguments.add("fmlclient");
+
+            arguments.add("--fml.forgeVersion");
+            arguments.add("28.2.0");
+
+            arguments.add("--fml.mcVersion");
+            arguments.add("1.14.4");
+
+            arguments.add("--fml.forgeGroup");
+            arguments.add("net.minecraftforge");
+
+            arguments.add("--fml.mcpVersion");
+            arguments.add("20190829.143755");
             return arguments;
         }
     };

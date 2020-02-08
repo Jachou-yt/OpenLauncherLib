@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2019 NeutronStars
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,6 @@
 package fr.theshark34.openlauncherlib.language.api;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 /**

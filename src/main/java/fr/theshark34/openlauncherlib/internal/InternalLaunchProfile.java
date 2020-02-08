@@ -59,7 +59,7 @@ public class InternalLaunchProfile
     /**
      * The jars to add to the classpath
      */
-    private List<File> classpath = new ArrayList<File>();
+    private List<File> classpath = new ArrayList<>();
 
     /**
      * Simple launch profile, method is main(String[] args) (with empty arguments)

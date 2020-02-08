@@ -18,6 +18,9 @@
  */
 package fr.theshark34.openlauncherlib.minecraft;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+import fr.theshark34.openlauncherlib.util.LogUtil;
+
 /**
  * The Game Tweak
  *
@@ -42,7 +45,11 @@ public abstract class GameTweak
 
     /**
      * The Forge GameTweak
+     *
+     * NOTE : IF YOU ALREADY USE THE {@link GameType#V1_13_FORGE} DON'T ADD THE FORGE TWEAK !
+     *
      */
+    @ModifiedByFlow
     public static final GameTweak FORGE = new GameTweak()
     {
         @Override
@@ -56,6 +63,11 @@ public abstract class GameTweak
         {
             if (infos.getGameVersion().getGameType().equals(GameType.V1_8_HIGHER))
                 return "net.minecraftforge.fml.common.launcher.FMLTweaker";
+            else if (infos.getGameVersion().getGameType().equals(GameType.V_1_14_4))
+            {
+                LogUtil.err("no-tweak");
+                return "";
+            }
             else
                 return "cpw.mods.fml.common.launcher.FMLTweaker";
         }
