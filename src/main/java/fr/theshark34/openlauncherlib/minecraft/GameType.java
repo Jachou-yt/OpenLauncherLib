@@ -404,33 +404,7 @@ public abstract class GameType
         public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
             final ArrayList<String> arguments = new ArrayList<>();
-            arguments.add("--username");
-            arguments.add(authInfos.getUsername());
-
-            arguments.add("--version");
-            arguments.add(infos.getGameVersion().getName());
-
-            arguments.add("--gameDir");
-            arguments.add(infos.getGameDir().getAbsolutePath());
-
-            arguments.add("--assetsDir");
-            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
-            arguments.add(assetsDir.getAbsolutePath());
-
-            arguments.add("--assetIndex");
-            arguments.add("1.14");
-
-            arguments.add("--uuid");
-            arguments.add(authInfos.getUuid());
-
-            arguments.add("--accessToken");
-            arguments.add(authInfos.getAccessToken());
-
-            arguments.add("--userType");
-            arguments.add("mojang");
-
-            arguments.add("--versionType");
-            arguments.add("release");
+            arguments.addAll(V_1_14_4.getLaunchArgs(infos, folder, authInfos));
 
             arguments.add("--launchTarget");
             arguments.add("fmlclient");
@@ -520,33 +494,7 @@ public abstract class GameType
         public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
             final ArrayList<String> arguments = new ArrayList<>();
-            arguments.add("--username");
-            arguments.add(authInfos.getUsername());
-
-            arguments.add("--version");
-            arguments.add(infos.getGameVersion().getName());
-
-            arguments.add("--gameDir");
-            arguments.add(infos.getGameDir().getAbsolutePath());
-
-            arguments.add("--assetsDir");
-            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
-            arguments.add(assetsDir.getAbsolutePath());
-
-            arguments.add("--assetIndex");
-            arguments.add("1.15");
-
-            arguments.add("--uuid");
-            arguments.add(authInfos.getUuid());
-
-            arguments.add("--accessToken");
-            arguments.add(authInfos.getAccessToken());
-
-            arguments.add("--userType");
-            arguments.add("mojang");
-
-            arguments.add("--versionType");
-            arguments.add("release");
+            arguments.addAll(V_1_15_2.getLaunchArgs(infos, folder, authInfos));
 
             arguments.add("--launchTarget");
             arguments.add("fmlclient");

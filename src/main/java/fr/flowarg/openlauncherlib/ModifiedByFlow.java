@@ -8,6 +8,6 @@ import java.lang.annotation.RetentionPolicy;
  * Notify my changes.
  */
 @Documented
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface ModifiedByFlow
 {}

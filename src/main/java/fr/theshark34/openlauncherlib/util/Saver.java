@@ -83,7 +83,7 @@ public class Saver
     public void set(String key, String value)
     {
         properties.setProperty(key, value);
-        save();
+        this.save();
     }
 
     /**
@@ -140,5 +140,12 @@ public class Saver
         {
             throw new FailException("Can't load the properties", t);
         }
+    }
+
+    @ModifiedByFlow
+    public void remove(String key)
+    {
+        properties.remove(key);
+        this.save();
     }
 }

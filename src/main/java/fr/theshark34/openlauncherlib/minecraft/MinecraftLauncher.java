@@ -18,11 +18,10 @@
  */
 package fr.theshark34.openlauncherlib.minecraft;
 
-import fr.theshark34.openlauncherlib.JavaUtil;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.LaunchException;
 import fr.theshark34.openlauncherlib.external.ClasspathConstructor;
 import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
-import fr.theshark34.openlauncherlib.internal.InternalLaunchProfile;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 import fr.theshark34.openlauncherlib.util.explorer.Explorer;
 
@@ -41,65 +40,9 @@ import java.util.List;
  * @version 3.0.4-BETA
  * @since 3.0.0-BETA
  */
+@ModifiedByFlow
 public class MinecraftLauncher
 {
-    /**
-     * Generate an Internal Launch Profile for Minecraft
-     *
-     * @param infos     The GameInfos (contains your game infos)
-     * @param folder    The GameFolder (contains your game folder organization)
-     * @param authInfos The AuthInfos (contains the user infos)
-     *
-     * @return The generated profile
-     *
-     * @throws LaunchException If it failed
-     *
-     * @deprecated Use {@link #createExternalProfile(GameInfos, GameFolder, AuthInfos)} instead
-     */
-    @Deprecated
-    public static InternalLaunchProfile createInternalProfile(GameInfos infos, GameFolder folder, AuthInfos authInfos) throws LaunchException
-    {
-        LogUtil.info("mc-int", infos.getGameVersion().getName());
-        LogUtil.info("mc-check", infos.getGameDir().getAbsolutePath());
-
-        checkFolder(folder, infos.getGameDir());
-
-        LogUtil.info("mc-cp");
-        List<File> libs = Explorer.dir(infos.getGameDir()).sub(folder.getLibsFolder()).allRecursive().files().match("^(.*\\.((jar)$))*$").get();
-        libs.add(Explorer.dir(infos.getGameDir()).get(folder.getMainJar()));
-
-        List<String> arguments = infos.getGameVersion().getGameType().getLaunchArgs(infos, folder, authInfos);
-
-        if(infos.getGameTweaks() != null)
-            for (GameTweak tweak : infos.getGameTweaks())
-            {
-                arguments.add("--tweakClass");
-                arguments.add(tweak.getTweakClass(infos));
-            }
-
-        String mainClass = infos.getGameTweaks() == null || infos.getGameTweaks().length == 0 ? infos.getGameVersion().getGameType().getMainClass(infos) : GameTweak.LAUNCHWRAPPER_MAIN_CLASS;
-        String[] args = arguments.toArray(new String[arguments.size()]);
-
-        InternalLaunchProfile profile = new InternalLaunchProfile(mainClass, args);
-        profile.setClasspath(libs);
-
-        System.setProperty("fml.ignoreInvalidMinecraftCertificates", "true");
-
-        LogUtil.info("nat");
-        try
-        {
-            JavaUtil.setLibraryPath(new File(infos.getGameDir(), folder.getNativesFolder()).getAbsolutePath());
-        }
-        catch (Exception e)
-        {
-            throw new LaunchException("Can't register the natives", e);
-        }
-
-        LogUtil.info("done");
-
-        return profile;
-    }
-
     /**
      * Generate an External Launch Profile for Minecraft
      *

@@ -63,9 +63,9 @@ public class ClasspathConstructor extends FileList
      */
     public String make()
     {
-        StringBuilder classPath = new StringBuilder();
+        final StringBuilder classPath = new StringBuilder();
 
-        for (int i = 0; i < files.size(); i++)
+        for (int i = 0; i < this.files.size(); i++)
             classPath.append(files.get(i).getAbsolutePath()).append(i + 1 == files.size() ? "" : File.pathSeparator);
 
         return classPath.toString();
