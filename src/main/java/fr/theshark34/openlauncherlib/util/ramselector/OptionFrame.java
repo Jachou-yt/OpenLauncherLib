@@ -26,7 +26,7 @@ import javax.swing.*;
  * The default Option Frame
  *
  * <p>
- *     The default Option Frame for the Ram Selector
+ * The default Option Frame for the Ram Selector
  * </p>
  *
  * @author Litarvan
@@ -38,12 +38,12 @@ public class OptionFrame extends AbstractOptionFrame
     /**
      * The Label "RAM : "
      */
-    private JLabel ramLabel;
+    private final JLabel ramLabel;
 
     /**
      * The RAM selection combo box
      */
-    private JComboBox ramBox;
+    private final JComboBox ramBox;
 
     /**
      * The Option Frame

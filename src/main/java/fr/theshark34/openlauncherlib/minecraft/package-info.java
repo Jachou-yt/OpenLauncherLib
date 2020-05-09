@@ -21,8 +21,8 @@
  * The Minecraft API
  *
  * <p>
- *     Makes you able to launch any Minecraft version easily with
- *     the Internal/External system.
+ * Makes you able to launch any Minecraft version easily with
+ * the Internal/External system.
  * </p>
  *
  * @author Litarvan

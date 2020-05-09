@@ -22,8 +22,8 @@ package fr.theshark34.openlauncherlib.minecraft;
  * The Auth Infos
  *
  * <p>
- *     The Auth Infos containing the player username, and the access token given
- *     by the authentication.
+ * The Auth Infos containing the player username, and the access token given
+ * by the authentication.
  * </p>
  *
  * @author Litarvan
@@ -35,12 +35,12 @@ public class AuthInfos
     /**
      * The player username
      */
-    private String username;
+    private final String username;
 
     /**
      * The access token given by the authentication
      */
-    private String accessToken;
+    private final String accessToken;
 
     /**
      * The (optional) client token given to the Authenticator
@@ -50,7 +50,7 @@ public class AuthInfos
     /**
      * The uuid given by the authentication
      */
-    private String uuid;
+    private final String uuid;
 
     /**
      * Basic constructor
@@ -61,9 +61,9 @@ public class AuthInfos
      */
     public AuthInfos(String username, String accessToken, String uuid)
     {
-        this.username = username;
+        this.username    = username;
         this.accessToken = accessToken;
-        this.uuid = uuid;
+        this.uuid        = uuid;
     }
 
     /**
@@ -76,10 +76,10 @@ public class AuthInfos
      */
     public AuthInfos(String username, String accessToken, String clientToken, String uuid)
     {
-        this.username = username;
+        this.username    = username;
         this.accessToken = accessToken;
         this.clientToken = clientToken;
-        this.uuid = uuid;
+        this.uuid        = uuid;
     }
 
     /**

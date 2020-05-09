@@ -21,11 +21,11 @@
  * The Explorer API
  *
  * <p>
- *     Powerful API to manipulate the file easier and faster than usual.
+ * Powerful API to manipulate the file easier and faster than usual.
  * </p>
- *
+ * <p>
  * Code example : Getting the jars in a given directory
- *
+ * <p>
  * Without the API :
  *
  * <pre>{@code
@@ -45,7 +45,7 @@
  *
  *     // Working, but not recursively :/
  * }</pre>
- *
+ * <p>
  * With the API :
  *
  * <pre>{@code
@@ -53,9 +53,9 @@
  *     // And this is recursive ! It also drop a FailException (extends RuntimeException) if something failed !
  * }</pre>
  *
- * @see fr.theshark34.openlauncherlib.FailException
  * @author Litarvan
  * @version 3.0.2-BETA
+ * @see fr.theshark34.openlauncherlib.FailException
  * @since 3.0.0-BETA
  */
 package fr.theshark34.openlauncherlib.util.explorer;

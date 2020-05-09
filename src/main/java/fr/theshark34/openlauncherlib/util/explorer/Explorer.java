@@ -24,9 +24,9 @@ import java.io.File;
  * The Explorer
  *
  * <p>
- *     Use the explorer to explore some directories.
+ * Use the explorer to explore some directories.
  * </p>
- *
+ * <p>
  * Code example :
  *
  * <pre>
@@ -34,13 +34,13 @@ import java.io.File;
  *     explorer.cd("mysub");
  *     List files = explorer.files(); // Return the list of files in the mysub directory
  * </pre>
- *
+ * <p>
  * The Explorer is extending ExploredDirectory, so you can use .files() or .subs() etc...
  *
  * @author Litarvan
  * @version 3.0.2-BETA
- * @since 3.0.0-BETA
  * @see ExploredDirectory
+ * @since 3.0.0-BETA
  */
 public class Explorer extends ExploredDirectory
 {
@@ -78,7 +78,6 @@ public class Explorer extends ExploredDirectory
      * Explore a directory
      *
      * @param dir The path of directory to explore
-     *
      * @return An {@link ExploredDirectory} object
      */
     public static ExploredDirectory dir(String dir)
@@ -90,7 +89,6 @@ public class Explorer extends ExploredDirectory
      * Explore a directory
      *
      * @param dir The directory to explore
-     *
      * @return An {@link ExploredDirectory} object
      */
     public static ExploredDirectory dir(File dir)

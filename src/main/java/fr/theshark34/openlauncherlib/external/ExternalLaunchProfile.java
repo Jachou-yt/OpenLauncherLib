@@ -25,7 +25,7 @@ import java.util.List;
  * The External Launch Profile
  *
  * <p>
- *     Contains the informations about an external launching.
+ * Contains the informations about an external launching.
  * </p>
  *
  * @author Litarvan
@@ -111,13 +111,13 @@ public class ExternalLaunchProfile
      */
     public ExternalLaunchProfile(String mainClass, String classPath, List<String> vmArgs, List<String> args, boolean redirectErrorStream, String macDockName, File directory)
     {
-        this.mainClass = mainClass;
-        this.classPath = classPath;
-        this.vmArgs = vmArgs;
-        this.args = args;
+        this.mainClass           = mainClass;
+        this.classPath           = classPath;
+        this.vmArgs              = vmArgs;
+        this.args                = args;
         this.redirectErrorStream = redirectErrorStream;
-        this.macDockName = macDockName;
-        this.directory = directory;
+        this.macDockName         = macDockName;
+        this.directory           = directory;
     }
 
     /**

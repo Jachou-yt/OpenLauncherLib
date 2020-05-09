@@ -24,7 +24,7 @@ import java.io.*;
  * The Process Log Manager
  *
  * <p>
- *     Manager logs of a Process by printing and/or writing them.
+ * Manager logs of a Process by printing and/or writing them.
  * </p>
  *
  * @author Litarvan
@@ -41,7 +41,7 @@ public class ProcessLogManager extends Thread
     /**
      * The reader
      */
-    private BufferedReader reader;
+    private final BufferedReader reader;
 
     /**
      * The file where to write the logs (optional)
@@ -71,15 +71,14 @@ public class ProcessLogManager extends Thread
      */
     public ProcessLogManager(InputStream input, File toWrite)
     {
-        this.reader = new BufferedReader(new InputStreamReader(input));
+        this.reader  = new BufferedReader(new InputStreamReader(input));
         this.toWrite = toWrite;
 
         if (toWrite != null)
             try
             {
                 this.writer = new BufferedWriter(new FileWriter(toWrite));
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 LogUtil.err("log-err", e.toString());
             }
@@ -100,14 +99,12 @@ public class ProcessLogManager extends Thread
                     try
                     {
                         writer.write(line + "\n");
-                    }
-                    catch (IOException e)
+                    } catch (IOException e)
                     {
                         LogUtil.err("log-err", e.toString());
                     }
             }
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             LogUtil.err("log-end", e.toString());
 
@@ -118,8 +115,7 @@ public class ProcessLogManager extends Thread
             try
             {
                 writer.close();
-            }
-            catch (IOException ignored)
+            } catch (IOException ignored)
             {
             }
     }

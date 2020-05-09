@@ -22,9 +22,9 @@ package fr.theshark34.openlauncherlib.external;
  * The Before Launching Event
  *
  * <p>
- *     Event that can be set to the external launching system that
- *     will be launched just before the process is started.
- *     Useful to customize the ProcessBuilder.
+ * Event that can be set to the external launching system that
+ * will be launched just before the process is started.
+ * Useful to customize the ProcessBuilder.
  * </p>
  *
  * @author Litarvan

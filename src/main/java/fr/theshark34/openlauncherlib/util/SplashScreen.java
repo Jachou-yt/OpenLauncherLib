@@ -25,7 +25,7 @@ import java.awt.*;
  * The Splash Screen
  *
  * <p>
- *     This class cans create a splash screen with an image.
+ * This class cans create a splash screen with an image.
  * </p>
  *
  * @author Litarvan
@@ -55,7 +55,6 @@ public class SplashScreen extends JFrame
      * Display the splash, wait a given time, then hide the splash.
      *
      * @param time The time to wait before hiding the splash
-     *
      * @return The created Thread
      */
     public Thread displayFor(final long time)
@@ -70,8 +69,7 @@ public class SplashScreen extends JFrame
                 try
                 {
                     sleep(time);
-                }
-                catch (InterruptedException e)
+                } catch (InterruptedException e)
                 {
                     LogUtil.err("warn", " : ", "splash-interrupted");
                 }
@@ -102,7 +100,7 @@ public class SplashScreen extends JFrame
 
     /**
      * Set the background transparent
-     *
+     * <p>
      * Warning : Works only for Java 7+ (but just doesn't do anything with Java 6 or less)
      */
     public void setTransparent()
@@ -119,7 +117,7 @@ public class SplashScreen extends JFrame
     @Override
     public SplashPanel getContentPane()
     {
-        return (SplashPanel) super.getContentPane();
+        return (SplashPanel)super.getContentPane();
     }
 
 }
@@ -128,7 +126,7 @@ public class SplashScreen extends JFrame
  * The Splash Panel
  *
  * <p>
- *     The container of a SplashScreen with an image in background
+ * The container of a SplashScreen with an image in background
  * </p>
  *
  * @author Litarvan
@@ -141,7 +139,7 @@ class SplashPanel extends JPanel
     /**
      * The splash image
      */
-    private Image image;
+    private final Image image;
 
     /**
      * Basic constructor

@@ -30,10 +30,9 @@ public interface Language
 
     /**
      * Retrieve the translated by nodes and the identifier.
-     * @param identify
-     *          Main key for get the translate.
-     * @param nodes
-     *          Key in the file of the translate.
+     *
+     * @param identify Main key for get the translate.
+     * @param nodes    Key in the file of the translate.
      * @return the translated string.
      */
     String get(LanguageInfo identify, String... nodes);

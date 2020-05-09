@@ -22,7 +22,7 @@ package fr.theshark34.openlauncherlib;
  * The Launch Exception
  *
  * <p>
- *     An exception thrown when launching.
+ * An exception thrown when launching.
  * </p>
  *
  * @author Litarvan

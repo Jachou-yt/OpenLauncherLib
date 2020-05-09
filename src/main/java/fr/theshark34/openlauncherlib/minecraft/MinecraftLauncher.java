@@ -33,7 +33,7 @@ import java.util.List;
  * The Minecraft Launcher
  *
  * <p>
- *     Contains some methods to create internal/external launch profile for Minecraft.
+ * Contains some methods to create internal/external launch profile for Minecraft.
  * </p>
  *
  * @author Litarvan
@@ -49,9 +49,7 @@ public class MinecraftLauncher
      * @param infos     The GameInfos (contains your game infos)
      * @param folder    The GameFolder (contains your game folder organization)
      * @param authInfos The AuthInfos (contains the user infos)
-     *
      * @return The generated profile
-     *
      * @throws LaunchException If it failed
      */
     public static ExternalLaunchProfile createExternalProfile(GameInfos infos, GameFolder folder, AuthInfos authInfos) throws LaunchException
@@ -72,20 +70,20 @@ public class MinecraftLauncher
         constructor.add(Explorer.dir(infos.getGameDir()).sub(folder.getLibsFolder()).allRecursive().files().match("^(.*\\.((jar)$))*$").get());
         constructor.add(Explorer.dir(infos.getGameDir()).get(folder.getMainJar()));
 
-        String mainClass = infos.getGameTweaks() == null || infos.getGameTweaks().length == 0 ? infos.getGameVersion().getGameType().getMainClass(infos) : GameTweak.LAUNCHWRAPPER_MAIN_CLASS;
-        String classpath = constructor.make();
-        List<String> args = infos.getGameVersion().getGameType().getLaunchArgs(infos, folder, authInfos);
-        List<String> vmArgs = new ArrayList<>();
+        String       mainClass = infos.getGameTweaks() == null || infos.getGameTweaks().length == 0 ? infos.getGameVersion().getGameType().getMainClass(infos) : GameTweak.LAUNCHWRAPPER_MAIN_CLASS;
+        String       classpath = constructor.make();
+        List<String> args      = infos.getGameVersion().getGameType().getLaunchArgs(infos, folder, authInfos);
+        List<String> vmArgs    = new ArrayList<>();
         vmArgs.add("-Djava.library.path=" + Explorer.dir(infos.getGameDir()).sub(folder.getNativesFolder()).get().getAbsolutePath());
         vmArgs.add("-Dfml.ignoreInvalidMinecraftCertificates=true");
         vmArgs.add("-Dfml.ignorePatchDiscrepancies=true");
 
-        if(infos.getGameTweaks() != null)
-			for (GameTweak tweak : infos.getGameTweaks())
-			{
-				args.add("--tweakClass");
-				args.add(tweak.getTweakClass(infos));
-			}
+        if (infos.getGameTweaks() != null)
+            for (GameTweak tweak : infos.getGameTweaks())
+            {
+                args.add("--tweakClass");
+                args.add(tweak.getTweakClass(infos));
+            }
 
         ExternalLaunchProfile profile = new ExternalLaunchProfile(mainClass, classpath, vmArgs, args, true, infos.getServerName(), infos.getGameDir());
 
@@ -99,15 +97,14 @@ public class MinecraftLauncher
      *
      * @param folder    The folder organization
      * @param directory The directory to check
-     *
      * @throws FolderException If it failed
      */
     public static void checkFolder(GameFolder folder, File directory) throws FolderException
     {
-        File assetsFolder = new File(directory, folder.getAssetsFolder());
-        File libsFolder = new File(directory, folder.getLibsFolder());
+        File assetsFolder  = new File(directory, folder.getAssetsFolder());
+        File libsFolder    = new File(directory, folder.getLibsFolder());
         File nativesFolder = new File(directory, folder.getNativesFolder());
-        File minecraftJar = new File(directory, folder.getMainJar());
+        File minecraftJar  = new File(directory, folder.getMainJar());
 
         if (!assetsFolder.exists() || assetsFolder.listFiles() == null)
             throw new FolderException("Missing/Empty assets folder (" + assetsFolder.getAbsolutePath() + ")");

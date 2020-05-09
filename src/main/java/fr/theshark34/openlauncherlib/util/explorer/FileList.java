@@ -27,9 +27,9 @@ import java.util.List;
  * The File List
  *
  * <p>
- *     The File List is a List of files, but with some very useful
- *     methods like the add(File Array / FileList / List of file) methods,
- *     the match method, etc...
+ * The File List is a List of files, but with some very useful
+ * methods like the add(File Array / FileList / List of file) methods,
+ * the match method, etc...
  * </p>
  *
  * @author Litarvan
@@ -96,7 +96,6 @@ public class FileList
      * the given regex
      *
      * @param regex The regex to apply
-     *
      * @return The generated list
      */
     public FileList match(String regex)

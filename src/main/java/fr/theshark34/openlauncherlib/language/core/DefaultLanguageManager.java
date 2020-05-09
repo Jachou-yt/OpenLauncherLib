@@ -64,10 +64,12 @@ public class DefaultLanguageManager extends LanguageManager
 
     /**
      * Retrieve the list of languages registered.
+     *
      * @return a {@link java.util.ArrayList} of languages.
      */
     @Override
-    public List<Language> getLanguages(){
+    public List<Language> getLanguages()
+    {
         return new ArrayList<>(langMap.values());
     }
 
@@ -76,13 +78,12 @@ public class DefaultLanguageManager extends LanguageManager
      *
      * <p>Warning: Can return a {@link NullPointerException}</p>
      *
-     * @param name
-     *       The name of language.
-     * @return
-     *       The language by name.
+     * @param name The name of language.
+     * @return The language by name.
      */
     @Override
-    public Language getLanguage(LanguageInfo name){
+    public Language getLanguage(LanguageInfo name)
+    {
         return langMap.get(name.get().toLowerCase());
     }
 
@@ -101,8 +102,8 @@ public class DefaultLanguageManager extends LanguageManager
 
     /**
      * Check if the name is the default language.
-     * @param name
-     *      The name of language.
+     *
+     * @param name The name of language.
      * @return true -> if the name is default language.
      */
     @Override
@@ -113,8 +114,8 @@ public class DefaultLanguageManager extends LanguageManager
 
     /**
      * Modify the default language.
-     * @param language
-     *          The language.
+     *
+     * @param language The language.
      */
     @Override
     public void setDefaultLanguage(Language language)
@@ -124,24 +125,27 @@ public class DefaultLanguageManager extends LanguageManager
 
     /**
      * Register a new language or if the name already exist then add of the translated by identify.
-     * @param identify
-     *          The identifier of language.
-     * @param name
-     *          The name of language.
-     * @param path
-     *          The path in the folder resource of project.
+     *
+     * @param identify The identifier of language.
+     * @param name     The name of language.
+     * @param path     The path in the folder resource of project.
      */
     @Override
     public void registerLanguage(LanguageInfo identify, LanguageInfo name, String path)
     {
-        try {
+        try
+        {
             Configuration configuration = new SimpleConfiguration(configurationManager.getLogger(), new BufferedReader(new InputStreamReader(DefaultLanguageManager.class.getResourceAsStream(path + name.get() + ".json"), StandardCharsets.UTF_8)));
-            if(!langMap.containsKey(name.get().toLowerCase())){
+            if (!langMap.containsKey(name.get().toLowerCase()))
+            {
                 langMap.put(name.get().toLowerCase(), new SimpleLanguage(name, this, identify, configuration));
-            }else {
+            }
+            else
+            {
                 ((SimpleLanguage)langMap.get(name.get().toLowerCase())).registerLanguage(identify, configuration);
             }
-        }catch (IOException e){
+        } catch (IOException e)
+        {
             configurationManager.getLogger().log(Level.SEVERE, e.getMessage(), e);
         }
     }

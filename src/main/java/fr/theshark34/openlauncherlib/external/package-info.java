@@ -21,10 +21,10 @@
  * The External Launching package
  *
  * <p>
- *     The external launching is the launching method that create a java Process
- *     to launch a Java program.
+ * The external launching is the launching method that create a java Process
+ * to launch a Java program.
  * </p>
- *
+ * <p>
  * Code example :
  *
  * <pre>{@code
@@ -38,7 +38,7 @@
  *     Process p = launcher.launch(); // throws LaunchException
  *     // Process is now launched =)
  * }</pre>
- *
+ * <p>
  * You can also give programs/VM parameters.
  *
  * @author Litarvan

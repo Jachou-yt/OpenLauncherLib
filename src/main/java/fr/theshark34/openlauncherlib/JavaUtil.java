@@ -26,7 +26,7 @@ import java.lang.reflect.Field;
  * The Java Util
  *
  * <p>
- *     Contains some useful things about the launching
+ * Contains some useful things about the launching
  * </p>
  *
  * @author Litarvan
@@ -52,7 +52,6 @@ public class JavaUtil
      * Create an argument for the mac dock name
      *
      * @param name The name to set
-     *
      * @return The generated argument
      */
     public static String macDockName(String name)
@@ -62,15 +61,17 @@ public class JavaUtil
 
     /**
      * Return the java executable path
-     *  Modified by Flow
+     * Modified by Flow
+     *
      * @return The java command
      */
     @ModifiedByFlow
     public static String getJavaCommand()
     {
-        if(javaCommand == null)
+        if (javaCommand == null)
         {
-            if (System.getProperty("os.name").toLowerCase().contains("win")) return "\"" + System.getProperty("java.home") + "\\bin\\java" + "\"";
+            if (System.getProperty("os.name").toLowerCase().contains("win"))
+                return "\"" + System.getProperty("java.home") + "\\bin\\java" + "\"";
             else return System.getProperty("java.home") + "/bin/java";
         }
         else return javaCommand;

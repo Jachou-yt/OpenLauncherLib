@@ -32,13 +32,13 @@ import java.util.logging.Logger;
  * The Log Util
  *
  * <p>
- *     Useful to print some messages :p
+ * Useful to print some messages :p
  * </p>
  *
  * @author Litarvan
  * @version 3.0.2-BETA
  * @since 3.0.0-BETA
- *
+ * <p>
  * Modified by NeutronStars.
  */
 public final class LogUtil
@@ -53,19 +53,24 @@ public final class LogUtil
      */
     private static final LanguageInfo IDENTIFIER = () -> "OpenLauncherLib";
 
-    static {
+    static
+    {
         LANGUAGE_MANAGER.registerLanguage(IDENTIFIER, LanguageTypes.EN, "/assets/languages/");
         LANGUAGE_MANAGER.registerLanguage(IDENTIFIER, LanguageTypes.FR, "/assets/languages/");
 
-        if (Locale.getDefault().getLanguage().toLowerCase().startsWith("fr")) {
+        if (Locale.getDefault().getLanguage().toLowerCase().startsWith("fr"))
+        {
             LANGUAGE_MANAGER.setDefaultLanguage(LANGUAGE_MANAGER.getLanguage(LanguageTypes.FR));
-        }else {
+        }
+        else
+        {
             LANGUAGE_MANAGER.setDefaultLanguage(LANGUAGE_MANAGER.getLanguage(LanguageTypes.EN));
         }
     }
 
     /**
      * Retrieve the LanguageManager.
+     *
      * @return the language manager.
      */
     public static LanguageManager getLanguageManager()
@@ -75,6 +80,7 @@ public final class LogUtil
 
     /**
      * Retrieve the identifier.
+     *
      * @return the identifier.
      */
     public static LanguageInfo getIdentifier()
@@ -89,17 +95,16 @@ public final class LogUtil
      * @param messages All the strings keys to translate
      */
     @ModifiedByFlow
-    public static String message(boolean err, String... messages)
+    public static void message(boolean err, String... messages)
     {
         final StringBuilder builder = new StringBuilder("[OpenLauncherLib]");
-        for(String node : messages){
+        for (String node : messages)
+        {
             builder.append(" ").append(LANGUAGE_MANAGER.getDefaultLanguage().get(IDENTIFIER, node));
         }
 
         if (err) System.err.println(builder.toString());
         else System.out.println(builder.toString());
-
-        return builder.toString();
     }
 
     /**

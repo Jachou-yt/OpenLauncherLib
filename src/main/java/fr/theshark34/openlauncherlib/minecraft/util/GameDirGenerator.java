@@ -24,8 +24,8 @@ import java.io.File;
  * The Minecraft Game Dir Generator
  *
  * <p>
- *     This class contains a method to generate the minecraft directory of
- *     the current OS like the default of Minecraft.
+ * This class contains a method to generate the minecraft directory of
+ * the current OS like the default of Minecraft.
  * </p>
  *
  * @author Litarvan
@@ -40,7 +40,6 @@ public class GameDirGenerator
      *
      * @param serverName The server name that will be the directory
      *                   name.
-     *
      * @return The generated game directory
      */
     public static File createGameDir(String serverName)

@@ -27,8 +27,8 @@ import java.util.List;
  * The Classpath Constructor
  *
  * <p>
- *     A FileList but that can construct a classpath String (libs.jar;test.jar;libs/myjar.jar)
- *     (with : instead of ; on Mac and Linux)
+ * A FileList but that can construct a classpath String (libs.jar;test.jar;libs/myjar.jar)
+ * (with : instead of ; on Mac and Linux)
  * </p>
  *
  * @author Litarvan
@@ -66,7 +66,7 @@ public class ClasspathConstructor extends FileList
         final StringBuilder classPath = new StringBuilder();
 
         for (int i = 0; i < this.files.size(); i++)
-            classPath.append(files.get(i).getAbsolutePath()).append(i + 1 == files.size() ? "" : File.pathSeparator);
+             classPath.append(files.get(i).getAbsolutePath()).append(i + 1 == files.size() ? "" : File.pathSeparator);
 
         return classPath.toString();
     }

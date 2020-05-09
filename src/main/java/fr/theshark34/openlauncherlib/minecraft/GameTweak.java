@@ -25,11 +25,11 @@ import fr.theshark34.openlauncherlib.util.LogUtil;
  * The Game Tweak
  *
  * <p>
- *     The Game Tweak is like a class, that patch Minecraft at launching.
- *     If one tweak is enabled, the system will launch the launchwrapper library,
- *     that is the library that patches the game.
- *
- *     One or more tweaking class will be given depending on the given Game Tweaks.
+ * The Game Tweak is like a class, that patch Minecraft at launching.
+ * If one tweak is enabled, the system will launch the launchwrapper library,
+ * that is the library that patches the game.
+ * <p>
+ * One or more tweaking class will be given depending on the given Game Tweaks.
  * </p>
  *
  * @author Litarvan
@@ -45,13 +45,12 @@ public abstract class GameTweak
 
     /**
      * The Forge GameTweak
-     *
+     * <p>
      * NOTE : IF YOU ALREADY USE :
      * - {@link GameType#V_1_14_4_FORGE}
      * - {@link GameType#V1_13_FORGE}
      * - {@link GameType#V_1_15_2_FORGE}
      * DON'T ADD THE FORGE TWEAK !
-     *
      */
     @ModifiedByFlow
     public static final GameTweak FORGE = new GameTweak()
@@ -128,7 +127,6 @@ public abstract class GameTweak
      * Return the name of the tweak class to give to the launch wrapper
      *
      * @param infos The current GameInfos
-     *
      * @return The tweak class
      */
     public abstract String getTweakClass(GameInfos infos);

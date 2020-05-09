@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * The Game Infos
  *
  * <p>
- *     The Game Infos like the server name, the version, the tweaks, etc...
+ * The Game Infos like the server name, the version, the tweaks, etc...
  * </p>
  *
  * @author Litarvan
@@ -40,12 +40,12 @@ public class GameInfos
     /**
      * The server name
      */
-    private String serverName;
+    private final String serverName;
 
     /**
      * The Game Directory
      */
-    private File gameDir;
+    private final File gameDir;
 
     /**
      * The current tweaks (Shader, Optifine, Forge, or just Vanilla)
@@ -55,7 +55,7 @@ public class GameInfos
     /**
      * The Game Version containing launch informations
      */
-    private GameVersion gameVersion;
+    private final GameVersion gameVersion;
 
     /**
      * Basic constructor
@@ -79,26 +79,26 @@ public class GameInfos
      */
     public GameInfos(String serverName, File gameDir, GameVersion gameVersion, GameTweak[] tweaks)
     {
-        this.serverName = serverName;
-        this.gameDir = gameDir;
+        this.serverName  = serverName;
+        this.gameDir     = gameDir;
         this.gameVersion = gameVersion;
-        this.tweaks = tweaks;
+        this.tweaks      = tweaks;
 
         if (tweaks != null)
         {
-            boolean forge = false;
+            boolean forge            = false;
             boolean shaderOrOptifine = false;
-			if (gameVersion.getGameType() == GameType.V1_13_FORGE)
-				if (tweaks.length == 1 && tweaks[0] == GameTweak.FORGE)
-					tweaks = new GameTweak[0];
-				else if (tweaks.length != 0)
-					LogUtil.info("tweak-deprec");
+            if (gameVersion.getGameType() == GameType.V1_13_FORGE)
+                if (tweaks.length == 1 && tweaks[0] == GameTweak.FORGE)
+                    tweaks = new GameTweak[0];
+                else if (tweaks.length != 0)
+                    LogUtil.info("tweak-deprec");
 
             for (GameTweak tweak : tweaks)
                 if (tweak.equals(GameTweak.FORGE))
                 {
                     if (gameVersion.getGameType() == GameType.V1_5_2_LOWER)
-                    	LogUtil.info("forge-old");
+                        LogUtil.info("forge-old");
 
                     forge = true;
                 }
@@ -108,14 +108,14 @@ public class GameInfos
                 }
 
             if (forge || gameVersion.getGameType() == GameType.V1_13_FORGE)
-            	LogUtil.info("support-forge");
+                LogUtil.info("support-forge");
 
-			if (tweaks.length > 0 && gameVersion.getGameType() == GameType.V1_5_2_LOWER)
-				LogUtil.info("old-tweaking");
+            if (tweaks.length > 0 && gameVersion.getGameType() == GameType.V1_5_2_LOWER)
+                LogUtil.info("old-tweaking");
 
             if (shaderOrOptifine && forge)
             {
-            	LogUtil.info("forge-optifine");
+                LogUtil.info("forge-optifine");
 
                 ArrayList<GameTweak> tweakList = new ArrayList<>();
 
@@ -172,7 +172,6 @@ public class GameInfos
      * Check if the game has a given tweak
      *
      * @param tweak The tweak to check if the game has it
-     *
      * @return True if it has, false if not
      */
     public boolean hasGameTweak(GameTweak tweak)

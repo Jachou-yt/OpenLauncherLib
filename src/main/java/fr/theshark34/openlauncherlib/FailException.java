@@ -22,7 +22,7 @@ package fr.theshark34.openlauncherlib;
  * The Fail Exception
  *
  * <p>
- *     Best exception ever made
+ * Best exception ever made
  * </p>
  *
  * @author Litarvan

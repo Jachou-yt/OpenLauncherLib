@@ -30,12 +30,14 @@ public abstract class ConfigurationManager
      */
     private final Logger logger;
 
-    protected ConfigurationManager(Logger logger){
+    protected ConfigurationManager(Logger logger)
+    {
         this.logger = logger;
     }
 
     /**
      * Retrieve the logger.
+     *
      * @return The logger.
      */
     public Logger getLogger()
@@ -45,11 +47,10 @@ public abstract class ConfigurationManager
 
     /**
      * Retrieve the configuration with path. If the file not exist the retrieve a new configuration.
-     * @param path
-     *      The path of the configuration.
+     *
+     * @param path The path of the configuration.
      * @return The configuration.
-     * @throws IOException
-     *      if the path is not valid the return this exception.
+     * @throws IOException if the path is not valid the return this exception.
      */
     public abstract Configuration getConfiguration(String path) throws IOException;
 }

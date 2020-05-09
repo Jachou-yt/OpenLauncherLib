@@ -18,6 +18,7 @@
  */
 package fr.theshark34.openlauncherlib.minecraft;
 
+import com.sun.istack.internal.Nullable;
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
 
 import java.io.File;
@@ -27,18 +28,21 @@ import java.util.ArrayList;
  * The Game Type
  *
  * <p>
- *     This class contains the specifics informations about a version
- *     or a group of verison of Minecraft.
- *
- *     It contains its main class, and its arguments.
+ * This class contains the specifics informations about a version
+ * or a group of verison of Minecraft.
+ * <p>
+ * It contains its main class, and its arguments.
  * </p>
  *
  * @author Litarvan
  * @version 3.0.4
  * @since 2.0.0-SNAPSHOT
  */
-public abstract class GameType
+public abstract class GameType implements IForgeArgumentsProvider
 {
+    @Nullable
+    private NewForgeVersionDiscriminator newForgeVersionDiscriminator;
+
     /**
      * The 1.5.2 or Lower game type
      */
@@ -232,7 +236,7 @@ public abstract class GameType
 
             String version = infos.getGameVersion().getName();
 
-            int first = version.indexOf('.');
+            int first  = version.indexOf('.');
             int second = version.lastIndexOf('.');
 
             if (first != second)
@@ -241,7 +245,7 @@ public abstract class GameType
             }
 
             if (infos.getGameVersion().getName().equals("1.13.1") || infos.getGameVersion().getName().equals("1.13.2"))
-            	version = "1.13.1";
+                version = "1.13.1";
 
             arguments.add(version);
 
@@ -258,83 +262,83 @@ public abstract class GameType
         }
     };
 
-	/**
-	 * This is a workaround until a new version of the lib using versions JSON is published
-	 */
-	public static final GameType V1_13_FORGE = new GameType()
-	{
-		@Override
-		public String getName()
-		{
-			return "1.13 or higher with Forge";
-		}
+    /**
+     * This is a workaround until a new version of the lib using versions JSON is published
+     */
+    public static final GameType V1_13_FORGE = new GameType()
+    {
+        @Override
+        public String getName()
+        {
+            return "1.13 or higher with Forge";
+        }
 
-		@Override
-		public String getMainClass(GameInfos infos)
-		{
-			return "cpw.mods.modlauncher.Launcher";
-		}
+        @Override
+        public String getMainClass(GameInfos infos)
+        {
+            return "cpw.mods.modlauncher.Launcher";
+        }
 
-		@Override
-		public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
-		{
-			ArrayList<String> arguments = new ArrayList<>();
+        @Override
+        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+        {
+            ArrayList<String> arguments = new ArrayList<>();
 
-			arguments.add("--username=" + authInfos.getUsername());
+            arguments.add("--username=" + authInfos.getUsername());
 
-			arguments.add("--accessToken");
-			arguments.add(authInfos.getAccessToken());
+            arguments.add("--accessToken");
+            arguments.add(authInfos.getAccessToken());
 
-			if (authInfos.getClientToken() != null)
-			{
-				arguments.add("--clientToken");
-				arguments.add(authInfos.getClientToken());
-			}
+            if (authInfos.getClientToken() != null)
+            {
+                arguments.add("--clientToken");
+                arguments.add(authInfos.getClientToken());
+            }
 
-			arguments.add("--version");
-			arguments.add(infos.getGameVersion().getName());
+            arguments.add("--version");
+            arguments.add(infos.getGameVersion().getName());
 
-			arguments.add("--gameDir");
-			arguments.add(infos.getGameDir().getAbsolutePath());
+            arguments.add("--gameDir");
+            arguments.add(infos.getGameDir().getAbsolutePath());
 
-			arguments.add("--assetsDir");
-			File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
-			arguments.add(assetsDir.getAbsolutePath());
+            arguments.add("--assetsDir");
+            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
+            arguments.add(assetsDir.getAbsolutePath());
 
-			arguments.add("--assetIndex");
+            arguments.add("--assetIndex");
 
-			arguments.add("1.13.1");
+            arguments.add("1.13.1");
 
-			arguments.add("--userProperties");
-			arguments.add("{}");
+            arguments.add("--userProperties");
+            arguments.add("{}");
 
-			arguments.add("--uuid");
-			arguments.add(authInfos.getUuid());
+            arguments.add("--uuid");
+            arguments.add(authInfos.getUuid());
 
-			arguments.add("--userType");
-			arguments.add("legacy");
+            arguments.add("--userType");
+            arguments.add("legacy");
 
-			arguments.add("--launchTarget");
-			arguments.add("fmlclient");
+            arguments.add("--launchTarget");
+            arguments.add("fmlclient");
 
-			arguments.add("--fml.forgeVersion");
-			arguments.add("25.0.219");
+            arguments.add("--fml.forgeVersion");
+            arguments.add("25.0.219");
 
-			arguments.add("--fml.mcVersion");
-			arguments.add("1.13.2");
+            arguments.add("--fml.mcVersion");
+            arguments.add("1.13.2");
 
-			arguments.add("--fml.forgeGroup");
-			arguments.add("net.minecraftforge");
+            arguments.add("--fml.forgeGroup");
+            arguments.add("net.minecraftforge");
 
-			arguments.add("--fml.mcpVersion");
-			arguments.add("20190213.203750");
+            arguments.add("--fml.mcpVersion");
+            arguments.add("20190213.203750");
 
-			return arguments;
-		}
-	};
+            return arguments;
+        }
+    };
 
-	@ModifiedByFlow
-	public static final GameType V_1_14_4 = new GameType()
+    @ModifiedByFlow
+    public static final GameType V_1_14_4 = new GameType()
     {
         @Override
         public String getName()
@@ -385,8 +389,8 @@ public abstract class GameType
         }
     };
 
-	@ModifiedByFlow
-	public static final GameType V_1_14_4_FORGE = new GameType()
+    @ModifiedByFlow
+    public static final GameType V_1_14_4_FORGE = new GameType()
     {
         @Override
         public String getName()
@@ -403,29 +407,16 @@ public abstract class GameType
         @Override
         public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            final ArrayList<String> arguments = new ArrayList<>();
-            arguments.addAll(V_1_14_4.getLaunchArgs(infos, folder, authInfos));
-
-            arguments.add("--launchTarget");
-            arguments.add("fmlclient");
-
-            arguments.add("--fml.forgeVersion");
-            arguments.add("28.2.0");
-
-            arguments.add("--fml.mcVersion");
-            arguments.add("1.14.4");
-
-            arguments.add("--fml.forgeGroup");
-            arguments.add("net.minecraftforge");
-
-            arguments.add("--fml.mcpVersion");
-            arguments.add("20190829.143755");
+            final ArrayList<String> arguments = new ArrayList<>(V_1_14_4.getLaunchArgs(infos, folder, authInfos));
+            if (this.getNewForgeVersionDiscriminator() == null)
+                throw new IllegalStateException("You must set an instance of NewForgeVersionDiscriminator");
+            arguments.addAll(this.getForgeArguments());
             return arguments;
         }
     };
 
-	@ModifiedByFlow
-	public static final GameType V_1_15_2 = new GameType()
+    @ModifiedByFlow
+    public static final GameType V_1_15_2 = new GameType()
     {
         @Override
         public String getName()
@@ -453,7 +444,7 @@ public abstract class GameType
             arguments.add(infos.getGameDir().getAbsolutePath());
 
             arguments.add("--assetsDir");
-            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
+            final File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
             arguments.add(assetsDir.getAbsolutePath());
 
             arguments.add("--assetIndex");
@@ -475,8 +466,8 @@ public abstract class GameType
         }
     };
 
-	@ModifiedByFlow
-	public static final GameType V_1_15_2_FORGE = new GameType()
+    @ModifiedByFlow
+    public static final GameType V_1_15_2_FORGE = new GameType()
     {
         @Override
         public String getName()
@@ -493,23 +484,10 @@ public abstract class GameType
         @Override
         public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            final ArrayList<String> arguments = new ArrayList<>();
-            arguments.addAll(V_1_15_2.getLaunchArgs(infos, folder, authInfos));
-
-            arguments.add("--launchTarget");
-            arguments.add("fmlclient");
-
-            arguments.add("--fml.forgeVersion");
-            arguments.add("31.1.0");
-
-            arguments.add("--fml.mcVersion");
-            arguments.add("1.15.2");
-
-            arguments.add("--fml.forgeGroup");
-            arguments.add("net.minecraftforge");
-
-            arguments.add("--fml.mcpVersion");
-            arguments.add("20200122.131323");
+            final ArrayList<String> arguments = new ArrayList<>(V_1_15_2.getLaunchArgs(infos, folder, authInfos));
+            if (this.getNewForgeVersionDiscriminator() == null)
+                throw new IllegalStateException("You must set an instance of NewForgeVersionDiscriminator");
+            arguments.addAll(this.getForgeArguments());
             return arguments;
         }
     };
@@ -525,7 +503,6 @@ public abstract class GameType
      * Returns the main class of the Minecraft Game Type
      *
      * @param infos The infos of the game
-     *
      * @return The main class
      */
     public abstract String getMainClass(GameInfos infos);
@@ -536,8 +513,60 @@ public abstract class GameType
      * @param infos     The infos of the game
      * @param folder    The current GameFolder
      * @param authInfos The current AuthInfos
-     *
      * @return The launch arguments
      */
     public abstract ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos);
+
+    @Nullable
+    @Override
+    public NewForgeVersionDiscriminator getNewForgeVersionDiscriminator()
+    {
+        return this.newForgeVersionDiscriminator;
+    }
+
+    /**
+     * Necessary if you want to launch a forge version 1.14.+.
+     */
+    public GameType setNewForgeVersionDiscriminator(NewForgeVersionDiscriminator newForgeVersionDiscriminator)
+    {
+        this.newForgeVersionDiscriminator = newForgeVersionDiscriminator;
+        return this;
+    }
+
+    @ModifiedByFlow
+    public static class NewForgeVersionDiscriminator
+    {
+        private final String forgeVersion;
+        private final String mcVersion;
+        private final String forgeGroup;
+        private final String mcpVersion;
+
+        public NewForgeVersionDiscriminator(String forgeVersion, String mcVersion, String forgeGroup, String mcpVersion)
+        {
+            this.forgeVersion = forgeVersion;
+            this.mcVersion    = mcVersion;
+            this.forgeGroup   = forgeGroup;
+            this.mcpVersion   = mcpVersion;
+        }
+
+        public String getForgeVersion()
+        {
+            return this.forgeVersion;
+        }
+
+        public String getMcVersion()
+        {
+            return this.mcVersion;
+        }
+
+        public String getForgeGroup()
+        {
+            return this.forgeGroup;
+        }
+
+        public String getMcpVersion()
+        {
+            return this.mcpVersion;
+        }
+    }
 }

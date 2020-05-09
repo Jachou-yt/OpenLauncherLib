@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 /**
  * Created by NeutronStars on 14/07/2017
- *
  */
 public final class JSONReader
 {
@@ -39,14 +38,14 @@ public final class JSONReader
     public JSONReader(Logger logger, BufferedReader reader) throws IOException
     {
         this.logger = logger;
-        json = load(reader);
+        json        = load(reader);
     }
 
     private String load(BufferedReader reader) throws IOException
     {
         StringBuilder builder = new StringBuilder();
 
-        while(reader.ready()) builder.append(reader.readLine());
+        while (reader.ready()) builder.append(reader.readLine());
 
         reader.close();
 
@@ -60,12 +59,11 @@ public final class JSONReader
 
     public static <E> List<E> toList(Logger logger, File file)
     {
-        if(!file.exists()) return new ArrayList<>();
+        if (!file.exists()) return new ArrayList<>();
         try
         {
             return toList(logger, new InputStreamReader(new FileInputStream(file)));
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -79,21 +77,20 @@ public final class JSONReader
 
     public static <E> List<E> toList(Logger logger, BufferedReader bufferedReader)
     {
-        List<E> list= new ArrayList<>();
+        List<E> list = new ArrayList<>();
 
         try
         {
             JSONReader reader = new JSONReader(logger, bufferedReader);
-            JSONArray array = reader.toJSONArray();
-            for(int i = 0; i < array.length(); i++)
+            JSONArray  array  = reader.toJSONArray();
+            for (int i = 0; i < array.length(); i++)
             {
                 try
                 {
-                    list.add((E) array.get(i));
-                }catch(ClassCastException ignored){}
+                    list.add((E)array.get(i));
+                } catch (ClassCastException ignored) {}
             }
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -108,12 +105,11 @@ public final class JSONReader
 
     public static <V> Map<String, V> toMap(Logger logger, File file)
     {
-        if(!file.exists()) return new HashMap<>();
+        if (!file.exists()) return new HashMap<>();
         try
         {
             return toMap(logger, new InputStreamReader(new FileInputStream(file)));
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -133,16 +129,14 @@ public final class JSONReader
         {
             JSONReader reader = new JSONReader(logger, bufferedReader);
             JSONObject object = reader.toJSONObject();
-            for(String key : object.keySet())
+            for (String key : object.keySet())
             {
                 try
                 {
-                    map.put(key, (V) object.get(key));
-                }
-                catch(ClassCastException ignored) {}
+                    map.put(key, (V)object.get(key));
+                } catch (ClassCastException ignored) {}
             }
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }

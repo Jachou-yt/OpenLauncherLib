@@ -22,7 +22,7 @@ package fr.theshark34.openlauncherlib.minecraft;
  * The Game Folder
  *
  * <p>
- *     The Game Folder contains the Minecraft folder organisation.
+ * The Game Folder contains the Minecraft folder organisation.
  * </p>
  *
  * @author Litarvan
@@ -40,22 +40,22 @@ public class GameFolder
     /**
      * The name of the folder containing the assets
      */
-    private String assetsFolder;
+    private final String assetsFolder;
 
     /**
      * The name of the folder containing the librairies
      */
-    private String libsFolder;
+    private final String libsFolder;
 
     /**
      * The name of the folder containing the natives
      */
-    private String nativesFolder;
+    private final String nativesFolder;
 
     /**
      * The name of the main jar
      */
-    private String mainJar;
+    private final String mainJar;
 
     /**
      * The Main Constructor
@@ -67,10 +67,10 @@ public class GameFolder
      */
     public GameFolder(String assetsFolder, String libsFolder, String nativesFolder, String mainJar)
     {
-        this.assetsFolder = assetsFolder;
-        this.libsFolder = libsFolder;
+        this.assetsFolder  = assetsFolder;
+        this.libsFolder    = libsFolder;
         this.nativesFolder = nativesFolder;
-        this.mainJar = mainJar;
+        this.mainJar       = mainJar;
     }
 
     /**

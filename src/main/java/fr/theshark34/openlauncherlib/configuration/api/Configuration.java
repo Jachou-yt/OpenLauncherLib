@@ -25,23 +25,19 @@ public interface Configuration
 {
     /**
      * Check if the nodes exist in the configuration.
-     * @param nodes
-     *      Key for retrieve a value in the configuration.
-     * @return
-     *      True -> if the nodes exist.
+     *
+     * @param nodes Key for retrieve a value in the configuration.
+     * @return True -> if the nodes exist.
      */
     boolean has(String... nodes);
 
     /**
      * Retrieve the value with nodes in the configuration.
-     * @param def
-     *      default value if nodes not exist.
-     * @param nodes
-     *      key for retrieve the value in the configuration.
-     * @param <T>
-     *     Type of value. <p>Warning: Can return {@link ClassCastException}</p>
-     * @return
-     *     The value with nodes or def.
+     *
+     * @param def   default value if nodes not exist.
+     * @param nodes key for retrieve the value in the configuration.
+     * @param <T>   Type of value. <p>Warning: Can return {@link ClassCastException}</p>
+     * @return The value with nodes or def.
      */
     <T> T get(T def, String... nodes);
 
@@ -50,30 +46,21 @@ public interface Configuration
      *
      * <p>Warning: This function dont save. You need call the function {@link #save()}</p>
      *
-     * @param def
-     *      default value if nodes not exist.
-     * @param nodes
-     *      key for retrieve the value in the configuration.
-     * @param <T>
-     *     Type of value. <p>Warning: Can return {@link ClassCastException}</p>
-     * @return
-     *     The value with nodes or def.
+     * @param def   default value if nodes not exist.
+     * @param nodes key for retrieve the value in the configuration.
+     * @param <T>   Type of value. <p>Warning: Can return {@link ClassCastException}</p>
+     * @return The value with nodes or def.
      */
     <T> T getOrSet(T def, String... nodes);
 
     /**
      * Retrieve the value with nodes in the configuration. If the nodes not exist then the default value is added in the configuration.
      *
-     * @param def
-     *      default value if nodes not exist.
-     * @param save
-     *      if True then save the configuration.
-     * @param nodes
-     *      key for retrieve the value in the configuration.
-     * @param <T>
-     *     Type of value. <p>Warning: Can return {@link ClassCastException}</p>
-     * @return
-     *     The value with nodes or def.
+     * @param def   default value if nodes not exist.
+     * @param save  if True then save the configuration.
+     * @param nodes key for retrieve the value in the configuration.
+     * @param <T>   Type of value. <p>Warning: Can return {@link ClassCastException}</p>
+     * @return The value with nodes or def.
      */
     <T> T getOrSet(T def, boolean save, String... nodes);
 
@@ -82,30 +69,24 @@ public interface Configuration
      *
      * <p>Warning: This function dont save. You need call the function {@link #save()}</p>
      *
-     * @param value
-     *         The new value.
-     * @param nodes
-     *         The keys in the configuration.
+     * @param value The new value.
+     * @param nodes The keys in the configuration.
      */
     void set(Object value, String... nodes);
 
     /**
      * Add new value in the configuration with the keys nodes.
      *
-     * @param value
-     *         The new value.
-     * @param save
-     *         if True then save the configuration.
-     * @param nodes
-     *         The keys in the configuration.
+     * @param value The new value.
+     * @param save  if True then save the configuration.
+     * @param nodes The keys in the configuration.
      */
     void set(Object value, boolean save, String... nodes);
 
     /**
      * Save the configuration.
      *
-     * @throws IOException
-     *          if cant save the return this exception.
+     * @throws IOException if cant save the return this exception.
      */
     void save() throws IOException;
 }

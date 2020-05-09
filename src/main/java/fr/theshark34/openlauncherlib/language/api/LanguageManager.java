@@ -39,6 +39,7 @@ public abstract class LanguageManager
 
     /**
      * Retrieve the logger.
+     *
      * @return the logger.
      */
     public Logger getLogger()
@@ -48,6 +49,7 @@ public abstract class LanguageManager
 
     /**
      * Retrieve the list of languages registered.
+     *
      * @return a {@link java.util.ArrayList} of languages.
      */
     public abstract List<Language> getLanguages();
@@ -57,10 +59,8 @@ public abstract class LanguageManager
      *
      * <p>Warning: Can return a {@link NullPointerException}</p>
      *
-     * @param name
-     *       The name of language.
-     * @return
-     *       The language by name.
+     * @param name The name of language.
+     * @return The language by name.
      */
     public abstract Language getLanguage(LanguageInfo name);
 
@@ -75,27 +75,25 @@ public abstract class LanguageManager
 
     /**
      * Check if the name is the default language.
-     * @param name
-     *      The name of language.
+     *
+     * @param name The name of language.
      * @return true -> if the name is default language.
      */
     public abstract boolean isDefaultLanguage(LanguageInfo name);
 
     /**
      * Modify the default language.
-     * @param language
-     *          The language.
+     *
+     * @param language The language.
      */
     public abstract void setDefaultLanguage(Language language);
 
     /**
      * Register a new language or if the name already exist then add of the translated by identify.
-     * @param identify
-     *          The identifier of language.
-     * @param name
-     *          The name of language.
-     * @param path
-     *          The path in the folder resource of project.
+     *
+     * @param identify The identifier of language.
+     * @param name     The name of language.
+     * @param path     The path in the folder resource of project.
      */
     public abstract void registerLanguage(LanguageInfo identify, LanguageInfo name, String path);
 }

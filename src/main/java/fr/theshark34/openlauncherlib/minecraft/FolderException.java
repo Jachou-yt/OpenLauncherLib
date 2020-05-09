@@ -24,7 +24,7 @@ import fr.theshark34.openlauncherlib.LaunchException;
  * The Folder Exception
  *
  * <p>
- *     An exception thrown when the folder is badly made.
+ * An exception thrown when the folder is badly made.
  * </p>
  *
  * @author Litarvan

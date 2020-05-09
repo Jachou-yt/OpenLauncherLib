@@ -36,11 +36,10 @@ public class DefaultConfigurationManager extends ConfigurationManager
 
     /**
      * Retrieve the configuration with path. If the file not exist the retrieve a new configuration.
-     * @param path
-     *      The path of the configuration.
+     *
+     * @param path The path of the configuration.
      * @return The configuration.
-     * @throws IOException
-     *      if the path is not valid the return this exception.
+     * @throws IOException if the path is not valid the return this exception.
      */
     @Override
     public Configuration getConfiguration(String path) throws IOException

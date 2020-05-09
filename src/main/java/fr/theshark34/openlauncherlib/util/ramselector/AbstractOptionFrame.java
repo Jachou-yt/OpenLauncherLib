@@ -24,7 +24,7 @@ import javax.swing.*;
  * The Abstract Option Frame
  *
  * <p>
- *     The base class to use with the Ram Selector to select RAM.
+ * The base class to use with the Ram Selector to select RAM.
  * </p>
  *
  * @author Litarvan
@@ -36,7 +36,7 @@ public abstract class AbstractOptionFrame extends JFrame
     /**
      * The current RAM Selector
      */
-    private RamSelector selector;
+    private final RamSelector selector;
 
     /**
      * The Abstract Option Frame
@@ -62,7 +62,6 @@ public abstract class AbstractOptionFrame extends JFrame
      * Return the selected RAM (as index of RamSelector.RAM_ARRAY)
      *
      * @return The selected RAM index
-     *
      * @see #setSelectedIndex(int)
      */
     public abstract int getSelectedIndex();
@@ -71,7 +70,6 @@ public abstract class AbstractOptionFrame extends JFrame
      * Set the selected RAM (as index of RamSelector.RAM_ARRAY)
      *
      * @param index The selected RAM index
-     *
      * @see #getSelectedIndex()
      */
     public abstract void setSelectedIndex(int index);

@@ -23,6 +23,7 @@ public interface LanguageInfo
 {
     /**
      * Retrieve the name or the identifier of language..
+     *
      * @return the name or the identifier.
      */
     String get();

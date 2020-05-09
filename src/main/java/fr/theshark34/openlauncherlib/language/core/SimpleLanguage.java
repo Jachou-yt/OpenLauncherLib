@@ -31,17 +31,19 @@ import org.json.JSONObject;
  */
 public class SimpleLanguage implements Language
 {
-    private final Configuration configuration;
+    private final Configuration   configuration;
     private final LanguageManager manager;
-    private final LanguageInfo name;
+    private final LanguageInfo    name;
 
-    public SimpleLanguage(LanguageInfo name, LanguageManager manager, LanguageInfo identify, Configuration configuration){
-        this.name = name;
-        this.manager = manager;
+    public SimpleLanguage(LanguageInfo name, LanguageManager manager, LanguageInfo identify, Configuration configuration)
+    {
+        this.name          = name;
+        this.manager       = manager;
         this.configuration = new SimpleConfiguration(manager.getLogger(), new JSONObject().put(identify.get(), configuration.get(new JSONObject())));
     }
 
-    public void registerLanguage(LanguageInfo identify, Configuration configuration){
+    public void registerLanguage(LanguageInfo identify, Configuration configuration)
+    {
         this.configuration.set(configuration.get(new JSONObject()), identify.get());
     }
 
@@ -50,34 +52,37 @@ public class SimpleLanguage implements Language
      *
      * @return the name of language.
      */
-    public String getName(){
+    public String getName()
+    {
         return name.get();
     }
 
     /**
      * Retrieve the translated by nodes and the identifier.
-     * @param identify
-     *          Main key for get the translate.
-     * @param nodes
-     *          Key in the file of the translate.
+     *
+     * @param identify Main key for get the translate.
+     * @param nodes    Key in the file of the translate.
      * @return the translated string.
      */
     @Override
-    public String get(LanguageInfo identify, String... nodes){
-        if(nodes.length == 0) return identify.get();
-        String[] buildNodes = new String[nodes.length+1];
+    public String get(LanguageInfo identify, String... nodes)
+    {
+        if (nodes.length == 0) return identify.get();
+        String[] buildNodes = new String[nodes.length + 1];
         buildNodes[0] = identify.get();
         System.arraycopy(nodes, 0, buildNodes, 1, nodes.length);
 
         StringBuilder builder = new StringBuilder();
-        for(String node : nodes) {
-            if(builder.length() == 0){
+        for (String node : nodes)
+        {
+            if (builder.length() == 0)
+            {
                 builder.append(".");
             }
             builder.append(node);
         }
 
-        if(configuration.has(buildNodes) || manager.isDefaultLanguage(name))
+        if (configuration.has(buildNodes) || manager.isDefaultLanguage(name))
             return configuration.get(builder.toString(), buildNodes);
 
         Language language = manager.getDefaultLanguage();

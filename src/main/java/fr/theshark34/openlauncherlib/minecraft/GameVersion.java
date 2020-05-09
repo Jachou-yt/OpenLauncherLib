@@ -22,7 +22,7 @@ package fr.theshark34.openlauncherlib.minecraft;
  * The Game Version
  *
  * <p>
- *     This contains the type of version, and its precise name.
+ * This contains the type of version, and its precise name.
  * </p>
  *
  * @author Litarvan
@@ -34,12 +34,12 @@ public class GameVersion
     /**
      * The name of the version
      */
-    private String name;
+    private final String name;
 
     /**
      * The type of the version
      */
-    private GameType gameType;
+    private final GameType gameType;
 
     /**
      * Basic constructor
@@ -49,7 +49,7 @@ public class GameVersion
      */
     public GameVersion(String name, GameType gameType)
     {
-        this.name = name;
+        this.name     = name;
         this.gameType = gameType;
     }
 

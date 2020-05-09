@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * The Files Util class
  *
  * <p>
- *     Contains some useful methods about the files.
+ * Contains some useful methods about the files.
  * </p>
  *
  * @author Litarvan
@@ -40,13 +40,12 @@ public class FilesUtil
      * List the sub-files and sub-directory of a given one, recursively
      *
      * @param directory The directory to list
-     *
      * @return The generated list of files
      */
     public static ArrayList<File> listRecursive(File directory)
     {
         ArrayList<File> files = new ArrayList<>();
-        File[] fs = directory.listFiles();
+        File[]          fs    = directory.listFiles();
         if (fs == null)
             return files;
 
@@ -67,7 +66,6 @@ public class FilesUtil
      *
      * @param root The root directory where the file is supposed to be
      * @param file The name of the file to get
-     *
      * @return The found file
      */
     public static File get(File root, String file)
@@ -83,7 +81,6 @@ public class FilesUtil
      * Return the given directory, but check if it is a directory
      *
      * @param d The directory to check
-     *
      * @return The given directory
      */
     public static File dir(File d)
@@ -99,9 +96,7 @@ public class FilesUtil
      *
      * @param root The directory where the other one is supposed to be
      * @param dir  The name of the directory to get
-     *
      * @return The got directory
-     *
      * @see #get(File, String)
      * @see #dir(File)
      */
@@ -115,9 +110,7 @@ public class FilesUtil
      * checks if it is a directory, and return an empty file list if listFiles returns null
      *
      * @param dir The directory to list
-     *
      * @return The files in the given directory
-     *
      * @see #dir(File)
      */
     public static File[] list(File dir)

@@ -30,7 +30,7 @@ import java.lang.reflect.Constructor;
  * The RAM Selector
  *
  * <p>
- *     A Tool to select the RAM for your project.
+ * A Tool to select the RAM for your project.
  * </p>
  *
  * @author Litarvan
@@ -76,7 +76,6 @@ public class RamSelector
      *
      * @return The displayed frame, an instance of the given
      * frame class (by default OptionFrame)
-     *
      * @see #setFrameClass(Class)
      * @see #getFrameClass()
      */
@@ -95,10 +94,9 @@ public class RamSelector
                 if (constructor == null)
                     throw new IllegalStateException("Can't load the OptionFrame class, it needs to have a constructor with just a RamSelector as argument.");
 
-                frame = (AbstractOptionFrame) constructor.newInstance(this);
+                frame = (AbstractOptionFrame)constructor.newInstance(this);
                 frame.setSelectedIndex(readRam());
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 System.err.println("[OpenLauncherLib] Can't display the Ram Selector !");
                 System.err.println(CrashReporter.makeCrashReport("OpenLauncherLib Ram Selector", e));
@@ -122,7 +120,7 @@ public class RamSelector
         int maxRam = Integer.parseInt(frame == null ? RAM_ARRAY[readRam()].replace("Go", "") : RAM_ARRAY[frame.getSelectedIndex()].replace("Go", "")) * 1024;
         int minRam = maxRam - 1024;
 
-        if(maxRam - 1024 <= 0) minRam = 128;
+        if (maxRam - 1024 <= 0) minRam = 128;
 
         return new String[]{"-Xms" + minRam + "M", "-Xmx" + maxRam + "M"};
     }
@@ -144,19 +142,16 @@ public class RamSelector
                 return Integer.parseInt(ramText);
             else
                 LogUtil.err("warn", "ram-empty");
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             System.err.println("[OpenLauncherLib] WARNING: Can't read ram : " + e);
-        }
-        finally
+        } finally
         {
             if (br != null)
                 try
                 {
                     br.close();
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     System.err.println("[OpenLauncherLib] WARNING: Can't close the file : " + e);
                 }
@@ -170,7 +165,7 @@ public class RamSelector
      */
     public void save()
     {
-	if (frame == null)
+        if (frame == null)
             return;
 
         BufferedWriter bw = null;
@@ -178,19 +173,16 @@ public class RamSelector
         {
             bw = new BufferedWriter(new FileWriter(file));
             bw.write(String.valueOf(frame.getSelectedIndex()));
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             System.err.println("[OpenLauncherLib] WARNING: Can't save ram : " + e);
-        }
-        finally
+        } finally
         {
             if (bw != null)
                 try
                 {
                     bw.close();
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     System.err.println("[OpenLauncherLib] WARNING: Can't close the file : " + e);
                 }
@@ -201,7 +193,6 @@ public class RamSelector
      * Return the file where to save the ram
      *
      * @return The file where the ram is saved
-     *
      * @see #setFile(File)
      */
     public File getFile()
@@ -213,7 +204,6 @@ public class RamSelector
      * Set the file where to save the ram
      *
      * @param file The new file where the ram is saved
-     *
      * @see #getFile()
      */
     public void setFile(File file)
@@ -225,7 +215,6 @@ public class RamSelector
      * Return the class of the selector Frame (? extends JFrame)
      *
      * @return The selector frame class
-     *
      * @see #setFrameClass(Class)
      */
     public Class<? extends JFrame> getFrameClass()
@@ -237,7 +226,6 @@ public class RamSelector
      * Set the class of the selector Frame (need to be a JFrame)
      *
      * @param frameClass The new class of the selector
-     *
      * @see #getFrameClass()
      */
     public void setFrameClass(Class<? extends AbstractOptionFrame> frameClass)

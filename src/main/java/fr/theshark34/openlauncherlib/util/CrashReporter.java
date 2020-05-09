@@ -30,7 +30,7 @@ import java.util.Date;
  * The Crash Reporter
  *
  * <p>
- *     The Crash Reporter can catch errors and save them as a crash report.
+ * The Crash Reporter can catch errors and save them as a crash report.
  * </p>
  *
  * @author Litarvan
@@ -54,12 +54,12 @@ public class CrashReporter
      * Basic constructor
      *
      * @param name The project name
-     * @param dir The directory to write the crashes
+     * @param dir  The directory to write the crashes
      */
     public CrashReporter(String name, File dir)
     {
         this.name = name;
-        this.dir = dir;
+        this.dir  = dir;
     }
 
     /**
@@ -80,8 +80,7 @@ public class CrashReporter
         {
             File report = writeError(e);
             msg = "\nThe crash report is in : " + report.getAbsolutePath() + "";
-        }
-        catch (IOException e2)
+        } catch (IOException e2)
         {
             LogUtil.err("report-error");
             e.printStackTrace();
@@ -97,15 +96,13 @@ public class CrashReporter
      * Write a stacktrace to a file
      *
      * @param e The exception
-     *
      * @return The file where the crash was saved
-     *
      * @throws IOException If it failed to write the crash
      */
     public File writeError(Exception e) throws IOException
     {
         File file;
-        int number = 0;
+        int  number = 0;
         while ((file = new File(dir, "crash-" + number + ".txt")).exists())
             number++;
 
@@ -124,6 +121,7 @@ public class CrashReporter
 
     /**
      * Return the crash directory
+     *
      * @return The crash dir
      */
     public File getDir()
@@ -133,6 +131,7 @@ public class CrashReporter
 
     /**
      * Set the directory where are the crashes
+     *
      * @param dir The crash dir
      */
     public void setDir(File dir)
@@ -142,6 +141,7 @@ public class CrashReporter
 
     /**
      * Return the reporter name
+     *
      * @return The name
      */
     public String getName()
@@ -151,6 +151,7 @@ public class CrashReporter
 
     /**
      * Set the reporter name
+     *
      * @param name The new name
      */
     public void setName(String name)
@@ -163,13 +164,12 @@ public class CrashReporter
      *
      * @param e           The exception to make the crash report
      * @param projectName The name of your project
-     *
      * @return The made crash report
      */
     public static String makeCrashReport(String projectName, Exception e)
     {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
+        Date       date       = new Date();
 
         StringBuilder report = new StringBuilder()
                 .append("# ").append(projectName).append(" Crash Report\n\r")

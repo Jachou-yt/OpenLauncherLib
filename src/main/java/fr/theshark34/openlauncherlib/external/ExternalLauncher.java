@@ -18,9 +18,9 @@
  */
 package fr.theshark34.openlauncherlib.external;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.JavaUtil;
 import fr.theshark34.openlauncherlib.LaunchException;
-import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 import fr.theshark34.openlauncherlib.util.ProcessLogManager;
 
@@ -32,7 +32,7 @@ import java.util.Arrays;
  * The External Launcher
  *
  * <p>
- *     Launch a program using java command launched by a ProcessBuilder.
+ * Launch a program using java command launched by a ProcessBuilder.
  * </p>
  *
  * @author Litarvan
@@ -70,7 +70,6 @@ public class ExternalLauncher
      * The External Launcher
      *
      * @param profile The launch profile
-     *
      * @see ExternalLaunchProfile
      */
     public ExternalLauncher(ExternalLaunchProfile profile)
@@ -83,13 +82,12 @@ public class ExternalLauncher
      *
      * @param profile        The launch profile
      * @param launchingEvent The launching event (optional)
-     *
      * @see ExternalLaunchProfile
      * @see BeforeLaunchingEvent
      */
     public ExternalLauncher(ExternalLaunchProfile profile, BeforeLaunchingEvent launchingEvent)
     {
-        this.profile = profile;
+        this.profile        = profile;
         this.launchingEvent = launchingEvent;
     }
 
@@ -115,7 +113,6 @@ public class ExternalLauncher
      * Launch the program !
      *
      * @return The created (and launched) process
-     *
      * @throws LaunchException If it failed something
      */
     @ModifiedByFlow
@@ -169,8 +166,7 @@ public class ExternalLauncher
             }
 
             return p;
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             throw new LaunchException("Cannot launch !", e);
         }
@@ -181,7 +177,6 @@ public class ExternalLauncher
      * Null by default, or the given one
      *
      * @return The set launching event
-     *
      * @see BeforeLaunchingEvent
      */
     public BeforeLaunchingEvent getLaunchingEvent()
@@ -193,7 +188,6 @@ public class ExternalLauncher
      * Set the launching event (executed just before the launching to customize the ProcessBuilder)
      *
      * @param launchingEvent The launching event to use
-     *
      * @see BeforeLaunchingEvent
      */
     public void setLaunchingEvent(BeforeLaunchingEvent launchingEvent)
@@ -205,7 +199,6 @@ public class ExternalLauncher
      * Return the given launch profile (containing all the launch information)
      *
      * @return The launch profile
-     *
      * @see ExternalLaunchProfile
      */
     public ExternalLaunchProfile getProfile()
@@ -217,7 +210,6 @@ public class ExternalLauncher
      * Set a new launch profile
      *
      * @param profile The new profile
-     *
      * @see ExternalLaunchProfile
      */
     public void setProfile(ExternalLaunchProfile profile)
