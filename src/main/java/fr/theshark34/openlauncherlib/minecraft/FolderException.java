@@ -33,7 +33,9 @@ import fr.theshark34.openlauncherlib.LaunchException;
  */
 public class FolderException extends LaunchException
 {
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * The Folder Exception
      *
      * @param message The message

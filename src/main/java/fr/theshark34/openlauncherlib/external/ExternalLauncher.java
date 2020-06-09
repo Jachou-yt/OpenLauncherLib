@@ -18,15 +18,15 @@
  */
 package fr.theshark34.openlauncherlib.external;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.JavaUtil;
 import fr.theshark34.openlauncherlib.LaunchException;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 import fr.theshark34.openlauncherlib.util.ProcessLogManager;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * The External Launcher

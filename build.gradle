@@ -2,7 +2,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "5.2.0"
 }
 
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
@@ -14,7 +14,7 @@ archivesBaseName = 'openlauncherlib'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-compileJava.options.encoding = 'Cp1252'
+compileJava.options.encoding = 'UTF-8'
 
 jar {
     from "LICENSE"
@@ -30,13 +30,10 @@ artifacts {
     archives sourcesJar
 }
 
-publishing
-        {
-            publications
-                    {
-                        mavenJava(MavenPublication)
-                                {
-                                    pom
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+                pom
                                             {
                                                 groupId = 'fr.litarvan'
                                                 version = '3.1.0-FLOWARGVERSION'
@@ -61,13 +58,6 @@ publishing
                                                                     }
                                                         }
                                             }
-                                }
-                    }
-            repositories
-                    {
-                        maven
-                                {
-                                    url "https://flowarg.github.io/maven/"
                                 }
                     }
         }

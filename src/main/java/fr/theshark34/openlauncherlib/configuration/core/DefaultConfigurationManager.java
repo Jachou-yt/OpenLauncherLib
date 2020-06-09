@@ -15,11 +15,11 @@
  */
 package fr.theshark34.openlauncherlib.configuration.core;
 
-import fr.theshark34.openlauncherlib.configuration.api.Configuration;
-import fr.theshark34.openlauncherlib.configuration.api.ConfigurationManager;
-
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import fr.theshark34.openlauncherlib.configuration.api.Configuration;
+import fr.theshark34.openlauncherlib.configuration.api.ConfigurationManager;
 
 /**
  * Default Class of ConfigurationManager.

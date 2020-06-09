@@ -18,8 +18,13 @@
  */
 package fr.theshark34.openlauncherlib.util;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 /**
  * The Splash Screen
@@ -34,8 +39,9 @@ import java.awt.*;
  */
 public class SplashScreen extends JFrame
 {
+	private static final long serialVersionUID = 1L;
 
-    /**
+	/**
      * Basic Constructor
      *
      * @param title The Window title
@@ -135,8 +141,9 @@ public class SplashScreen extends JFrame
  */
 class SplashPanel extends JPanel
 {
-
-    /**
+	private static final long serialVersionUID = 1L;
+	
+	/**
      * The splash image
      */
     private final Image image;

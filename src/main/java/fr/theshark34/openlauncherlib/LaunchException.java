@@ -31,7 +31,9 @@ package fr.theshark34.openlauncherlib;
  */
 public class LaunchException extends Exception
 {
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Normal constructor
      *
      * @param message The message

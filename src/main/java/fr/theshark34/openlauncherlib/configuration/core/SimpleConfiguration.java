@@ -15,16 +15,17 @@
  */
 package fr.theshark34.openlauncherlib.configuration.core;
 
-import fr.theshark34.openlauncherlib.configuration.api.Configuration;
-import fr.theshark34.openlauncherlib.configuration.api.json.JSONReader;
-import fr.theshark34.openlauncherlib.configuration.api.json.JSONWriter;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.json.JSONObject;
+
+import fr.theshark34.openlauncherlib.configuration.api.Configuration;
+import fr.theshark34.openlauncherlib.configuration.api.json.JSONReader;
+import fr.theshark34.openlauncherlib.configuration.api.json.JSONWriter;
 
 /**
  * Default Class of Configuration
@@ -107,7 +108,8 @@ public class SimpleConfiguration implements Configuration
      * @param <T>   Type of value. <p>Warning: Can return {@link ClassCastException}</p>
      * @return The value with nodes or def.
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public <T> T get(T def, String... nodes)
     {
         if (nodes.length == 0) return def instanceof JSONObject ? (T)object : def;

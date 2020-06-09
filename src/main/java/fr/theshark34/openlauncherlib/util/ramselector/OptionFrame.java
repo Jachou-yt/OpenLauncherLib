@@ -18,9 +18,10 @@
  */
 package fr.theshark34.openlauncherlib.util.ramselector;
 
-import fr.theshark34.openlauncherlib.util.LogUtil;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
-import javax.swing.*;
+import fr.theshark34.openlauncherlib.util.LogUtil;
 
 /**
  * The default Option Frame
@@ -35,7 +36,9 @@ import javax.swing.*;
  */
 public class OptionFrame extends AbstractOptionFrame
 {
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * The Label "RAM : "
      */
     private final JLabel ramLabel;
@@ -43,14 +46,13 @@ public class OptionFrame extends AbstractOptionFrame
     /**
      * The RAM selection combo box
      */
-    private final JComboBox ramBox;
+    private final JComboBox<?> ramBox;
 
     /**
      * The Option Frame
      *
      * @param selector The current Ram Selector
      */
-    @SuppressWarnings("unchecked")
     public OptionFrame(RamSelector selector)
     {
         super(selector);
@@ -65,7 +67,7 @@ public class OptionFrame extends AbstractOptionFrame
         ramLabel.setBounds(15, 20, 45, 25);
         this.add(ramLabel);
 
-        ramBox = new JComboBox(RamSelector.RAM_ARRAY);
+        ramBox = new JComboBox<>(RamSelector.RAM_ARRAY);
         ramBox.setBounds(65, 20, 195, 25);
         this.add(ramBox);
     }

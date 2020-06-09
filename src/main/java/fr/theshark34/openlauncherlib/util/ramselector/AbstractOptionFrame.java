@@ -18,7 +18,7 @@
  */
 package fr.theshark34.openlauncherlib.util.ramselector;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 /**
  * The Abstract Option Frame
@@ -33,7 +33,9 @@ import javax.swing.*;
  */
 public abstract class AbstractOptionFrame extends JFrame
 {
-    /**
+	private static final long serialVersionUID = 1L;
+	
+	/**
      * The current RAM Selector
      */
     private final RamSelector selector;

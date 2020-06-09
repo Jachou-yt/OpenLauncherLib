@@ -1,9 +1,11 @@
 package fr.theshark34.openlauncherlib.configuration.api.json;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Created by NeutronStars on 14/07/2017
@@ -75,7 +80,8 @@ public final class JSONReader
         return toList(logger, new BufferedReader(reader));
     }
 
-    public static <E> List<E> toList(Logger logger, BufferedReader bufferedReader)
+    @SuppressWarnings("unchecked")
+	public static <E> List<E> toList(Logger logger, BufferedReader bufferedReader)
     {
         List<E> list = new ArrayList<>();
 
@@ -121,7 +127,8 @@ public final class JSONReader
         return toMap(logger, new BufferedReader(reader));
     }
 
-    public static <V> Map<String, V> toMap(Logger logger, BufferedReader bufferedReader)
+    @SuppressWarnings("unchecked")
+	public static <V> Map<String, V> toMap(Logger logger, BufferedReader bufferedReader)
     {
         Map<String, V> map = new HashMap<>();
 

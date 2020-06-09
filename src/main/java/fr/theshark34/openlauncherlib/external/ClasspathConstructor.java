@@ -18,10 +18,10 @@
  */
 package fr.theshark34.openlauncherlib.external;
 
-import fr.theshark34.openlauncherlib.util.explorer.FileList;
-
 import java.io.File;
 import java.util.List;
+
+import fr.theshark34.openlauncherlib.util.explorer.FileList;
 
 /**
  * The Classpath Constructor

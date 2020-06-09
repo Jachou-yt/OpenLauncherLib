@@ -16,13 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the OpenLauncherLib.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openlauncherlib.minecraft;
 
-import com.sun.istack.internal.Nullable;
-import fr.flowarg.openlauncherlib.ModifiedByFlow;
+package fr.theshark34.openlauncherlib.minecraft;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
+import fr.flowarg.openlauncherlib.IForgeArgumentsProvider;
+import fr.flowarg.openlauncherlib.NewForgeVersionDiscriminator;
 
 /**
  * The Game Type
@@ -40,7 +42,6 @@ import java.util.ArrayList;
  */
 public abstract class GameType implements IForgeArgumentsProvider
 {
-    @Nullable
     private NewForgeVersionDiscriminator newForgeVersionDiscriminator;
 
     /**
@@ -61,9 +62,9 @@ public abstract class GameType implements IForgeArgumentsProvider
         }
 
         @Override
-        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+        public List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            ArrayList<String> arguments = new ArrayList<>();
+            final List<String> arguments = new ArrayList<>();
 
             arguments.add(authInfos.getUsername());
 
@@ -98,9 +99,9 @@ public abstract class GameType implements IForgeArgumentsProvider
         }
 
         @Override
-        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+        public List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            ArrayList<String> arguments = new ArrayList<>();
+        	final List<String> arguments = new ArrayList<>();
 
             arguments.add("--username=" + authInfos.getUsername());
 
@@ -148,9 +149,9 @@ public abstract class GameType implements IForgeArgumentsProvider
         }
 
         @Override
-        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+        public List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            ArrayList<String> arguments = new ArrayList<>();
+            final List<String> arguments = new ArrayList<>();
 
             arguments.add("--username=" + authInfos.getUsername());
 
@@ -207,9 +208,9 @@ public abstract class GameType implements IForgeArgumentsProvider
         }
 
         @Override
-        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+        public List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
-            ArrayList<String> arguments = new ArrayList<>();
+        	final List<String> arguments = new ArrayList<>();
 
             arguments.add("--username=" + authInfos.getUsername());
 
@@ -261,236 +262,86 @@ public abstract class GameType implements IForgeArgumentsProvider
             return arguments;
         }
     };
-
-    /**
-     * This is a workaround until a new version of the lib using versions JSON is published
-     */
-    public static final GameType V1_13_FORGE = new GameType()
+    
+    public static final GameType V1_13_HIGER_FORGE = new GameType()
     {
-        @Override
-        public String getName()
-        {
-            return "1.13 or higher with Forge";
-        }
-
-        @Override
-        public String getMainClass(GameInfos infos)
-        {
-            return "cpw.mods.modlauncher.Launcher";
-        }
-
-        @Override
-        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
-        {
-            ArrayList<String> arguments = new ArrayList<>();
-
-            arguments.add("--username=" + authInfos.getUsername());
-
-            arguments.add("--accessToken");
-            arguments.add(authInfos.getAccessToken());
-
-            if (authInfos.getClientToken() != null)
-            {
-                arguments.add("--clientToken");
-                arguments.add(authInfos.getClientToken());
-            }
-
-            arguments.add("--version");
-            arguments.add(infos.getGameVersion().getName());
-
-            arguments.add("--gameDir");
-            arguments.add(infos.getGameDir().getAbsolutePath());
-
-            arguments.add("--assetsDir");
-            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
-            arguments.add(assetsDir.getAbsolutePath());
-
-            arguments.add("--assetIndex");
-
-            arguments.add("1.13.1");
-
-            arguments.add("--userProperties");
-            arguments.add("{}");
-
-            arguments.add("--uuid");
-            arguments.add(authInfos.getUuid());
-
-            arguments.add("--userType");
-            arguments.add("legacy");
-
-            arguments.add("--launchTarget");
-            arguments.add("fmlclient");
-
-            arguments.add("--fml.forgeVersion");
-            arguments.add("25.0.219");
-
-            arguments.add("--fml.mcVersion");
-            arguments.add("1.13.2");
-
-            arguments.add("--fml.forgeGroup");
-            arguments.add("net.minecraftforge");
-
-            arguments.add("--fml.mcpVersion");
-            arguments.add("20190213.203750");
-
-            return arguments;
-        }
-    };
-
-    @ModifiedByFlow
-    public static final GameType V_1_14_4 = new GameType()
-    {
-        @Override
-        public String getName()
-        {
-            return "1.14.4";
-        }
-
-        @Override
-        public String getMainClass(GameInfos infos)
-        {
-            return "net.minecraft.client.main.Main";
-        }
-
-        @Override
-        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
-        {
-            final ArrayList<String> arguments = new ArrayList<>();
-
-            arguments.add("--username");
-            arguments.add(authInfos.getUsername());
-
-            arguments.add("--version");
-            arguments.add(infos.getGameVersion().getName());
-
-            arguments.add("--gameDir");
-            arguments.add(infos.getGameDir().getAbsolutePath());
-
-            arguments.add("--assetsDir");
-            File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
-            arguments.add(assetsDir.getAbsolutePath());
-
-            arguments.add("--assetIndex");
-            arguments.add("1.14");
-
-            arguments.add("--uuid");
-            arguments.add(authInfos.getUuid());
-
-            arguments.add("--accessToken");
-            arguments.add(authInfos.getAccessToken());
-
-            arguments.add("--userType");
-            arguments.add("mojang");
-
-            arguments.add("--versionType");
-            arguments.add("release");
-
-            return arguments;
-        }
-    };
-
-    @ModifiedByFlow
-    public static final GameType V_1_14_4_FORGE = new GameType()
-    {
-        @Override
-        public String getName()
-        {
-            return "1.14.4 with Forge";
-        }
-
-        @Override
-        public String getMainClass(GameInfos infos)
-        {
-            return "cpw.mods.modlauncher.Launcher";
-        }
-
-        @Override
-        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
-        {
-            final ArrayList<String> arguments = new ArrayList<>(V_1_14_4.getLaunchArgs(infos, folder, authInfos));
+		@Override
+		public String getName()
+		{
+			return "1.13.x or higher with Forge";
+		}
+		
+		@Override
+		public String getMainClass(GameInfos infos)
+		{
+			return "cpw.mods.modlauncher.Launcher";
+		}
+		
+		@Override
+		public List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+		{
+			final List<String> args = new ArrayList<>(getNewVanillaArguments(authInfos, folder, infos));
             if (this.getNewForgeVersionDiscriminator() == null)
                 throw new IllegalStateException("You must set an instance of NewForgeVersionDiscriminator");
-            arguments.addAll(this.getForgeArguments());
-            return arguments;
-        }
-    };
+            args.addAll(this.getForgeArguments());
+			return args;
+		}
+	};
+	
+	public static final GameType V1_13_HIGER_VANILLA = new GameType()
+	{
+		
+		@Override
+		public String getName()
+		{
+			return "1.13.x or higer";
+		}
+		
+		@Override
+		public String getMainClass(GameInfos infos)
+		{
+			return "net.minecraft.main.Main";
+		}
+		
+		@Override
+		public List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+		{
+			return getNewVanillaArguments(authInfos, folder, infos);
+		}
+	};
+	
+	private static List<String> getNewVanillaArguments(AuthInfos authInfos, GameFolder folder, GameInfos infos)
+	{
+		final List<String> arguments = new ArrayList<>();
+        arguments.add("--username");
+        arguments.add(authInfos.getUsername());
 
-    @ModifiedByFlow
-    public static final GameType V_1_15_2 = new GameType()
-    {
-        @Override
-        public String getName()
-        {
-            return "1.15.2";
-        }
+        arguments.add("--version");
+        arguments.add(infos.getGameVersion().getName());
 
-        @Override
-        public String getMainClass(GameInfos infos)
-        {
-            return "net.minecraft.client.main.Main";
-        }
+        arguments.add("--gameDir");
+        arguments.add(infos.getGameDir().getAbsolutePath());
 
-        @Override
-        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
-        {
-            final ArrayList<String> arguments = new ArrayList<>();
-            arguments.add("--username");
-            arguments.add(authInfos.getUsername());
+        arguments.add("--assetsDir");
+        final File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
+        arguments.add(assetsDir.getAbsolutePath());
 
-            arguments.add("--version");
-            arguments.add(infos.getGameVersion().getName());
+        arguments.add("--assetIndex");
+        arguments.add(infos.getGameVersion().getName().substring(0, infos.getGameVersion().getName().lastIndexOf('.') - 1));
 
-            arguments.add("--gameDir");
-            arguments.add(infos.getGameDir().getAbsolutePath());
+        arguments.add("--uuid");
+        arguments.add(authInfos.getUuid());
 
-            arguments.add("--assetsDir");
-            final File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
-            arguments.add(assetsDir.getAbsolutePath());
+        arguments.add("--accessToken");
+        arguments.add(authInfos.getAccessToken());
 
-            arguments.add("--assetIndex");
-            arguments.add("1.15");
+        arguments.add("--userType");
+        arguments.add("mojang");
 
-            arguments.add("--uuid");
-            arguments.add(authInfos.getUuid());
-
-            arguments.add("--accessToken");
-            arguments.add(authInfos.getAccessToken());
-
-            arguments.add("--userType");
-            arguments.add("mojang");
-
-            arguments.add("--versionType");
-            arguments.add("release");
-
-            return arguments;
-        }
-    };
-
-    @ModifiedByFlow
-    public static final GameType V_1_15_2_FORGE = new GameType()
-    {
-        @Override
-        public String getName()
-        {
-            return "1.15.2 with Forge";
-        }
-
-        @Override
-        public String getMainClass(GameInfos infos)
-        {
-            return "cpw.mods.modlauncher.Launcher";
-        }
-
-        @Override
-        public ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
-        {
-            final ArrayList<String> arguments = new ArrayList<>(V_1_15_2.getLaunchArgs(infos, folder, authInfos));
-            if (this.getNewForgeVersionDiscriminator() == null)
-                throw new IllegalStateException("You must set an instance of NewForgeVersionDiscriminator");
-            arguments.addAll(this.getForgeArguments());
-            return arguments;
-        }
-    };
+        arguments.add("--versionType");
+        arguments.add("release");
+		return arguments;
+	}
 
     /**
      * The name of the Game Type
@@ -515,9 +366,8 @@ public abstract class GameType implements IForgeArgumentsProvider
      * @param authInfos The current AuthInfos
      * @return The launch arguments
      */
-    public abstract ArrayList<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos);
+    public abstract List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos);
 
-    @Nullable
     @Override
     public NewForgeVersionDiscriminator getNewForgeVersionDiscriminator()
     {
@@ -531,42 +381,5 @@ public abstract class GameType implements IForgeArgumentsProvider
     {
         this.newForgeVersionDiscriminator = newForgeVersionDiscriminator;
         return this;
-    }
-
-    @ModifiedByFlow
-    public static class NewForgeVersionDiscriminator
-    {
-        private final String forgeVersion;
-        private final String mcVersion;
-        private final String forgeGroup;
-        private final String mcpVersion;
-
-        public NewForgeVersionDiscriminator(String forgeVersion, String mcVersion, String forgeGroup, String mcpVersion)
-        {
-            this.forgeVersion = forgeVersion;
-            this.mcVersion    = mcVersion;
-            this.forgeGroup   = forgeGroup;
-            this.mcpVersion   = mcpVersion;
-        }
-
-        public String getForgeVersion()
-        {
-            return this.forgeVersion;
-        }
-
-        public String getMcVersion()
-        {
-            return this.mcVersion;
-        }
-
-        public String getForgeGroup()
-        {
-            return this.forgeGroup;
-        }
-
-        public String getMcpVersion()
-        {
-            return this.mcpVersion;
-        }
     }
 }

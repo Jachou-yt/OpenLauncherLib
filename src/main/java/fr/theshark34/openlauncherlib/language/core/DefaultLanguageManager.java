@@ -15,13 +15,6 @@
  */
 package fr.theshark34.openlauncherlib.language.core;
 
-import fr.theshark34.openlauncherlib.configuration.api.Configuration;
-import fr.theshark34.openlauncherlib.configuration.api.ConfigurationManager;
-import fr.theshark34.openlauncherlib.configuration.core.SimpleConfiguration;
-import fr.theshark34.openlauncherlib.language.api.Language;
-import fr.theshark34.openlauncherlib.language.api.LanguageInfo;
-import fr.theshark34.openlauncherlib.language.api.LanguageManager;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,6 +25,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import fr.theshark34.openlauncherlib.configuration.api.Configuration;
+import fr.theshark34.openlauncherlib.configuration.api.ConfigurationManager;
+import fr.theshark34.openlauncherlib.configuration.core.SimpleConfiguration;
+import fr.theshark34.openlauncherlib.language.api.Language;
+import fr.theshark34.openlauncherlib.language.api.LanguageInfo;
+import fr.theshark34.openlauncherlib.language.api.LanguageManager;
 
 /**
  * Default Class of LanguageManager

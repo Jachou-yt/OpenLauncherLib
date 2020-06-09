@@ -66,14 +66,13 @@ public abstract class GameTweak
         {
             if (infos.getGameVersion().getGameType().equals(GameType.V1_8_HIGHER))
                 return "net.minecraftforge.fml.common.launcher.FMLTweaker";
-            else if (infos.getGameVersion().getGameType().equals(GameType.V_1_14_4_FORGE) || infos.getGameVersion().getGameType().equals(GameType.V_1_15_2_FORGE))
+            else if (infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGER_FORGE))
             {
                 LogUtil.err("no-tweak-forge");
                 System.exit(0);
                 return "";
             }
-            else
-                return "cpw.mods.fml.common.launcher.FMLTweaker";
+            else return "cpw.mods.fml.common.launcher.FMLTweaker";
         }
     };
 

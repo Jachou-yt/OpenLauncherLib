@@ -16,12 +16,13 @@
 package fr.theshark34.openlauncherlib.language.core;
 
 
+import org.json.JSONObject;
+
 import fr.theshark34.openlauncherlib.configuration.api.Configuration;
 import fr.theshark34.openlauncherlib.configuration.core.SimpleConfiguration;
 import fr.theshark34.openlauncherlib.language.api.Language;
 import fr.theshark34.openlauncherlib.language.api.LanguageInfo;
 import fr.theshark34.openlauncherlib.language.api.LanguageManager;
-import org.json.JSONObject;
 
 /**
  * Default Class of Language.

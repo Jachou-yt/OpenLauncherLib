@@ -18,14 +18,14 @@
  */
 package fr.theshark34.openlauncherlib.util;
 
-import fr.flowarg.openlauncherlib.ModifiedByFlow;
-import fr.theshark34.openlauncherlib.FailException;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.util.Properties;
+
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+import fr.theshark34.openlauncherlib.FailException;
 
 /**
  * The Saver
