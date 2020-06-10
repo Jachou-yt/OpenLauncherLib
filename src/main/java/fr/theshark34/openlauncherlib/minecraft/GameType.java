@@ -327,7 +327,7 @@ public abstract class GameType implements IForgeArgumentsProvider
         arguments.add(assetsDir.getAbsolutePath());
 
         arguments.add("--assetIndex");
-        arguments.add(infos.getGameVersion().getName().substring(0, infos.getGameVersion().getName().lastIndexOf('.') - 1));
+        arguments.add(infos.getGameVersion().getName().substring(0, infos.getGameVersion().getName().lastIndexOf('.')));
 
         arguments.add("--uuid");
         arguments.add(authInfos.getUuid());
