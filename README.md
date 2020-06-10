@@ -1,24 +1,6 @@
 ![OpenLauncherLib logo](http://image.noelshack.com/fichiers/2015/17/1429612277-oolbaniere.png)
 =====
 
-[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/Litarvan)
-
-# Launch everything you want
-
-## Internal Java Launching
-
-You can launch a Java program using the internal system. It loads some given jars, then it can launch any method from any class you want, it can be non-static, so it will use the constructor you want.
-
-```java
-List classpath = Explorer.dir("libs").files().match("^(.*\.((jar)$))*$").get();
-InternalLaunchProfile profile = new InternalLaunchProfile("fr.theshark34.MyMainClass", classpath);
-profile.launch();
-```
-
-This will launches the main(String[] args) method of the fr.theshark34.MyMainClass class, after loading all the jars in the libs folder.
-You can add a ClassInitializer, an object that will initialize the main class.
-You can also choose the method to invoke, and its parameters.
-
 ## External Java Launching
 
 You can launch a Java program using the external system. It launches directly the java program, to run a simple runnable jar with its librairies.
@@ -37,12 +19,6 @@ Process p = launcher.launch(); // throws LaunchException
 This will launch a java process with in classpath: mymainjar.jar and all the files of the libs folder.
 You can also add program/vm parameters, and a LaunchingEvent to customize the ProcessBuilder just before launching.
 
-## Any Program Launching
-
-You can run any executable or command, and then use the OpenLauncherLib tools with it.
-
-    Coming soon
-
 ## Tools
 
 There are a lot of tools that can be used before or after the program launching.
@@ -58,18 +34,6 @@ String age = saver.get("age");
 ```
 
 The data is automatically saved when you do set()
-
-### The Logger
-
-You can use the Logger to activate logging for any program you want.
-
-    Coming soon
-
-### The Process Log Manager
-
-You can use the Log Saver to save the logs to a file.
-
-    Coming soon
 
 ### The Splash Screen
 
@@ -110,9 +74,3 @@ InternalLauncher launcher = new InternalLauncher(profile);
 
 launcher.launch();
 ```
-
-### Minecraft Crash Detector
-
-The Crash Detector detects the common Minecraft crashes
-
-    Coming soon

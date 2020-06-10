@@ -6,6 +6,7 @@ apply plugin: 'java-library'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
+apply plugin: 'maven'
 
 group = 'fr.litarvan'
 version = '3.1.1-FLOWARGVERSION'
@@ -22,7 +23,7 @@ jar {
 }
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
+    classifier 'sources'
     from sourceSets.main.allSource
 }
 
@@ -33,34 +34,31 @@ artifacts {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-                pom
-                                            {
-                                                groupId = 'fr.litarvan'
-                                                version = '3.1.0-FLOWARGVERSION'
-                                                artifactId = 'openlauncherlib'
-                                                name = 'openlauncherlib'
-                                                description = 'A simple modern java launching library with minecraft support '
-                                                url = 'https://github.com/FlowArg/OpenLauncherLib'
+        	pom {
+            	groupId = project.group
+                version = project.version
+                artifactId = archivesBaseName
+                name = 'OpenLauncherLib'
+                description = 'A simple modern java launching library with minecraft support '
+                url = 'https://github.com/FlowArg/OpenLauncherLib'
 
-                                                issueManagement
-                                                        {
-                                                            system = 'github'
-                                                            url = 'https://github.com/FlowArg/OpenLauncherLib/issues'
-                                                        }
+                issueManagement {
+                 	system = 'github'
+                    url = 'https://github.com/FlowArg/OpenLauncherLib/issues'
+                }
 
-                                                licenses
-                                                        {
-                                                            license
-                                                                    {
-                                                                        name = 'LICENSE'
-                                                                        url = 'https://github.com/FlowArg/OpenLauncherLib/blob/master/LICENSE'
-                                                                        distribution = 'repo'
-                                                                    }
-                                                        }
-                                            }
-                                }
-                    }
-        }
+                licenses {
+                 	license {
+                    	name = 'LICENSE'
+						url = 'https://github.com/FlowArg/OpenLauncherLib/blob/master/LICENSE'
+                        distribution = 'repo'
+                   	}
+               	}
+			}
+		}
+   }
+}
+
 
 repositories {
     jcenter()
