@@ -300,7 +300,7 @@ public abstract class GameType implements IForgeArgumentsProvider
 		@Override
 		public String getMainClass(GameInfos infos)
 		{
-			return "net.minecraft.main.Main";
+			return "net.minecraft.client.main.Main";
 		}
 		
 		@Override
