@@ -36,6 +36,11 @@ public class GameFolder
      * The basic game folder (assets, libs, natives, minecraft.jar)
      */
     public static final GameFolder BASIC = new GameFolder("assets", "libs", "natives", "minecraft.jar");
+    
+    /**
+     * The game folder for FlowUpdater (assets, libraries, natives, client.jar)
+     */
+    public static final GameFolder FLOW_UPDATER = new GameFolder("assets", "libraries", "natives", "client.jar");
 
     /**
      * The name of the folder containing the assets

@@ -375,7 +375,7 @@ public abstract class GameType implements IForgeArgumentsProvider
     }
 
     /**
-     * Necessary if you want to launch a forge version 1.14.+.
+     * Necessary if you want to launch a forge version 1.13.+.
      */
     public GameType setNewForgeVersionDiscriminator(NewForgeVersionDiscriminator newForgeVersionDiscriminator)
     {

@@ -1,21 +1,20 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "com.jfrog.bintray" version "1.8.5"
 }
 
 apply plugin: 'java-library'
 apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'maven-publish'
-apply plugin: 'maven'
 
 group = 'fr.litarvan'
-version = '3.1.1-FLOWARGVERSION'
+version = '3.1.2-FLOWARGVERSION'
 archivesBaseName = 'openlauncherlib'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-compileJava.options.encoding = 'UTF-8'
+compileJava {
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+    options.encoding = 'UTF-8'
+}
 
 jar {
     from "LICENSE"
@@ -34,6 +33,8 @@ artifacts {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+           	from components.java
+            artifact tasks.sourcesJar
         	pom {
             	groupId = project.group
                 version = project.version
@@ -59,11 +60,30 @@ publishing {
    }
 }
 
+bintray {
+    user = System.getenv('BINTRAY_USERNAME')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['mavenJava'] 
+    pkg {
+    	repo = 'maven'
+        name = 'OpenLauncherLib'
+        userOrg = 'flowarg'
+        licenses = ['GPL-3.0']
+        publicDownloadNumbers = true
+        vcsUrl = 'https://github.com/FlowArg/OpenLauncherLib.git'
+        version {
+        	name = 'v' + project.version
+        	released = new Date()
+        	vcsTag = 'v' + project.version
+    	}
+    }
+}
+
 
 repositories {
-    jcenter()
+    jcenter() // https://jcenter.bintray.com/
 }
 
 dependencies {
-    compile 'org.json:json:20190722'
+    implementation 'org.json:json:20200518'
 }
