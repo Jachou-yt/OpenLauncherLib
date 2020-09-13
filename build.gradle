@@ -8,7 +8,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 group = 'fr.litarvan'
-version = '3.1.2-FLOWARGVERSION'
+version = '3.1.3-FLOWARGVERSION'
 archivesBaseName = 'openlauncherlib'
 
 compileJava {
@@ -81,7 +81,7 @@ bintray {
 
 
 repositories {
-    jcenter() // https://jcenter.bintray.com/
+    jcenter()
 }
 
 dependencies {

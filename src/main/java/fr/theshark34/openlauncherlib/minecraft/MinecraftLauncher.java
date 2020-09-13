@@ -66,8 +66,28 @@ public class MinecraftLauncher
 
         LogUtil.info("mc-cp");
 
-        ClasspathConstructor constructor = new ClasspathConstructor();
-        constructor.add(Explorer.dir(infos.getGameDir()).sub(folder.getLibsFolder()).allRecursive().files().match("^(.*\\.((jar)$))*$").get());
+        final ClasspathConstructor constructor = new ClasspathConstructor();
+        final List<File> libs = Explorer.dir(infos.getGameDir()).sub(folder.getLibsFolder()).allRecursive().files().match("^(.*\\.((jar)$))*$").get();
+        final List<File> toRemove = new ArrayList<>();
+        
+        libs.forEach(f -> {
+        	if(infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGER_FORGE))
+        	{
+        		if(f.getName().contains("asm"))
+        		{
+        			if(f.getName().contains("6"))
+        				toRemove.add(f);
+        		}
+        		else if(f.getName().contains("guava"))
+        		{
+        			if(f.getName().contains("20") || f.getName().contains("25"))
+        				toRemove.add(f);
+        		}
+        	}
+        });
+        
+        toRemove.forEach(libs::remove);
+        constructor.add(libs);
         constructor.add(Explorer.dir(infos.getGameDir()).get(folder.getMainJar()));
 
         String       mainClass = infos.getGameTweaks() == null || infos.getGameTweaks().length == 0 ? infos.getGameVersion().getGameType().getMainClass(infos) : GameTweak.LAUNCHWRAPPER_MAIN_CLASS;

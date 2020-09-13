@@ -382,4 +382,15 @@ public abstract class GameType implements IForgeArgumentsProvider
         this.newForgeVersionDiscriminator = newForgeVersionDiscriminator;
         return this;
     }
+    
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(obj instanceof GameType)
+		{
+			final GameType o = (GameType)obj;
+			return o.getName().equals(this.getName());
+		}
+		else return false;
+	}
 }
