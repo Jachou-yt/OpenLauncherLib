@@ -66,7 +66,7 @@ public abstract class GameTweak
         {
             if (infos.getGameVersion().getGameType().equals(GameType.V1_8_HIGHER))
                 return "net.minecraftforge.fml.common.launcher.FMLTweaker";
-            else if (infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGER_FORGE))
+            else if (infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGHER_FORGE))
             {
                 LogUtil.err("no-tweak-forge");
                 System.exit(0);

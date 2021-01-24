@@ -15,17 +15,16 @@
  */
 package fr.theshark34.openlauncherlib.configuration.core;
 
+import fr.theshark34.openlauncherlib.configuration.api.Configuration;
+import fr.theshark34.openlauncherlib.configuration.api.json.JSONReader;
+import fr.theshark34.openlauncherlib.configuration.api.json.JSONWriter;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.json.JSONObject;
-
-import fr.theshark34.openlauncherlib.configuration.api.Configuration;
-import fr.theshark34.openlauncherlib.configuration.api.json.JSONReader;
-import fr.theshark34.openlauncherlib.configuration.api.json.JSONWriter;
 
 /**
  * Default Class of Configuration

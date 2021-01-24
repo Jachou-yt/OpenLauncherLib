@@ -18,16 +18,16 @@
  */
 package fr.theshark34.openlauncherlib.minecraft;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.LaunchException;
 import fr.theshark34.openlauncherlib.external.ClasspathConstructor;
 import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 import fr.theshark34.openlauncherlib.util.explorer.Explorer;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Minecraft Launcher
@@ -71,7 +71,7 @@ public class MinecraftLauncher
         final List<File> toRemove = new ArrayList<>();
         
         libs.forEach(f -> {
-        	if(infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGER_FORGE))
+        	if(infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGHER_FORGE))
         	{
         		if(f.getName().contains("asm"))
         		{

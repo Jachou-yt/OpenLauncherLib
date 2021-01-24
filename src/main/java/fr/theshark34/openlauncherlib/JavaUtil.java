@@ -18,9 +18,9 @@
  */
 package fr.theshark34.openlauncherlib;
 
-import java.lang.reflect.Field;
-
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
+import java.lang.reflect.Field;
 
 /**
  * The Java Util

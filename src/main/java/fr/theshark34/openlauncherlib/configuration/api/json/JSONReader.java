@@ -1,11 +1,9 @@
 package fr.theshark34.openlauncherlib.configuration.api.json;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * Created by NeutronStars on 14/07/2017

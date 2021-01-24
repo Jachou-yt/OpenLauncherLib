@@ -18,15 +18,15 @@
  */
 package fr.theshark34.openlauncherlib.util;
 
-import java.util.Locale;
-import java.util.logging.Logger;
-
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.configuration.core.DefaultConfigurationManager;
 import fr.theshark34.openlauncherlib.language.api.LanguageInfo;
 import fr.theshark34.openlauncherlib.language.api.LanguageManager;
 import fr.theshark34.openlauncherlib.language.api.LanguageTypes;
 import fr.theshark34.openlauncherlib.language.core.DefaultLanguageManager;
+
+import java.util.Locale;
+import java.util.logging.Logger;
 
 /**
  * The Log Util

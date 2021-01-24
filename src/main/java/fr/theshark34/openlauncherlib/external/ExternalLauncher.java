@@ -18,15 +18,15 @@
  */
 package fr.theshark34.openlauncherlib.external;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.JavaUtil;
 import fr.theshark34.openlauncherlib.LaunchException;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 import fr.theshark34.openlauncherlib.util.ProcessLogManager;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The External Launcher
@@ -120,7 +120,7 @@ public class ExternalLauncher
     {
         LogUtil.info("hi-ext");
 
-        ProcessBuilder builder = new ProcessBuilder();
+        final ProcessBuilder builder = new ProcessBuilder();
         vmArgs.add(JavaUtil.getJavaCommand());
         vmArgs.addAll(Arrays.asList(JavaUtil.getSpecialArgs()));
 
@@ -148,7 +148,7 @@ public class ExternalLauncher
 
         builder.command(vmArgs);
 
-        StringBuilder entireCommand = new StringBuilder();
+        final StringBuilder entireCommand = new StringBuilder();
         for (String command : vmArgs)
             entireCommand.append(command).append(" ");
 
@@ -157,7 +157,7 @@ public class ExternalLauncher
 
         try
         {
-            Process p = builder.start();
+            final Process p = builder.start();
 
             if (logsEnabled)
             {

@@ -1,14 +1,9 @@
 package fr.theshark34.openlauncherlib.configuration.api.json;
 
-import java.io.BufferedWriter;
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.*;
 
 /**
  * Created by NeutronStars on 14/07/2017

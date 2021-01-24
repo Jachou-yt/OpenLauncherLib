@@ -18,10 +18,9 @@
  */
 package fr.theshark34.openlauncherlib.util.ramselector;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-
 import fr.theshark34.openlauncherlib.util.LogUtil;
+
+import javax.swing.*;
 
 /**
  * The default Option Frame

@@ -16,13 +16,12 @@
 package fr.theshark34.openlauncherlib.language.core;
 
 
-import org.json.JSONObject;
-
 import fr.theshark34.openlauncherlib.configuration.api.Configuration;
 import fr.theshark34.openlauncherlib.configuration.core.SimpleConfiguration;
 import fr.theshark34.openlauncherlib.language.api.Language;
 import fr.theshark34.openlauncherlib.language.api.LanguageInfo;
 import fr.theshark34.openlauncherlib.language.api.LanguageManager;
+import org.json.JSONObject;
 
 /**
  * Default Class of Language.
@@ -32,14 +31,14 @@ import fr.theshark34.openlauncherlib.language.api.LanguageManager;
  */
 public class SimpleLanguage implements Language
 {
-    private final Configuration   configuration;
+    private final Configuration configuration;
     private final LanguageManager manager;
-    private final LanguageInfo    name;
+    private final LanguageInfo name;
 
     public SimpleLanguage(LanguageInfo name, LanguageManager manager, LanguageInfo identify, Configuration configuration)
     {
-        this.name          = name;
-        this.manager       = manager;
+        this.name = name;
+        this.manager = manager;
         this.configuration = new SimpleConfiguration(manager.getLogger(), new JSONObject().put(identify.get(), configuration.get(new JSONObject())));
     }
 
@@ -69,24 +68,22 @@ public class SimpleLanguage implements Language
     public String get(LanguageInfo identify, String... nodes)
     {
         if (nodes.length == 0) return identify.get();
-        String[] buildNodes = new String[nodes.length + 1];
+        final String[] buildNodes = new String[nodes.length + 1];
         buildNodes[0] = identify.get();
-        System.arraycopy(nodes, 0, buildNodes, 1, nodes.length);
+        for (int i = 0; i < nodes.length; i++)
+            buildNodes[i + 1] = nodes[i];
 
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         for (String node : nodes)
         {
-            if (builder.length() == 0)
-            {
-                builder.append(".");
-            }
+            if (builder.length() == 0) builder.append(".");
             builder.append(node);
         }
 
         if (configuration.has(buildNodes) || manager.isDefaultLanguage(name))
             return configuration.get(builder.toString(), buildNodes);
 
-        Language language = manager.getDefaultLanguage();
+        final Language language = manager.getDefaultLanguage();
 
         return language != null ? language.get(identify, nodes) : builder.toString();
     }

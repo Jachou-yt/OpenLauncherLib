@@ -18,10 +18,10 @@
  */
 package fr.theshark34.openlauncherlib.util.explorer;
 
+import fr.theshark34.openlauncherlib.FailException;
+
 import java.io.File;
 import java.util.ArrayList;
-
-import fr.theshark34.openlauncherlib.FailException;
 
 /**
  * The Files Util class

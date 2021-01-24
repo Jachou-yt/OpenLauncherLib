@@ -12,12 +12,17 @@ public class NewForgeVersionDiscriminator
     /** e.g : 20200625.160719 */
     private final String mcpVersion;
 
+    public NewForgeVersionDiscriminator(String forgeVersion, String mcVersion, String mcpVersion)
+    {
+        this(forgeVersion, mcVersion, "net.minecraftforge", mcpVersion);
+    }
+
     public NewForgeVersionDiscriminator(String forgeVersion, String mcVersion, String forgeGroup, String mcpVersion)
     {
         this.forgeVersion = forgeVersion;
-        this.mcVersion    = mcVersion;
-        this.forgeGroup   = forgeGroup;
-        this.mcpVersion   = mcpVersion;
+        this.mcVersion = mcVersion;
+        this.forgeGroup = forgeGroup;
+        this.mcpVersion = mcpVersion;
     }
 
     public String getForgeVersion()

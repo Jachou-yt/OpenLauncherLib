@@ -18,7 +18,7 @@
  */
 package fr.theshark34.openlauncherlib.util.ramselector;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * The Abstract Option Frame
