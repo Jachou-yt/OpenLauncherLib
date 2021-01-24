@@ -310,6 +310,29 @@ public abstract class GameType implements IForgeArgumentsProvider
 		}
 	};
 	
+	
+	public static final GameType V1_13_HIGER_FABIC = new GameType()
+	{
+		
+		@Override
+		public String getName()
+		{
+			return "1.13.x or higer";
+		}
+		
+		@Override
+		public String getMainClass(GameInfos infos)
+		{
+			return "net.fabricmc.loader.launch.knot.KnotClient";
+		}
+		
+		@Override
+		public List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
+		{
+			return getNewVanillaArguments(authInfos, folder, infos);
+		}
+	};
+	
 	private static List<String> getNewVanillaArguments(AuthInfos authInfos, GameFolder folder, GameInfos infos)
 	{
 		final List<String> arguments = new ArrayList<>();
@@ -342,6 +365,8 @@ public abstract class GameType implements IForgeArgumentsProvider
         arguments.add("release");
 		return arguments;
 	}
+	
+	
 
     /**
      * The name of the Game Type
