@@ -317,7 +317,7 @@ public abstract class GameType implements IForgeArgumentsProvider
 		@Override
 		public String getName()
 		{
-			return "1.13.x or higer";
+			return "1.13.x or higer with Fabric";
 		}
 		
 		@Override
