@@ -1,5 +1,23 @@
-![OpenLauncherLib logo](http://image.noelshack.com/fichiers/2015/17/1429612277-oolbaniere.png)
-=====
+[version]: https://img.shields.io/maven-central/v/fr.flowarg/openlauncherlib/.svg?label=Download
+[download]: https://search.maven.org/search?q=g:%22fr.flowarg%22%20AND%20a:%22openlauncherlib%22
+
+[ ![version][] ][download]
+
+# OpenLauncherLib
+
+Add OpenLauncherLib in your dependencies :
+
+```groovy
+repositories {
+    mavenCentral()
+}
+```
+
+```groovy
+dependencies {
+    implementation 'fr.flowarg:openlauncherlib:VERSION'
+}
+```
 
 ## External Java Launching
 
@@ -63,14 +81,14 @@ There is a support for Minecraft launching, you can use these tools to create a 
 
 ### Minecraft Launcher
 
-You can use the Minecraft Launcher to create internal/external launch profile for Minecraft
+You can use the Minecraft Launcher to create external launch profile for Minecraft
 
 ```java
 GameInfos infos = new GameInfos("MyMinecraft", new GameVersion("1.7.2", GameType.V1_7_2_LOWER), new GameTweak[] {GameTweak.FORGE});
 AuthInfos authInfos = new AuthInfos("PlayerUsername", "token", "uuid");
 
-InternalLaunchProfile profile = MinecraftLauncher.createInternalProfile(infos, GameFolder.BASIC, authInfos);
-InternalLauncher launcher = new InternalLauncher(profile);
+ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.BASIC, authInfos);
+ExternalLauncher launcher = new ExternalLauncher(profile);
 
 launcher.launch();
 ```
