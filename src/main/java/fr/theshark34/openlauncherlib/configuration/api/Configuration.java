@@ -27,7 +27,7 @@ public interface Configuration
      * Check if the nodes exist in the configuration.
      *
      * @param nodes Key for retrieve a value in the configuration.
-     * @return True -> if the nodes exist.
+     * @return True: if the nodes exist.
      */
     boolean has(String... nodes);
 

@@ -47,9 +47,7 @@ public abstract class GameTweak
      * The Forge GameTweak
      * <p>
      * NOTE : IF YOU ALREADY USE :
-     * - {@link GameType#V_1_14_4_FORGE}
-     * - {@link GameType#V1_13_FORGE}
-     * - {@link GameType#V_1_15_2_FORGE}
+     * - {@link GameType#V1_13_HIGHER_FORGE}
      * DON'T ADD THE FORGE TWEAK !
      */
     @ModifiedByFlow

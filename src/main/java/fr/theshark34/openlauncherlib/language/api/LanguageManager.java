@@ -77,7 +77,7 @@ public abstract class LanguageManager
      * Check if the name is the default language.
      *
      * @param name The name of language.
-     * @return true -> if the name is default language.
+     * @return true: if the name is default language.
      */
     public abstract boolean isDefaultLanguage(LanguageInfo name);
 

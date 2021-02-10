@@ -5,8 +5,9 @@ plugins {
 apply plugin: 'java-library'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
-group = 'fr.litarvan'
+group = 'fr.flowarg'
 version = '3.1.4-FLOWARGVERSION'
 archivesBaseName = 'openlauncherlib'
 
@@ -36,8 +37,13 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
+task javadocJar(type: Jar) {
+    classifier 'javadoc'
+    from javadoc
+}
+
 artifacts {
-    archives sourcesJar
+    archives sourcesJar, javadocJar
 }
 
 publishing {
@@ -45,6 +51,8 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
             artifact tasks.sourcesJar
+            artifact tasks.javadocJar
+            
             pom {
                 groupId = project.group
                 version = project.version
@@ -58,41 +66,56 @@ publishing {
                     url = 'https://github.com/FlowArg/OpenLauncherLib/issues'
                 }
 
+                scm {
+                    connection = 'scm:git:git://github.com/FlowArg/OpenLauncherLib.git'
+                    developerConnection = 'scm:git:ssh://github.com:FlowArg/OpenLauncherLib.git'
+                    url = 'http://github.com/FlowArg/OpenLauncherLib/tree/master'
+                }
+
                 licenses {
                     license {
-                        name = 'LICENSE'
-                        url = 'https://github.com/FlowArg/OpenLauncherLib/blob/master/LICENSE'
-                        distribution = 'repo'
+                        name = 'GNU GENERAL PUBLIC LICENSE 3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.txt'
+                    }
+                    
+                    license {
+                        name = 'GNU LESSER GENERAL PUBLIC LICENSE 3.0'
+                        url = 'https://www.gnu.org/licenses/lgpl-3.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'flowarg'
+                        name = 'Flow Arg'
+                        email = 'coutureflorence3@gmail.com'
                     }
                 }
             }
         }
     }
+    
+    repositories {
+        maven {
+            credentials {
+                username ossrhUsername
+                password ossrhPassword
+            }
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = project.version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }    
 }
 
-bintray {
-    user = System.getenv('BINTRAY_USERNAME')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['mavenJava']
-    pkg {
-        repo = 'maven'
-        name = 'OpenLauncherLib'
-        userOrg = 'flowarg'
-        licenses = ['GPL-3.0']
-        publicDownloadNumbers = true
-        vcsUrl = 'https://github.com/FlowArg/OpenLauncherLib.git'
-        version {
-            name = 'v' + project.version
-            released = new Date()
-            vcsTag = 'v' + project.version
-        }
-    }
+signing {
+    sign publishing.publications.mavenJava
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    api 'org.json:json:20200518'
+    api 'org.json:json:20201115'
 }
