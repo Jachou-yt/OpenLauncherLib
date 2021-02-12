@@ -71,19 +71,27 @@ public class MinecraftLauncher
         final List<File> toRemove = new ArrayList<>();
         
         libs.forEach(f -> {
-        	if(infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGHER_FORGE))
-        	{
-        		if(f.getName().contains("asm"))
-        		{
-        			if(f.getName().contains("6"))
-        				toRemove.add(f);
-        		}
-        		else if(f.getName().contains("guava"))
-        		{
-        			if(f.getName().contains("20") || f.getName().contains("25"))
-        				toRemove.add(f);
-        		}
-        	}
+            if(infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGHER_FORGE))
+            {
+                if(f.getName().contains("asm"))
+                {
+                    if(f.getName().contains("6"))
+                        toRemove.add(f);
+                }
+                else if(f.getName().contains("guava"))
+                {
+                    if(f.getName().contains("20") || f.getName().contains("25"))
+                        toRemove.add(f);
+                }
+            }
+            else if(infos.getGameVersion().getGameType().equals(GameType.V1_7_10) && infos.getGameTweaks()[0] == GameTweak.FORGE)
+            {
+                if(f.getName().contains("guava"))
+                {
+                    if(f.getName().contains("15"))
+                        toRemove.add(f);
+                }
+            }
         });
         
         toRemove.forEach(libs::remove);
