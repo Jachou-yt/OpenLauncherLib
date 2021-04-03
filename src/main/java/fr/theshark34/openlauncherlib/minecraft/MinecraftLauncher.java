@@ -75,7 +75,7 @@ public class MinecraftLauncher
             {
                 if(f.getName().contains("asm"))
                 {
-                    if(f.getName().contains("6"))
+                    if(f.getName().contains("6") && !infos.getGameVersion().getName().contains("1.14"))
                         toRemove.add(f);
                 }
                 else if(f.getName().contains("guava"))
