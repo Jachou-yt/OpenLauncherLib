@@ -1,4 +1,4 @@
-[version]: https://img.shields.io/maven-central/v/fr.flowarg/openlauncherlib/.svg?label=Download
+[version]: https://img.shields.io/maven-central/v/fr.flowarg/openlauncherlib.svg?label=Download
 [download]: https://search.maven.org/search?q=g:%22fr.flowarg%22%20AND%20a:%22openlauncherlib%22
 
 [ ![version][] ][download]
