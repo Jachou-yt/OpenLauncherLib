@@ -84,7 +84,7 @@ public class MinecraftLauncher
                         toRemove.add(f);
                 }
             }
-            else if(infos.getGameVersion().getGameType().equals(GameType.V1_7_10) && infos.getGameTweaks()[0] == GameTweak.FORGE)
+            else if(infos.getGameVersion().getGameType().equals(GameType.V1_7_10) && infos.getGameTweaks().length > 0 && infos.getGameTweaks()[0] == GameTweak.FORGE)
             {
                 if(f.getName().contains("guava"))
                 {
