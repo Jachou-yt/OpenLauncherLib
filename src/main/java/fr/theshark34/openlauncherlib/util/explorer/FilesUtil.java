@@ -18,10 +18,16 @@
  */
 package fr.theshark34.openlauncherlib.util.explorer;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.FailException;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The Files Util class
@@ -34,6 +40,7 @@ import java.util.ArrayList;
  * @version 3.0.2-BETA
  * @since 3.0.0-BETA
  */
+@ModifiedByFlow
 public class FilesUtil
 {
     /**
@@ -42,23 +49,19 @@ public class FilesUtil
      * @param directory The directory to list
      * @return The generated list of files
      */
-    public static ArrayList<File> listRecursive(File directory)
+    public static List<Path> listRecursive(final Path directory)
     {
-        ArrayList<File> files = new ArrayList<>();
-        File[]          fs    = directory.listFiles();
-        if (fs == null)
-            return files;
+        final List<Path> files = new ArrayList<>();
+        final List<Path> fs = list(directory).collect(Collectors.toList());
 
-        for (File f : fs)
+        for (final Path f : fs)
         {
-            if (f.isDirectory())
-                files.addAll(listRecursive(f));
-
+            if (Files.isDirectory(f)) files.addAll(listRecursive(f));
             files.add(f);
         }
-
         return files;
     }
+
 
     /**
      * Get a file in a directory and checks if it is existing
@@ -68,10 +71,10 @@ public class FilesUtil
      * @param file The name of the file to get
      * @return The found file
      */
-    public static File get(File root, String file)
+    public static Path get(Path root, String file)
     {
-        File f = new File(root, file);
-        if (!f.exists())
+        final Path f = Paths.get(root.toString(), file);
+        if (Files.notExists(f))
             throw new FailException("Given file/directory doesn't exist !");
 
         return f;
@@ -83,9 +86,9 @@ public class FilesUtil
      * @param d The directory to check
      * @return The given directory
      */
-    public static File dir(File d)
+    public static Path dir(Path d)
     {
-        if (!d.isDirectory())
+        if (!Files.isDirectory(d))
             throw new FailException("Given directory is not one !");
 
         return d;
@@ -97,10 +100,10 @@ public class FilesUtil
      * @param root The directory where the other one is supposed to be
      * @param dir  The name of the directory to get
      * @return The got directory
-     * @see #get(File, String)
-     * @see #dir(File)
+     * @see #get(Path, String)
+     * @see #dir(Path)
      */
-    public static File dir(File root, String dir)
+    public static Path dir(Path root, String dir)
     {
         return dir(get(root, dir));
     }
@@ -111,12 +114,17 @@ public class FilesUtil
      *
      * @param dir The directory to list
      * @return The files in the given directory
-     * @see #dir(File)
+     * @see #dir(Path)
      */
-    public static File[] list(File dir)
+    public static Stream<Path> list(final Path dir)
     {
-        File[] files = dir(dir).listFiles();
-
-        return files == null ? new File[0] : files;
+        try
+        {
+            return Files.exists(dir) ? Files.list(dir) : Stream.empty();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new FailException(e.getMessage());
+        }
     }
 }

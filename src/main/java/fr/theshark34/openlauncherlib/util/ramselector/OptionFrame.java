@@ -18,6 +18,7 @@
  */
 package fr.theshark34.openlauncherlib.util.ramselector;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 
 import javax.swing.*;
@@ -33,14 +34,10 @@ import javax.swing.*;
  * @version 3.0.2-BETA
  * @since 3.0.0-BETA
  */
+@ModifiedByFlow
 public class OptionFrame extends AbstractOptionFrame
 {
 	private static final long serialVersionUID = 1L;
-
-	/**
-     * The Label "RAM : "
-     */
-    private final JLabel ramLabel;
 
     /**
      * The RAM selection combo box
@@ -62,7 +59,7 @@ public class OptionFrame extends AbstractOptionFrame
         this.setLocationRelativeTo(null);
         this.setLayout(null);
 
-        ramLabel = new JLabel(LogUtil.getLanguageManager().getDefaultLanguage().get(LogUtil.getIdentifier(), "ram") + " : ");
+        final JLabel ramLabel = new JLabel(LogUtil.getLanguageManager().getDefaultLanguage().get(LogUtil.getIdentifier(), "ram") + " : ");
         ramLabel.setBounds(15, 20, 45, 25);
         this.add(ramLabel);
 

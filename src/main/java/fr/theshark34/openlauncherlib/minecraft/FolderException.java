@@ -18,6 +18,7 @@
  */
 package fr.theshark34.openlauncherlib.minecraft;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.LaunchException;
 
 /**
@@ -43,5 +44,11 @@ public class FolderException extends LaunchException
     public FolderException(String message)
     {
         super(message);
+    }
+
+    @ModifiedByFlow
+    public FolderException(Throwable cause)
+    {
+        super(cause);
     }
 }

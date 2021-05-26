@@ -18,9 +18,13 @@
  */
 package fr.theshark34.openlauncherlib.util.explorer;
 
-import java.io.File;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The Explored Directory
@@ -34,19 +38,20 @@ import java.util.Arrays;
  * @version 3.0.2-BETA
  * @since 3.0.0-BETA
  */
+@ModifiedByFlow
 public class ExploredDirectory
 {
     /**
      * The current exploring directory
      */
-    protected File directory;
+    protected Path directory;
 
     /**
      * The Explored Directory
      *
      * @param directory The directory to explore
      */
-    ExploredDirectory(File directory)
+    ExploredDirectory(Path directory)
     {
         this.directory = directory;
     }
@@ -71,7 +76,7 @@ public class ExploredDirectory
      */
     public FileList list()
     {
-        return new FileList(Arrays.asList(FilesUtil.list(this.directory)));
+        return new FileList(FilesUtil.list(this.directory).collect(Collectors.toList()));
     }
 
     /**
@@ -91,7 +96,7 @@ public class ExploredDirectory
      * @param file The file to get
      * @return The got file
      */
-    public File get(String file)
+    public Path get(String file)
     {
         return FilesUtil.get(this.directory, file);
     }
@@ -104,11 +109,11 @@ public class ExploredDirectory
      */
     public FileList subs()
     {
-        File[]          files = FilesUtil.list(this.directory);
-        ArrayList<File> dirs  = new ArrayList<>();
+        final List<Path> files = FilesUtil.list(this.directory).collect(Collectors.toList());
+        final List<Path> dirs  = new ArrayList<>();
 
-        for (File f : files)
-            if (f.isDirectory())
+        for (Path f : files)
+            if (Files.isDirectory(f))
                 dirs.add(f);
 
         return new FileList(dirs);
@@ -121,22 +126,22 @@ public class ExploredDirectory
      */
     public FileList files()
     {
-        File[]          files = FilesUtil.list(this.directory);
-        ArrayList<File> fs    = new ArrayList<>();
+        List<Path> files = FilesUtil.list(this.directory).collect(Collectors.toList());
+        List<Path> fs = new ArrayList<>();
 
-        for (File f : files)
-            if (!f.isDirectory())
+        for (Path f : files)
+            if (!Files.isDirectory(f))
                 fs.add(f);
 
         return new FileList(fs);
     }
 
     /**
-     * Return this directory as a {@link File}
+     * Return this directory as a {@link Path}
      *
-     * @return This, as {@link File}
+     * @return This, as {@link Path}
      */
-    public File get()
+    public Path get()
     {
         return directory;
     }

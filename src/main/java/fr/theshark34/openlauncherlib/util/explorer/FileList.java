@@ -18,7 +18,10 @@
  */
 package fr.theshark34.openlauncherlib.util.explorer;
 
-import java.io.File;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,12 +39,13 @@ import java.util.List;
  * @version 3.0.2-BETA
  * @since 3.0.0-BETA
  */
+@ModifiedByFlow
 public class FileList
 {
     /**
      * The file list
      */
-    protected List<File> files;
+    protected List<Path> files;
 
     /**
      * The File List, empty
@@ -56,7 +60,7 @@ public class FileList
      *
      * @param files The files
      */
-    public FileList(List<File> files)
+    public FileList(List<Path> files)
     {
         this.files = files;
     }
@@ -66,7 +70,7 @@ public class FileList
      *
      * @param files The files to add
      */
-    public void add(File... files)
+    public void add(Path... files)
     {
         this.add(Arrays.asList(files));
     }
@@ -76,7 +80,7 @@ public class FileList
      *
      * @param files The list of files to add
      */
-    public void add(List<File> files)
+    public void add(List<Path> files)
     {
         this.files.addAll(files);
     }
@@ -100,10 +104,10 @@ public class FileList
      */
     public FileList match(String regex)
     {
-        ArrayList<File> matching = new ArrayList<>();
+        List<Path> matching = new ArrayList<>();
 
-        for (File f : files)
-            if (f.getName().matches(regex))
+        for (Path f : files)
+            if (f.toString().matches(regex))
                 matching.add(f);
 
         return new FileList(matching);
@@ -117,10 +121,10 @@ public class FileList
      */
     public FileList dirs()
     {
-        ArrayList<File> dirs = new ArrayList<>();
+        List<Path> dirs = new ArrayList<>();
 
-        for (File f : files)
-            if (f.isDirectory())
+        for (Path f : files)
+            if (Files.isDirectory(f))
                 dirs.add(f);
 
         return new FileList(dirs);
@@ -134,10 +138,10 @@ public class FileList
      */
     public FileList files()
     {
-        ArrayList<File> files = new ArrayList<>();
+        List<Path> files = new ArrayList<>();
 
-        for (File f : this.files)
-            if (!f.isDirectory())
+        for (Path f : this.files)
+            if (!Files.isDirectory(f))
                 files.add(f);
 
         return new FileList(files);
@@ -148,7 +152,7 @@ public class FileList
      *
      * @return This, as {@link List}
      */
-    public List<File> get()
+    public List<Path> get()
     {
         return files;
     }

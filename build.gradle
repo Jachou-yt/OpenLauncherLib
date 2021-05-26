@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = 'fr.flowarg'
-version = '3.1.7'
+version = '3.2.0'
 archivesBaseName = 'openlauncherlib'
 
 compileJava {
@@ -97,9 +97,7 @@ publishing {
                 username ossrhUsername
                 password ossrhPassword
             }
-            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-            url = project.version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
         }
     }    
 }
@@ -113,5 +111,5 @@ repositories {
 }
 
 dependencies {
-    api 'org.json:json:20201115'
+    api 'org.json:json:20210307'
 }

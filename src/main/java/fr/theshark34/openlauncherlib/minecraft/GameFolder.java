@@ -18,6 +18,8 @@
  */
 package fr.theshark34.openlauncherlib.minecraft;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
 /**
  * The Game Folder
  *
@@ -29,6 +31,7 @@ package fr.theshark34.openlauncherlib.minecraft;
  * @version 3.0.2-BETA
  * @since 2.0.0-SNAPSHOT
  */
+@ModifiedByFlow
 public class GameFolder
 {
 

@@ -15,14 +15,17 @@
  */
 package fr.theshark34.openlauncherlib.configuration.core;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.configuration.api.Configuration;
 import fr.theshark34.openlauncherlib.configuration.api.json.JSONReader;
 import fr.theshark34.openlauncherlib.configuration.api.json.JSONWriter;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +35,7 @@ import java.util.logging.Logger;
  * @author NeutronStars.
  * @version 1.0.0
  */
+@ModifiedByFlow
 public class SimpleConfiguration implements Configuration
 {
     /**
@@ -42,7 +46,7 @@ public class SimpleConfiguration implements Configuration
     /**
      * File of the configuration
      */
-    private final File file;
+    private final Path file;
 
     /**
      * The data in the configuration.
@@ -51,22 +55,20 @@ public class SimpleConfiguration implements Configuration
 
     SimpleConfiguration(Logger logger, String path) throws IOException
     {
-        this(logger, new File(path));
+        this(logger, Paths.get(path));
     }
 
-    private SimpleConfiguration(Logger logger, File file) throws IOException
+    private SimpleConfiguration(Logger logger, Path file) throws IOException
     {
-        this.file   = file;
+        this.file = file;
         this.logger = logger;
-        if (this.file.exists())
-            this.object = new JSONReader(logger, file).toJSONObject();
-        else
-            this.object = new JSONObject();
+        if (Files.exists(this.file)) this.object = new JSONReader(logger, file).toJSONObject();
+        else this.object = new JSONObject();
     }
 
     public SimpleConfiguration(Logger logger, BufferedReader reader) throws IOException
     {
-        this.file   = null;
+        this.file = null;
         this.logger = logger;
         this.object = new JSONReader(logger, reader).toJSONObject();
     }
@@ -74,7 +76,7 @@ public class SimpleConfiguration implements Configuration
     public SimpleConfiguration(Logger logger, JSONObject object)
     {
         this.object = object;
-        this.file   = null;
+        this.file = null;
         this.logger = logger;
     }
 
@@ -239,7 +241,7 @@ public class SimpleConfiguration implements Configuration
         {
             try
             {
-                save();
+                this.save();
             } catch (IOException e)
             {
                 logger.log(Level.SEVERE, e.getMessage(), e);

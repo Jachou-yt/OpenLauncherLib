@@ -21,6 +21,8 @@ package fr.theshark34.openlauncherlib;
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
 
 import java.lang.reflect.Field;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * The Java Util
@@ -70,11 +72,12 @@ public class JavaUtil
     {
         if (javaCommand == null)
         {
+            final Path java = Paths.get(System.getProperty("java.home"), "bin", "java");
             if (System.getProperty("os.name").toLowerCase().contains("win"))
-                return "\"" + System.getProperty("java.home") + "\\bin\\java" + "\"";
-            else return System.getProperty("java.home") + "/bin/java";
+                javaCommand = "\"" + java + "\"";
+            else javaCommand = java.toString();
         }
-        else return javaCommand;
+        return javaCommand;
     }
 
     /**

@@ -27,6 +27,7 @@ import fr.theshark34.openlauncherlib.util.ProcessLogManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * The External Launcher
@@ -64,7 +65,7 @@ public class ExternalLauncher
      * Vm arguments
      */
     @ModifiedByFlow
-    private ArrayList<String> vmArgs = new ArrayList<>();
+    private List<String> vmArgs = new ArrayList<>();
 
     /**
      * The External Launcher
@@ -138,7 +139,7 @@ public class ExternalLauncher
             vmArgs.addAll(profile.getArgs());
 
         if (profile.getDirectory() != null)
-            builder.directory(profile.getDirectory());
+            builder.directory(profile.getDirectory().toFile());
 
         if (profile.isRedirectErrorStream())
             builder.redirectErrorStream(true);
@@ -218,13 +219,13 @@ public class ExternalLauncher
     }
 
     @ModifiedByFlow
-    public ArrayList<String> getVmArgs()
+    public List<String> getVmArgs()
     {
         return vmArgs;
     }
 
     @ModifiedByFlow
-    public void setVmArgs(ArrayList<String> vmArgs)
+    public void setVmArgs(List<String> vmArgs)
     {
         this.vmArgs = vmArgs;
     }

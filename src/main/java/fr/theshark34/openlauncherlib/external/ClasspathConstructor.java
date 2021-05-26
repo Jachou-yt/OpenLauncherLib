@@ -21,6 +21,7 @@ package fr.theshark34.openlauncherlib.external;
 import fr.theshark34.openlauncherlib.util.explorer.FileList;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public class ClasspathConstructor extends FileList
      *
      * @param classPath The files to add
      */
-    public ClasspathConstructor(List<File> classPath)
+    public ClasspathConstructor(List<Path> classPath)
     {
         super(classPath);
     }
@@ -66,7 +67,7 @@ public class ClasspathConstructor extends FileList
         final StringBuilder classPath = new StringBuilder();
 
         for (int i = 0; i < this.files.size(); i++)
-             classPath.append(files.get(i).getAbsolutePath()).append(i + 1 == files.size() ? "" : File.pathSeparator);
+             classPath.append(files.get(i).toString()).append(i + 1 == files.size() ? "" : File.pathSeparator);
 
         return classPath.toString();
     }

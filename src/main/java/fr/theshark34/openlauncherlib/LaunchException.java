@@ -18,6 +18,8 @@
  */
 package fr.theshark34.openlauncherlib;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
 /**
  * The Launch Exception
  *
@@ -52,5 +54,11 @@ public class LaunchException extends Exception
     public LaunchException(String message, Throwable cause)
     {
         super(message, cause);
+    }
+
+    @ModifiedByFlow
+    public LaunchException(Throwable cause)
+    {
+        super(cause);
     }
 }

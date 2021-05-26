@@ -15,7 +15,7 @@
  */
 package fr.theshark34.openlauncherlib.language.core;
 
-
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.configuration.api.Configuration;
 import fr.theshark34.openlauncherlib.configuration.core.SimpleConfiguration;
 import fr.theshark34.openlauncherlib.language.api.Language;
@@ -64,14 +64,14 @@ public class SimpleLanguage implements Language
      * @param nodes    Key in the file of the translate.
      * @return the translated string.
      */
+    @ModifiedByFlow
     @Override
     public String get(LanguageInfo identify, String... nodes)
     {
         if (nodes.length == 0) return identify.get();
         final String[] buildNodes = new String[nodes.length + 1];
         buildNodes[0] = identify.get();
-        for (int i = 0; i < nodes.length; i++)
-            buildNodes[i + 1] = nodes[i];
+        System.arraycopy(nodes, 0, buildNodes, 1, nodes.length);
 
         final StringBuilder builder = new StringBuilder();
         for (String node : nodes)

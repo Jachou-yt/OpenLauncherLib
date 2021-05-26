@@ -18,7 +18,10 @@
  */
 package fr.theshark34.openlauncherlib.util.explorer;
 
-import java.io.File;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * The Explorer
@@ -42,6 +45,7 @@ import java.io.File;
  * @see ExploredDirectory
  * @since 3.0.0-BETA
  */
+@ModifiedByFlow
 public class Explorer extends ExploredDirectory
 {
     /**
@@ -49,7 +53,7 @@ public class Explorer extends ExploredDirectory
      *
      * @param directory The directory to explore
      */
-    public Explorer(File directory)
+    public Explorer(Path directory)
     {
         super(directory);
     }
@@ -59,7 +63,7 @@ public class Explorer extends ExploredDirectory
      *
      * @param cd The directory to explore
      */
-    public void cd(File cd)
+    public void cd(Path cd)
     {
         this.directory = cd;
     }
@@ -82,7 +86,7 @@ public class Explorer extends ExploredDirectory
      */
     public static ExploredDirectory dir(String dir)
     {
-        return dir(new File(dir));
+        return dir(Paths.get(dir));
     }
 
     /**
@@ -91,7 +95,7 @@ public class Explorer extends ExploredDirectory
      * @param dir The directory to explore
      * @return An {@link ExploredDirectory} object
      */
-    public static ExploredDirectory dir(File dir)
+    public static ExploredDirectory dir(Path dir)
     {
         return new ExploredDirectory(FilesUtil.dir(dir));
     }

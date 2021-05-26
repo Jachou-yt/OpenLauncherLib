@@ -103,8 +103,8 @@ public final class LogUtil
             builder.append(" ").append(LANGUAGE_MANAGER.getDefaultLanguage().get(IDENTIFIER, node));
         }
 
-        if (err) System.err.println(builder.toString());
-        else System.out.println(builder.toString());
+        if (err) System.err.println(builder);
+        else System.out.println(builder);
     }
 
     /**

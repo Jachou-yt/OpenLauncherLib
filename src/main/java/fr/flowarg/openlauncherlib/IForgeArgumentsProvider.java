@@ -13,18 +13,18 @@ public interface IForgeArgumentsProvider
         arguments.add("fmlclient");
 
         arguments.add("--fml.forgeVersion");
-        arguments.add(this.getNewForgeVersionDiscriminator().getForgeVersion());
+        arguments.add(this.getNFVD().getForgeVersion());
 
         arguments.add("--fml.mcVersion");
-        arguments.add(this.getNewForgeVersionDiscriminator().getMcVersion());
+        arguments.add(this.getNFVD().getMcVersion());
 
         arguments.add("--fml.forgeGroup");
-        arguments.add(this.getNewForgeVersionDiscriminator().getForgeGroup());
+        arguments.add(this.getNFVD().getForgeGroup());
 
         arguments.add("--fml.mcpVersion");
-        arguments.add(this.getNewForgeVersionDiscriminator().getMcpVersion());
+        arguments.add(this.getNFVD().getMcpVersion());
         return arguments;
     }
 
-    NewForgeVersionDiscriminator getNewForgeVersionDiscriminator();
+    NewForgeVersionDiscriminator getNFVD();
 }

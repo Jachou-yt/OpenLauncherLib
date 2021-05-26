@@ -18,7 +18,11 @@
  */
 package fr.theshark34.openlauncherlib.util;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * The Process Log Manager
@@ -46,7 +50,7 @@ public class ProcessLogManager extends Thread
     /**
      * The file where to write the logs (optional)
      */
-    private File toWrite;
+    private Path toWrite;
 
     /**
      * The writer to write the logs
@@ -60,7 +64,7 @@ public class ProcessLogManager extends Thread
      */
     public ProcessLogManager(InputStream input)
     {
-        this(input, null);
+        this(input, (Path)null);
     }
 
     /**
@@ -69,55 +73,70 @@ public class ProcessLogManager extends Thread
      * @param input   The input where to read the logs
      * @param toWrite The files where to write the logs (optional)
      */
+    @Deprecated
     public ProcessLogManager(InputStream input, File toWrite)
     {
-        this.reader  = new BufferedReader(new InputStreamReader(input));
+        this(input, toWrite.toPath());
+    }
+
+    /**
+     * Complete constructor
+     *
+     * @param input   The input where to read the logs
+     * @param toWrite The files where to write the logs (optional)
+     */
+    public ProcessLogManager(InputStream input, Path toWrite)
+    {
+        this.reader = new BufferedReader(new InputStreamReader(input));
         this.toWrite = toWrite;
 
-        if (toWrite != null)
+        if (this.toWrite != null)
+        {
             try
             {
-                this.writer = new BufferedWriter(new FileWriter(toWrite));
+                this.writer = Files.newBufferedWriter(this.toWrite);
             } catch (IOException e)
             {
                 LogUtil.err("log-err", e.toString());
             }
+        }
     }
 
+    @ModifiedByFlow
     @Override
     public void run()
     {
         String line;
         try
         {
-            while ((line = reader.readLine()) != null)
+            while ((line = this.reader.readLine()) != null)
             {
-                if (print)
-                    System.out.println(line);
+                if (this.print) System.out.printf("%s\n", line);
 
-                if (writer != null)
+                if (this.writer != null)
                     try
                     {
-                        writer.write(line + "\n");
+                        this.writer.write(line + "\n");
                     } catch (IOException e)
                     {
                         LogUtil.err("log-err", e.toString());
                     }
             }
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             LogUtil.err("log-end", e.toString());
 
             this.interrupt();
         }
 
-        if (writer != null)
+        if (this.writer != null)
+        {
             try
             {
-                writer.close();
-            } catch (IOException ignored)
-            {
-            }
+                this.writer.close();
+            } catch (IOException ignored) {}
+        }
     }
 
     /**
@@ -127,7 +146,7 @@ public class ProcessLogManager extends Thread
      */
     public boolean isPrint()
     {
-        return print;
+        return this.print;
     }
 
     /**
@@ -145,9 +164,9 @@ public class ProcessLogManager extends Thread
      *
      * @return The file where are written the logs
      */
-    public File getToWrite()
+    public Path getToWrite()
     {
-        return toWrite;
+        return this.toWrite;
     }
 
     /**
@@ -155,7 +174,7 @@ public class ProcessLogManager extends Thread
      *
      * @param toWrite The new file
      */
-    public void setToWrite(File toWrite)
+    public void setToWrite(Path toWrite)
     {
         this.toWrite = toWrite;
     }

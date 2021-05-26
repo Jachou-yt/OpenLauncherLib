@@ -20,9 +20,10 @@
 package fr.theshark34.openlauncherlib.minecraft;
 
 import fr.flowarg.openlauncherlib.IForgeArgumentsProvider;
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.flowarg.openlauncherlib.NewForgeVersionDiscriminator;
 
-import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +41,10 @@ import java.util.List;
  * @version 3.0.4
  * @since 2.0.0-SNAPSHOT
  */
+@ModifiedByFlow
 public abstract class GameType implements IForgeArgumentsProvider
 {
-    private NewForgeVersionDiscriminator newForgeVersionDiscriminator;
+    private NewForgeVersionDiscriminator nfvd;
 
     /**
      * The 1.5.2 or Lower game type
@@ -71,10 +73,10 @@ public abstract class GameType implements IForgeArgumentsProvider
             arguments.add("token:" + authInfos.getAccessToken() + ":" + authInfos.getUuid());
 
             arguments.add("--gameDir");
-            arguments.add(infos.getGameDir().getAbsolutePath());
+            arguments.add(infos.getGameDir().toString());
 
             arguments.add("--assetsDir");
-            arguments.add(new File(infos.getGameDir(), folder.getAssetsFolder()).getAbsolutePath() + "/virtual/legacy/");
+            arguments.add(Paths.get(infos.getGameDir().toString(), folder.getAssetsFolder(), "virtual", "legacy").toString());
 
             return arguments;
         }
@@ -111,10 +113,10 @@ public abstract class GameType implements IForgeArgumentsProvider
             arguments.add(infos.getGameVersion().getName());
 
             arguments.add("--gameDir");
-            arguments.add(infos.getGameDir().getAbsolutePath());
+            arguments.add(infos.getGameDir().toString());
 
             arguments.add("--assetsDir");
-            arguments.add(new File(infos.getGameDir(), folder.getAssetsFolder()).getAbsolutePath() + "/virtual/legacy/");
+            arguments.add(Paths.get(infos.getGameDir().toString(), folder.getAssetsFolder(), "virtual", "legacy").toString());
 
             arguments.add("--userProperties");
             arguments.add("{}");
@@ -195,18 +197,12 @@ public abstract class GameType implements IForgeArgumentsProvider
         public List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos)
         {
             final List<String> args = new ArrayList<>(getNewVanillaArguments(authInfos, folder, infos));
-            if (this.getNewForgeVersionDiscriminator() == null)
-                throw new IllegalStateException("You must set an instance of NewForgeVersionDiscriminator");
+            if (this.getNFVD() == null)
+                throw new IllegalStateException("You must set an instance of NewForgeVersionDiscriminator (NFVD)");
             args.addAll(this.getForgeArguments());
             return args;
         }
     };
-
-    /**
-     * @deprecated Use {@link GameType#V1_13_HIGHER_FORGE} instead.
-     */
-    @Deprecated
-    public static final GameType V1_13_HIGER_FORGE = V1_13_HIGHER_FORGE;
 
     public static final GameType V1_13_HIGHER_VANILLA = new GameType()
     {
@@ -228,12 +224,6 @@ public abstract class GameType implements IForgeArgumentsProvider
             return getNewVanillaArguments(authInfos, folder, infos);
         }
     };
-
-    /**
-     * @deprecated Use {@link GameType#V1_13_HIGHER_VANILLA} instead.
-     */
-    @Deprecated
-    public static final GameType V1_13_HIGER_VANILLA = V1_13_HIGHER_VANILLA;
     
     public static final GameType FABRIC = new GameType()
     {
@@ -275,10 +265,10 @@ public abstract class GameType implements IForgeArgumentsProvider
         arguments.add(infos.getGameVersion().getName());
 
         arguments.add("--gameDir");
-        arguments.add(infos.getGameDir().getAbsolutePath());
+        arguments.add(infos.getGameDir().toString());
 
         arguments.add("--assetsDir");
-        arguments.add(new File(infos.getGameDir(), folder.getAssetsFolder()).getAbsolutePath());
+        arguments.add(Paths.get(infos.getGameDir().toString(), folder.getAssetsFolder()).toString());
 
         arguments.add("--assetIndex");
         arguments.add(getAssetIndex(type, infos.getGameVersion()));
@@ -305,11 +295,10 @@ public abstract class GameType implements IForgeArgumentsProvider
         arguments.add(infos.getGameVersion().getName());
 
         arguments.add("--gameDir");
-        arguments.add(infos.getGameDir().getAbsolutePath());
+        arguments.add(infos.getGameDir().toString());
 
         arguments.add("--assetsDir");
-        final File assetsDir = new File(infos.getGameDir(), folder.getAssetsFolder());
-        arguments.add(assetsDir.getAbsolutePath());
+        arguments.add(Paths.get(infos.getGameDir().toString(), folder.getAssetsFolder()).toString());
 
         arguments.add("--assetIndex");
         arguments.add(infos.getGameVersion().getName().substring(0, infos.getGameVersion().getName().lastIndexOf('.')));
@@ -354,17 +343,28 @@ public abstract class GameType implements IForgeArgumentsProvider
     public abstract List<String> getLaunchArgs(GameInfos infos, GameFolder folder, AuthInfos authInfos);
 
     @Override
-    public NewForgeVersionDiscriminator getNewForgeVersionDiscriminator()
+    public NewForgeVersionDiscriminator getNFVD()
     {
-        return this.newForgeVersionDiscriminator;
+        return this.nfvd;
+    }
+
+    /**
+     * Necessary if you want to launch a forge version 1.13.+.
+     * @deprecated use {@link #setNFVD(NewForgeVersionDiscriminator)} instead.
+     */
+    @Deprecated
+    public GameType setNewForgeVersionDiscriminator(NewForgeVersionDiscriminator nfvd)
+    {
+        this.nfvd = nfvd;
+        return this;
     }
 
     /**
      * Necessary if you want to launch a forge version 1.13.+.
      */
-    public GameType setNewForgeVersionDiscriminator(NewForgeVersionDiscriminator newForgeVersionDiscriminator)
+    public GameType setNFVD(NewForgeVersionDiscriminator nfvd)
     {
-        this.newForgeVersionDiscriminator = newForgeVersionDiscriminator;
+        this.nfvd = nfvd;
         return this;
     }
 

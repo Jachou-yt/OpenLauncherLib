@@ -18,11 +18,14 @@
  */
 package fr.theshark34.openlauncherlib.minecraft;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Game Infos
@@ -35,6 +38,7 @@ import java.util.ArrayList;
  * @version 3.0.4
  * @since 2.0.0-SNAPSHOT
  */
+@ModifiedByFlow
 public class GameInfos
 {
     /**
@@ -45,7 +49,7 @@ public class GameInfos
     /**
      * The Game Directory
      */
-    private final File gameDir;
+    private final Path gameDir;
 
     /**
      * The current tweaks (Shader, Optifine, Forge, or just Vanilla)
@@ -66,7 +70,19 @@ public class GameInfos
      */
     public GameInfos(String serverName, GameVersion gameVersion, GameTweak[] tweaks)
     {
-        this(serverName, GameDirGenerator.createGameDir(serverName), gameVersion, tweaks);
+        this(serverName, GameDirGenerator.createGameDir(serverName, false), gameVersion, tweaks);
+    }
+
+    /**
+     * Basic constructor
+     *
+     * @param serverName  The server name
+     * @param gameVersion The Game Version containing the launch informations
+     * @param tweaks      The current tweaks (Shader, Optifine, Forge, or just Vanilla)
+     */
+    public GameInfos(String serverName, boolean inLinuxLocalShare, GameVersion gameVersion, GameTweak[] tweaks)
+    {
+        this(serverName, GameDirGenerator.createGameDir(serverName, inLinuxLocalShare), gameVersion, tweaks);
     }
 
     /**
@@ -77,24 +93,41 @@ public class GameInfos
      * @param gameVersion The Game Version containing the launch informations
      * @param tweaks      The current tweaks (Shader, Optifine, Forge, or just Vanilla)
      */
+    @Deprecated
     public GameInfos(String serverName, File gameDir, GameVersion gameVersion, GameTweak[] tweaks)
     {
-        this.serverName  = serverName;
-        this.gameDir     = gameDir;
+        this(serverName, gameDir.toPath(), gameVersion, tweaks);
+    }
+
+    /**
+     * Advanced constructor
+     *
+     * @param serverName  The server name
+     * @param gameDir     The game directory
+     * @param gameVersion The Game Version containing the launch informations
+     * @param tweaks      The current tweaks (Shader, Optifine, Forge, or just Vanilla)
+     */
+    public GameInfos(String serverName, Path gameDir, GameVersion gameVersion, GameTweak[] tweaks)
+    {
+        this.serverName = serverName;
+        this.gameDir = gameDir;
         this.gameVersion = gameVersion;
-        this.tweaks      = tweaks;
+        this.tweaks = tweaks;
 
         if (tweaks != null)
         {
-            boolean forge            = false;
+            boolean forge = false;
             boolean shaderOrOptifine = false;
             if (gameVersion.getGameType() == GameType.V1_13_HIGHER_FORGE)
+            {
                 if (tweaks.length == 1 && tweaks[0] == GameTweak.FORGE)
                     tweaks = new GameTweak[0];
                 else if (tweaks.length != 0)
                     LogUtil.info("tweak-deprec");
+            }
 
             for (GameTweak tweak : tweaks)
+            {
                 if (tweak.equals(GameTweak.FORGE))
                 {
                     if (gameVersion.getGameType() == GameType.V1_5_2_LOWER)
@@ -103,9 +136,8 @@ public class GameInfos
                     forge = true;
                 }
                 else if (tweak == GameTweak.OPTIFINE || tweak == GameTweak.SHADER)
-                {
                     shaderOrOptifine = true;
-                }
+            }
 
             if (forge || gameVersion.getGameType() == GameType.V1_13_HIGHER_FORGE)
                 LogUtil.info("support-forge");
@@ -117,13 +149,13 @@ public class GameInfos
             {
                 LogUtil.info("forge-optifine");
 
-                ArrayList<GameTweak> tweakList = new ArrayList<>();
+                final List<GameTweak> tweakList = new ArrayList<>();
 
                 for (GameTweak tweak : tweaks)
                     if (tweak != GameTweak.OPTIFINE && tweak != GameTweak.SHADER)
                         tweakList.add(tweak);
 
-                this.tweaks = tweakList.toArray(new GameTweak[tweakList.size()]);
+                this.tweaks = tweakList.toArray(new GameTweak[0]);
             }
         }
     }
@@ -143,7 +175,7 @@ public class GameInfos
      *
      * @return The Game Directory
      */
-    public File getGameDir()
+    public Path getGameDir()
     {
         return this.gameDir;
     }

@@ -1,10 +1,15 @@
 package fr.theshark34.openlauncherlib.configuration.api.json;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +20,7 @@ import java.util.logging.Logger;
 /**
  * Created by NeutronStars on 14/07/2017
  */
+@ModifiedByFlow
 public final class JSONReader
 {
     private final Logger logger;
@@ -22,23 +28,18 @@ public final class JSONReader
 
     public JSONReader(Logger logger, String path) throws IOException
     {
-        this(logger, new File(path));
+        this(logger, Paths.get(path));
     }
 
-    public JSONReader(Logger logger, File file) throws IOException
+    public JSONReader(Logger logger, Path file) throws IOException
     {
-        this(logger, new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-    }
-
-    public JSONReader(Logger logger, Reader reader) throws IOException
-    {
-        this(logger, new BufferedReader(reader));
+        this(logger, Files.newBufferedReader(file, StandardCharsets.UTF_8));
     }
 
     public JSONReader(Logger logger, BufferedReader reader) throws IOException
     {
         this.logger = logger;
-        json        = load(reader);
+        this.json = this.load(reader);
     }
 
     private String load(BufferedReader reader) throws IOException
@@ -54,25 +55,20 @@ public final class JSONReader
 
     public static <E> List<E> toList(Logger logger, String path)
     {
-        return toList(logger, new File(path));
+        return toList(logger, Paths.get(path));
     }
 
-    public static <E> List<E> toList(Logger logger, File file)
+    public static <E> List<E> toList(Logger logger, Path file)
     {
-        if (!file.exists()) return new ArrayList<>();
+        if (Files.notExists(file)) return new ArrayList<>();
         try
         {
-            return toList(logger, new InputStreamReader(new FileInputStream(file)));
+            return toList(logger, Files.newBufferedReader(file));
         } catch (IOException e)
         {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
         return new ArrayList<>();
-    }
-
-    public static <E> List<E> toList(Logger logger, Reader reader)
-    {
-        return toList(logger, new BufferedReader(reader));
     }
 
     @SuppressWarnings("unchecked")
@@ -83,7 +79,7 @@ public final class JSONReader
         try
         {
             JSONReader reader = new JSONReader(logger, bufferedReader);
-            JSONArray  array  = reader.toJSONArray();
+            JSONArray array = reader.toJSONArray();
             for (int i = 0; i < array.length(); i++)
             {
                 try
@@ -101,25 +97,20 @@ public final class JSONReader
 
     public static <V> Map<String, V> toMap(Logger logger, String path)
     {
-        return toMap(logger, new File(path));
+        return toMap(logger, Paths.get(path));
     }
 
-    public static <V> Map<String, V> toMap(Logger logger, File file)
+    public static <V> Map<String, V> toMap(Logger logger, Path file)
     {
-        if (!file.exists()) return new HashMap<>();
+        if (Files.notExists(file)) return new HashMap<>();
         try
         {
-            return toMap(logger, new InputStreamReader(new FileInputStream(file)));
+            return toMap(logger, Files.newBufferedReader(file));
         } catch (IOException e)
         {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
         return new HashMap<>();
-    }
-
-    public static <V> Map<String, V> toMap(Logger logger, Reader reader)
-    {
-        return toMap(logger, new BufferedReader(reader));
     }
 
     @SuppressWarnings("unchecked")

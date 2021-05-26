@@ -25,9 +25,13 @@ import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 import fr.theshark34.openlauncherlib.util.explorer.Explorer;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * The Minecraft Launcher
@@ -55,7 +59,7 @@ public class MinecraftLauncher
     public static ExternalLaunchProfile createExternalProfile(GameInfos infos, GameFolder folder, AuthInfos authInfos) throws LaunchException
     {
         LogUtil.info("mc-ext", infos.getGameVersion().getName());
-        LogUtil.info("mc-check", infos.getGameDir().getAbsolutePath());
+        LogUtil.info("mc-check", infos.getGameDir().toString());
 
         if (authInfos == null)
         {
@@ -67,28 +71,28 @@ public class MinecraftLauncher
         LogUtil.info("mc-cp");
 
         final ClasspathConstructor constructor = new ClasspathConstructor();
-        final List<File> libs = Explorer.dir(infos.getGameDir()).sub(folder.getLibsFolder()).allRecursive().files().match("^(.*\\.((jar)$))*$").get();
-        final List<File> toRemove = new ArrayList<>();
+        final List<Path> libs = Explorer.dir(infos.getGameDir()).sub(folder.getLibsFolder()).allRecursive().files().match("^(.*\\.((jar)$))*$").get();
+        final List<Path> toRemove = new ArrayList<>();
         
         libs.forEach(f -> {
             if(infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGHER_FORGE))
             {
-                if(f.getName().contains("asm"))
+                if(f.getFileName().toString().contains("asm"))
                 {
-                    if(f.getName().contains("6") && !infos.getGameVersion().getName().contains("1.14"))
+                    if(f.getFileName().toString().contains("6") && !infos.getGameVersion().getName().contains("1.14"))
                         toRemove.add(f);
                 }
-                else if(f.getName().contains("guava"))
+                else if(f.getFileName().toString().contains("guava"))
                 {
-                    if(f.getName().contains("20") || f.getName().contains("25"))
+                    if(f.getFileName().toString().contains("20") || f.getFileName().toString().contains("25"))
                         toRemove.add(f);
                 }
             }
             else if(infos.getGameVersion().getGameType().equals(GameType.V1_7_10) && infos.getGameTweaks().length > 0 && infos.getGameTweaks()[0] == GameTweak.FORGE)
             {
-                if(f.getName().contains("guava"))
+                if(f.getFileName().toString().contains("guava"))
                 {
-                    if(f.getName().contains("15"))
+                    if(f.getFileName().toString().contains("15"))
                         toRemove.add(f);
                 }
             }
@@ -98,11 +102,11 @@ public class MinecraftLauncher
         constructor.add(libs);
         constructor.add(Explorer.dir(infos.getGameDir()).get(folder.getMainJar()));
 
-        String       mainClass = infos.getGameTweaks() == null || infos.getGameTweaks().length == 0 ? infos.getGameVersion().getGameType().getMainClass(infos) : GameTweak.LAUNCHWRAPPER_MAIN_CLASS;
-        String       classpath = constructor.make();
-        List<String> args      = infos.getGameVersion().getGameType().getLaunchArgs(infos, folder, authInfos);
-        List<String> vmArgs    = new ArrayList<>();
-        vmArgs.add("-Djava.library.path=" + Explorer.dir(infos.getGameDir()).sub(folder.getNativesFolder()).get().getAbsolutePath());
+        final String mainClass = infos.getGameTweaks() == null || infos.getGameTweaks().length == 0 ? infos.getGameVersion().getGameType().getMainClass(infos) : GameTweak.LAUNCHWRAPPER_MAIN_CLASS;
+        final String classpath = constructor.make();
+        final List<String> args = infos.getGameVersion().getGameType().getLaunchArgs(infos, folder, authInfos);
+        final List<String> vmArgs = new ArrayList<>();
+        vmArgs.add("-Djava.library.path=" + Explorer.dir(infos.getGameDir()).sub(folder.getNativesFolder()).get().toString());
         vmArgs.add("-Dfml.ignoreInvalidMinecraftCertificates=true");
         vmArgs.add("-Dfml.ignorePatchDiscrepancies=true");
 
@@ -113,8 +117,7 @@ public class MinecraftLauncher
                 args.add(tweak.getTweakClass(infos));
             }
 
-        ExternalLaunchProfile profile = new ExternalLaunchProfile(mainClass, classpath, vmArgs, args, true, infos.getServerName(), infos.getGameDir());
-
+        final ExternalLaunchProfile profile = new ExternalLaunchProfile(mainClass, classpath, vmArgs, args, true, infos.getServerName(), infos.getGameDir());
         LogUtil.info("done");
 
         return profile;
@@ -127,20 +130,33 @@ public class MinecraftLauncher
      * @param directory The directory to check
      * @throws FolderException If it failed
      */
-    public static void checkFolder(GameFolder folder, File directory) throws FolderException
+    @ModifiedByFlow
+    public static void checkFolder(GameFolder folder, Path directory) throws FolderException
     {
-        File assetsFolder  = new File(directory, folder.getAssetsFolder());
-        File libsFolder    = new File(directory, folder.getLibsFolder());
-        File nativesFolder = new File(directory, folder.getNativesFolder());
-        File minecraftJar  = new File(directory, folder.getMainJar());
+        final Path assetsFolder = Paths.get(directory.toString(), folder.getAssetsFolder());
+        final Path libsFolder = Paths.get(directory.toString(), folder.getLibsFolder());
+        final Path nativesFolder = Paths.get(directory.toString(), folder.getNativesFolder());
+        final Path minecraftJar = Paths.get(directory.toString(), folder.getMainJar());
 
-        if (!assetsFolder.exists() || assetsFolder.listFiles() == null)
-            throw new FolderException("Missing/Empty assets folder (" + assetsFolder.getAbsolutePath() + ")");
-        else if (!libsFolder.exists() || libsFolder.listFiles() == null)
-            throw new FolderException("Missing/Empty libraries folder (" + libsFolder.getAbsolutePath() + ")");
-        else if (!nativesFolder.exists() || nativesFolder.listFiles() == null)
-            throw new FolderException("Missing/Empty natives folder (" + nativesFolder.getAbsolutePath() + ")");
-        else if (!minecraftJar.exists())
-            throw new FolderException("Missing main jar (" + minecraftJar.getAbsolutePath() + ")");
+        try {
+            if (Files.notExists(assetsFolder) || notEmpty(assetsFolder))
+                throw new FolderException("Missing/Empty assets folder (" + assetsFolder + ")");
+            else if (Files.notExists(libsFolder) || notEmpty(libsFolder))
+                throw new FolderException("Missing/Empty libraries folder (" + libsFolder + ")");
+            else if (Files.notExists(nativesFolder) || notEmpty(nativesFolder))
+                throw new FolderException("Missing/Empty natives folder (" + nativesFolder + ")");
+            else if (Files.notExists(minecraftJar))
+                throw new FolderException("Missing main jar (" + minecraftJar + ")");
+        } catch (IOException e)
+        {
+            throw new FolderException(e);
+        }
+    }
+
+    @ModifiedByFlow
+    private static boolean notEmpty(Path path) throws IOException
+    {
+        final Stream<Path> children = Files.list(path);
+        return children == null || children.count() <= 0;
     }
 }

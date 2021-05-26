@@ -18,6 +18,8 @@
  */
 package fr.theshark34.openlauncherlib.util;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -58,26 +60,22 @@ public class SplashScreen extends JFrame
      * @param time The time to wait before hiding the splash
      * @return The created Thread
      */
+    @ModifiedByFlow
     public Thread displayFor(final long time)
     {
-        Thread thread = new Thread()
-        {
-            @Override
-            public void run()
+        Thread thread = new Thread(() -> {
+            setVisible(true);
+
+            try
             {
-                setVisible(true);
-
-                try
-                {
-                    sleep(time);
-                } catch (InterruptedException e)
-                {
-                    LogUtil.err("warn", " : ", "splash-interrupted");
-                }
-
-                setVisible(false);
+                Thread.sleep(time);
+            } catch (InterruptedException e)
+            {
+                LogUtil.err("warn", " : ", "splash-interrupted");
             }
-        };
+
+            setVisible(false);
+        });
         thread.start();
 
         return thread;

@@ -1,31 +1,33 @@
 package fr.theshark34.openlauncherlib.configuration.api.json;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.Closeable;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created by NeutronStars on 14/07/2017
  */
+@ModifiedByFlow
 public final class JSONWriter implements Closeable
 {
     private final BufferedWriter writer;
-    private       int            space;
+    private int space;
 
     public JSONWriter(String path) throws IOException
     {
-        this(new File(path));
+        this(Paths.get(path));
     }
 
-    public JSONWriter(File file) throws IOException
+    public JSONWriter(Path file) throws IOException
     {
-        this(new FileWriter(file));
-    }
-
-    public JSONWriter(Writer writer)
-    {
-        this(new BufferedWriter(writer));
+        this(Files.newBufferedWriter(file));
     }
 
     public JSONWriter(BufferedWriter writer)

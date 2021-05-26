@@ -18,10 +18,15 @@
  */
 package fr.theshark34.openlauncherlib.util;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
 import javax.swing.*;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,13 +42,13 @@ import java.util.Date;
  * @version 3.0.2-BETA
  * @since 3.0.0-BETA
  */
+@ModifiedByFlow
 public class CrashReporter
 {
-
     /**
      * The directory to write the crashes
      */
-    private File dir;
+    private Path dir;
 
     /**
      * The reporter name
@@ -56,10 +61,22 @@ public class CrashReporter
      * @param name The project name
      * @param dir  The directory to write the crashes
      */
+    @Deprecated
     public CrashReporter(String name, File dir)
     {
+        this(name, dir.toPath());
+    }
+
+    /**
+     * Basic constructor
+     *
+     * @param name The project name
+     * @param dir  The directory to write the crashes
+     */
+    public CrashReporter(String name, Path dir)
+    {
         this.name = name;
-        this.dir  = dir;
+        this.dir = dir;
     }
 
     /**
@@ -72,14 +89,13 @@ public class CrashReporter
     {
         LogUtil.err("ex-caught");
 
-        System.out.println(makeCrashReport(name, e));
+        System.out.printf("%s\n", makeCrashReport(name, e));
 
         String msg;
 
         try
         {
-            File report = writeError(e);
-            msg = "\nThe crash report is in : " + report.getAbsolutePath() + "";
+            msg = "\nThe crash report is in : " + this.writeError(e).toString() + "";
         } catch (IOException e2)
         {
             LogUtil.err("report-error");
@@ -99,24 +115,20 @@ public class CrashReporter
      * @return The file where the crash was saved
      * @throws IOException If it failed to write the crash
      */
-    public File writeError(Exception e) throws IOException
+    public Path writeError(Exception e) throws IOException
     {
-        File file;
+        Path path;
         int  number = 0;
-        while ((file = new File(dir, "crash-" + number + ".txt")).exists())
+        while (Files.exists(path = Paths.get(this.dir.toString(), "crash-" + number + ".txt")))
             number++;
 
-        LogUtil.info("writing-crash", file.getAbsolutePath());
+        LogUtil.info("writing-crash", path.toString());
+        Files.createDirectories(path.getParent());
+        final Writer writer = Files.newBufferedWriter(path);
+        writer.write(makeCrashReport(name, e));
+        writer.close();
 
-        file.getParentFile().mkdirs();
-
-        FileWriter fw = new FileWriter(file);
-
-        fw.write(makeCrashReport(name, e));
-
-        fw.close();
-
-        return file;
+        return path;
     }
 
     /**
@@ -124,7 +136,7 @@ public class CrashReporter
      *
      * @return The crash dir
      */
-    public File getDir()
+    public Path getDir()
     {
         return dir;
     }
@@ -134,7 +146,7 @@ public class CrashReporter
      *
      * @param dir The crash dir
      */
-    public void setDir(File dir)
+    public void setDir(Path dir)
     {
         this.dir = dir;
     }
@@ -175,7 +187,7 @@ public class CrashReporter
                 .append("# ").append(projectName).append(" Crash Report\n\r")
                 .append("#\n\r# At : ").append(dateFormat.format(date)).append("\n\r")
                 .append("#\n\r# Exception : ").append(e.getClass().getSimpleName()).append("\n\r")
-                .append("\n\r# ").append(e.toString());
+                .append("\n\r# ").append(e);
 
         StackTraceElement[] stackTrace = e.getStackTrace();
         for (StackTraceElement element : stackTrace)

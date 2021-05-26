@@ -18,7 +18,10 @@
  */
 package fr.theshark34.openlauncherlib.external;
 
+import fr.flowarg.openlauncherlib.ModifiedByFlow;
+
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -32,6 +35,7 @@ import java.util.List;
  * @version 3.0.2-BETA
  * @since 3.0.0-BETA
  */
+@ModifiedByFlow
 public class ExternalLaunchProfile
 {
     /**
@@ -69,7 +73,7 @@ public class ExternalLaunchProfile
     /**
      * The directory where the process need to be launched (optional)
      */
-    private File directory;
+    private Path directory;
 
     /**
      * Basic launch profile
@@ -94,7 +98,7 @@ public class ExternalLaunchProfile
      */
     public ExternalLaunchProfile(String mainClass, String classPath, List<String> vmArgs, List<String> args)
     {
-        this(mainClass, classPath, vmArgs, args, false, null, null);
+        this(mainClass, classPath, vmArgs, args, false, null, (Path)null);
     }
 
     /**
@@ -109,7 +113,25 @@ public class ExternalLaunchProfile
      * @param macDockName         The name in the mac dock
      * @param directory           The directory where the process need to be launched
      */
+    @Deprecated
     public ExternalLaunchProfile(String mainClass, String classPath, List<String> vmArgs, List<String> args, boolean redirectErrorStream, String macDockName, File directory)
+    {
+        this(mainClass, classPath, vmArgs, args, redirectErrorStream, macDockName, directory.toPath());
+    }
+
+    /**
+     * Full launch profile
+     *
+     * @param mainClass           Your program main class
+     * @param classPath           The classpath (you can create it using the {@link ClasspathConstructor})
+     *                            It contains the path to your dependencies and your main jar
+     * @param vmArgs              The VM arguments (optional)
+     * @param args                Your program arguments (optional)
+     * @param redirectErrorStream If the error stream need to be redirected
+     * @param macDockName         The name in the mac dock
+     * @param directory           The directory where the process need to be launched
+     */
+    public ExternalLaunchProfile(String mainClass, String classPath, List<String> vmArgs, List<String> args, boolean redirectErrorStream, String macDockName, Path directory)
     {
         this.mainClass           = mainClass;
         this.classPath           = classPath;
@@ -245,7 +267,7 @@ public class ExternalLaunchProfile
      *
      * @return The program directory
      */
-    public File getDirectory()
+    public Path getDirectory()
     {
         return directory;
     }
@@ -255,7 +277,7 @@ public class ExternalLaunchProfile
      *
      * @param directory The program directory
      */
-    public void setDirectory(File directory)
+    public void setDirectory(Path directory)
     {
         this.directory = directory;
     }
