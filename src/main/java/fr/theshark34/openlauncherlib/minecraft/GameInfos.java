@@ -70,7 +70,7 @@ public class GameInfos
      */
     public GameInfos(String serverName, GameVersion gameVersion, GameTweak[] tweaks)
     {
-        this(serverName, GameDirGenerator.createGameDir(serverName, false), gameVersion, tweaks);
+        this(serverName, GameDirGenerator.createGameDir(serverName, true), gameVersion, tweaks);
     }
 
     /**

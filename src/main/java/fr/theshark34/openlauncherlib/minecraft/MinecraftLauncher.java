@@ -28,7 +28,6 @@ import fr.theshark34.openlauncherlib.util.explorer.Explorer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -133,10 +132,10 @@ public class MinecraftLauncher
     @ModifiedByFlow
     public static void checkFolder(GameFolder folder, Path directory) throws FolderException
     {
-        final Path assetsFolder = Paths.get(directory.toString(), folder.getAssetsFolder());
-        final Path libsFolder = Paths.get(directory.toString(), folder.getLibsFolder());
-        final Path nativesFolder = Paths.get(directory.toString(), folder.getNativesFolder());
-        final Path minecraftJar = Paths.get(directory.toString(), folder.getMainJar());
+        final Path assetsFolder = directory.resolve(folder.getAssetsFolder());
+        final Path libsFolder = directory.resolve(folder.getLibsFolder());
+        final Path nativesFolder = directory.resolve(folder.getNativesFolder());
+        final Path minecraftJar = directory.resolve(folder.getMainJar());
 
         try {
             if (Files.notExists(assetsFolder) || notEmpty(assetsFolder))
@@ -156,7 +155,9 @@ public class MinecraftLauncher
     @ModifiedByFlow
     private static boolean notEmpty(Path path) throws IOException
     {
-        final Stream<Path> children = Files.list(path);
-        return children == null || children.count() <= 0;
+        try(final Stream<Path> children = Files.list(path))
+        {
+            return children == null || children.count() <= 0;
+        }
     }
 }

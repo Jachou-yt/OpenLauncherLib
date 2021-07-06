@@ -23,7 +23,6 @@ import fr.theshark34.openlauncherlib.FailException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +51,7 @@ public class FilesUtil
     public static List<Path> listRecursive(final Path directory)
     {
         final List<Path> files = new ArrayList<>();
-        final List<Path> fs = list(directory).collect(Collectors.toList());
+        final List<Path> fs = list(directory);
 
         for (final Path f : fs)
         {
@@ -73,7 +72,7 @@ public class FilesUtil
      */
     public static Path get(Path root, String file)
     {
-        final Path f = Paths.get(root.toString(), file);
+        final Path f = root.resolve(file);
         if (Files.notExists(f))
             throw new FailException("Given file/directory doesn't exist !");
 
@@ -116,11 +115,19 @@ public class FilesUtil
      * @return The files in the given directory
      * @see #dir(Path)
      */
-    public static Stream<Path> list(final Path dir)
+    public static List<Path> list(final Path dir)
     {
+        final List<Path> result = new ArrayList<>();
         try
         {
-            return Files.exists(dir) ? Files.list(dir) : Stream.empty();
+            if(Files.exists(dir))
+            {
+                try(final Stream<Path> stream = Files.list(dir))
+                {
+                    result.addAll(stream.collect(Collectors.toList()));
+                }
+            }
+            return result;
         } catch (Exception e)
         {
             e.printStackTrace();

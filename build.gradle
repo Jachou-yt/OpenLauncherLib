@@ -1,3 +1,8 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+}
+
+
 apply plugin: 'java-library'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
@@ -21,11 +26,6 @@ java {
 jar {
     from "LICENSE"
     from "LICENSE.LESSER"
-    from {
-        configurations.compileClasspath.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
 }
 
 task sourcesJar(type: Jar) {
@@ -94,8 +94,8 @@ publishing {
     repositories {
         maven {
             credentials {
-                username ossrhUsername
-                password ossrhPassword
+                username System.getenv("OSSRH_USERNAME")
+                password System.getenv("OSSRH_PASSWORD")
             }
             url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
         }
@@ -103,6 +103,9 @@ publishing {
 }
 
 signing {
+    def signingKey = System.getenv("GPG_PRIVATE_KEY")
+    def signingPassword = System.getenv("GPG_PASSPHRASE")
+    useInMemoryPgpKeys(signingKey, signingPassword)
     sign publishing.publications.mavenJava
 }
 
@@ -111,5 +114,9 @@ repositories {
 }
 
 dependencies {
-    api 'org.json:json:20210307'
+    implementation 'org.json:json:20210307'
+}
+
+shadowJar {
+    classifier 'shaded'
 }

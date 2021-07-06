@@ -21,12 +21,11 @@ package fr.theshark34.openlauncherlib.util;
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
 
 import javax.swing.*;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -119,12 +118,12 @@ public class CrashReporter
     {
         Path path;
         int  number = 0;
-        while (Files.exists(path = Paths.get(this.dir.toString(), "crash-" + number + ".txt")))
+        while (Files.exists(path = this.dir.resolve("crash-" + number + ".txt")))
             number++;
 
         LogUtil.info("writing-crash", path.toString());
         Files.createDirectories(path.getParent());
-        final Writer writer = Files.newBufferedWriter(path);
+        final BufferedWriter writer = Files.newBufferedWriter(path);
         writer.write(makeCrashReport(name, e));
         writer.close();
 

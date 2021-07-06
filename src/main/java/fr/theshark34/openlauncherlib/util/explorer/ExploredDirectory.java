@@ -24,7 +24,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The Explored Directory
@@ -65,7 +64,7 @@ public class ExploredDirectory
      */
     public FileList allRecursive()
     {
-        return new FileList(FilesUtil.listRecursive(directory));
+        return new FileList(FilesUtil.listRecursive(this.directory));
     }
 
     /**
@@ -76,7 +75,7 @@ public class ExploredDirectory
      */
     public FileList list()
     {
-        return new FileList(FilesUtil.list(this.directory).collect(Collectors.toList()));
+        return new FileList(FilesUtil.list(this.directory));
     }
 
     /**
@@ -109,7 +108,7 @@ public class ExploredDirectory
      */
     public FileList subs()
     {
-        final List<Path> files = FilesUtil.list(this.directory).collect(Collectors.toList());
+        final List<Path> files = FilesUtil.list(this.directory);
         final List<Path> dirs  = new ArrayList<>();
 
         for (Path f : files)
@@ -126,7 +125,7 @@ public class ExploredDirectory
      */
     public FileList files()
     {
-        List<Path> files = FilesUtil.list(this.directory).collect(Collectors.toList());
+        List<Path> files = FilesUtil.list(this.directory);
         List<Path> fs = new ArrayList<>();
 
         for (Path f : files)
@@ -143,6 +142,6 @@ public class ExploredDirectory
      */
     public Path get()
     {
-        return directory;
+        return this.directory;
     }
 }

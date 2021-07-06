@@ -23,7 +23,6 @@ import fr.flowarg.openlauncherlib.IForgeArgumentsProvider;
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import fr.flowarg.openlauncherlib.NewForgeVersionDiscriminator;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +75,7 @@ public abstract class GameType implements IForgeArgumentsProvider
             arguments.add(infos.getGameDir().toString());
 
             arguments.add("--assetsDir");
-            arguments.add(Paths.get(infos.getGameDir().toString(), folder.getAssetsFolder(), "virtual", "legacy").toString());
+            arguments.add(infos.getGameDir().resolve(folder.getAssetsFolder()).resolve("virtual").resolve("legacy").toString());
 
             return arguments;
         }
@@ -116,7 +115,7 @@ public abstract class GameType implements IForgeArgumentsProvider
             arguments.add(infos.getGameDir().toString());
 
             arguments.add("--assetsDir");
-            arguments.add(Paths.get(infos.getGameDir().toString(), folder.getAssetsFolder(), "virtual", "legacy").toString());
+            arguments.add(infos.getGameDir().resolve(folder.getAssetsFolder()).resolve("virtual").resolve("legacy").toString());
 
             arguments.add("--userProperties");
             arguments.add("{}");
@@ -268,7 +267,7 @@ public abstract class GameType implements IForgeArgumentsProvider
         arguments.add(infos.getGameDir().toString());
 
         arguments.add("--assetsDir");
-        arguments.add(Paths.get(infos.getGameDir().toString(), folder.getAssetsFolder()).toString());
+        arguments.add(infos.getGameDir().resolve(folder.getAssetsFolder()).toString());
 
         arguments.add("--assetIndex");
         arguments.add(getAssetIndex(type, infos.getGameVersion()));
@@ -298,7 +297,7 @@ public abstract class GameType implements IForgeArgumentsProvider
         arguments.add(infos.getGameDir().toString());
 
         arguments.add("--assetsDir");
-        arguments.add(Paths.get(infos.getGameDir().toString(), folder.getAssetsFolder()).toString());
+        arguments.add(infos.getGameDir().resolve(folder.getAssetsFolder()).toString());
 
         arguments.add("--assetIndex");
         arguments.add(infos.getGameVersion().getName().substring(0, infos.getGameVersion().getName().lastIndexOf('.')));
