@@ -41,16 +41,6 @@ public class JavaUtil
     private static String javaCommand;
 
     /**
-     * Return the special default VM arguments
-     *
-     * @return The special VM args
-     */
-    public static String[] getSpecialArgs()
-    {
-        return new String[]{"-XX:-UseAdaptiveSizePolicy", "-XX:+UseConcMarkSweepGC"};
-    }
-
-    /**
      * Create an argument for the mac dock name
      *
      * @param name The name to set

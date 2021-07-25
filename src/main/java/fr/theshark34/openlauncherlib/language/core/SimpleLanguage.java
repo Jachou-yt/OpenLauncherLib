@@ -69,16 +69,15 @@ public class SimpleLanguage implements Language
     public String get(LanguageInfo identify, String... nodes)
     {
         if (nodes.length == 0) return identify.get();
+
         final String[] buildNodes = new String[nodes.length + 1];
+
         buildNodes[0] = identify.get();
         System.arraycopy(nodes, 0, buildNodes, 1, nodes.length);
 
         final StringBuilder builder = new StringBuilder();
-        for (String node : nodes)
-        {
-            if (builder.length() == 0) builder.append(".");
-            builder.append(node);
-        }
+
+        for (String node : nodes) builder.append(node);
 
         if (configuration.has(buildNodes) || manager.isDefaultLanguage(name))
             return configuration.get(builder.toString(), buildNodes);

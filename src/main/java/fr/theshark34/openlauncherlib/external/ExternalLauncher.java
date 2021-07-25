@@ -123,7 +123,6 @@ public class ExternalLauncher
 
         final ProcessBuilder builder = new ProcessBuilder();
         vmArgs.add(JavaUtil.getJavaCommand());
-        vmArgs.addAll(Arrays.asList(JavaUtil.getSpecialArgs()));
 
         if (profile.getMacDockName() != null && System.getProperty("os.name").toLowerCase().contains("mac"))
             vmArgs.add(JavaUtil.macDockName(profile.getMacDockName()));
