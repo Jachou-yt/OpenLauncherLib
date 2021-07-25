@@ -2,14 +2,13 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
-
 apply plugin: 'java-library'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-group = 'fr.flowarg'
-version = '3.2.0'
+group 'fr.flowarg'
+version '3.2.0'
 archivesBaseName = 'openlauncherlib'
 
 compileJava {

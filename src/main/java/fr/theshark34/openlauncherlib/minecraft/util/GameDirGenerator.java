@@ -41,12 +41,13 @@ public class GameDirGenerator
      *
      * @param serverName The server name that will be the directory
      *                   name.
+     * @param inLinuxLocalShare if true, the game dir would be ~/.local/share/server ; ~/.server else
      * @return The generated game directory
      */
     public static Path createGameDir(String serverName, boolean inLinuxLocalShare)
     {
         final String os = System.getProperty("os.name").toLowerCase();
-        if (os.contains("win")) return Paths.get(System.getProperty("APPDATA"), '.' + serverName);
+        if (os.contains("win")) return Paths.get(System.getenv("APPDATA"), '.' + serverName);
         else if (os.contains("mac")) return Paths.get(System.getProperty("user.home"), "Library", "Application Support", serverName);
         else
         {

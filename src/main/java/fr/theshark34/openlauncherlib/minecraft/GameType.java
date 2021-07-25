@@ -349,7 +349,10 @@ public abstract class GameType implements IForgeArgumentsProvider
 
     /**
      * Necessary if you want to launch a forge version 1.13.+.
+     * @param nfvd a NFVD instance.
      * @deprecated use {@link #setNFVD(NewForgeVersionDiscriminator)} instead.
+     *
+     * @return this
      */
     @Deprecated
     public GameType setNewForgeVersionDiscriminator(NewForgeVersionDiscriminator nfvd)
@@ -359,7 +362,10 @@ public abstract class GameType implements IForgeArgumentsProvider
     }
 
     /**
+     * @param nfvd a NFVD instance.
      * Necessary if you want to launch a forge version 1.13.+.
+     *
+     * @return this
      */
     public GameType setNFVD(NewForgeVersionDiscriminator nfvd)
     {

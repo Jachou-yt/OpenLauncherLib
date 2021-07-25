@@ -77,6 +77,7 @@ public class GameInfos
      * Basic constructor
      *
      * @param serverName  The server name
+     * @param inLinuxLocalShare if true, the game dir would be ~/.local/share/server ; ~/.server else
      * @param gameVersion The Game Version containing the launch informations
      * @param tweaks      The current tweaks (Shader, Optifine, Forge, or just Vanilla)
      */
