@@ -90,15 +90,14 @@ public class ProcessLogManager extends Thread
         this.reader = new BufferedReader(new InputStreamReader(input));
         this.toWrite = toWrite;
 
-        if (this.toWrite != null)
+        if(this.toWrite == null) return;
+
+        try
         {
-            try
-            {
-                this.writer = Files.newBufferedWriter(this.toWrite);
-            } catch (IOException e)
-            {
-                LogUtil.err("log-err", e.toString());
-            }
+            this.writer = Files.newBufferedWriter(this.toWrite);
+        } catch (IOException e)
+        {
+            LogUtil.err("log-err", e.toString());
         }
     }
 
@@ -113,14 +112,15 @@ public class ProcessLogManager extends Thread
             {
                 if (this.print) System.out.printf("%s\n", line);
 
-                if (this.writer != null)
-                    try
-                    {
-                        this.writer.write(line + "\n");
-                    } catch (IOException e)
-                    {
-                        LogUtil.err("log-err", e.toString());
-                    }
+                if(this.writer == null) continue;
+
+                try
+                {
+                    this.writer.write(line + "\n");
+                } catch (IOException e)
+                {
+                    LogUtil.err("log-err", e.toString());
+                }
             }
         }
         catch (IOException e)
@@ -130,13 +130,12 @@ public class ProcessLogManager extends Thread
             this.interrupt();
         }
 
-        if (this.writer != null)
+        if(this.writer == null) return;
+
+        try
         {
-            try
-            {
-                this.writer.close();
-            } catch (IOException ignored) {}
-        }
+            this.writer.close();
+        } catch (IOException ignored) {}
     }
 
     /**

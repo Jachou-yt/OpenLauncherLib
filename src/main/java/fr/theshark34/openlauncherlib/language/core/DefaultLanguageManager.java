@@ -26,10 +26,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -135,7 +132,7 @@ public class DefaultLanguageManager extends LanguageManager
     {
         try
         {
-            Configuration configuration = new SimpleConfiguration(configurationManager.getLogger(), new BufferedReader(new InputStreamReader(DefaultLanguageManager.class.getResourceAsStream(path + name.get() + ".json"), StandardCharsets.UTF_8)));
+            Configuration configuration = new SimpleConfiguration(configurationManager.getLogger(), new BufferedReader(new InputStreamReader(Objects.requireNonNull(DefaultLanguageManager.class.getResourceAsStream(path + name.get() + ".json")), StandardCharsets.UTF_8)));
             if (!langMap.containsKey(name.get().toLowerCase()))
             {
                 langMap.put(name.get().toLowerCase(), new SimpleLanguage(name, this, identify, configuration));

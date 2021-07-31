@@ -123,9 +123,11 @@ public class CrashReporter
 
         LogUtil.info("writing-crash", path.toString());
         Files.createDirectories(path.getParent());
-        final BufferedWriter writer = Files.newBufferedWriter(path);
-        writer.write(makeCrashReport(name, e));
-        writer.close();
+
+        try(final BufferedWriter writer = Files.newBufferedWriter(path))
+        {
+            writer.write(makeCrashReport(name, e));
+        }
 
         return path;
     }
@@ -193,14 +195,14 @@ public class CrashReporter
             report.append("\n\r#     ").append(element);
 
         Throwable cause = e.getCause();
-        if (cause != null)
-        {
-            report.append("\n\r# Caused by: ").append(cause);
 
-            StackTraceElement[] causeStackTrace = cause.getStackTrace();
-            for (StackTraceElement element : causeStackTrace)
-                report.append("\n\r#     ").append(element);
-        }
+        if (cause == null) return report.toString();
+
+        report.append("\n\r# Caused by: ").append(cause);
+
+        StackTraceElement[] causeStackTrace = cause.getStackTrace();
+        for (StackTraceElement element : causeStackTrace)
+            report.append("\n\r#     ").append(element);
 
         return report.toString();
     }

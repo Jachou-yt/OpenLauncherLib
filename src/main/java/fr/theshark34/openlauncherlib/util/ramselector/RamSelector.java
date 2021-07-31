@@ -23,8 +23,14 @@ import fr.theshark34.openlauncherlib.util.CrashReporter;
 import fr.theshark34.openlauncherlib.util.LogUtil;
 
 import javax.swing.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * The RAM Selector
@@ -37,10 +43,9 @@ import java.lang.reflect.Constructor;
  * @version 3.0.2-BETA
  * @since 3.0.0-BETA
  */
-@SuppressWarnings({"rawtypes", "unused"})
+@ModifiedByFlow
 public class RamSelector
 {
-
     /**
      * The RAM !
      */
@@ -49,7 +54,7 @@ public class RamSelector
     /**
      * The file where to save the ram
      */
-    private File file;
+    private Path file;
 
     /**
      * The class of the selector frame
@@ -65,10 +70,22 @@ public class RamSelector
      * The RAM Selector with a file to save the RAM
      *
      * @param file The file where to save the RAM
+     * @deprecated use {@link #RamSelector(Path)} instead.
      */
+    @Deprecated
     public RamSelector(File file)
     {
-        this.file = file;
+        this.file = file.toPath();
+    }
+
+    /**
+     * The RAM Selector with a file to save the RAM
+     *
+     * @param path The file where to save the RAM
+     */
+    public RamSelector(Path path)
+    {
+        this.file = path;
     }
 
     /**
@@ -81,21 +98,22 @@ public class RamSelector
      */
     public JFrame display()
     {
-        if (frame == null)
+        if (this.frame == null)
+        {
             try
             {
-                Constructor[] constructors = frameClass.getDeclaredConstructors();
+                Constructor<?>[] constructors = frameClass.getDeclaredConstructors();
 
-                Constructor constructor = null;
-                for (Constructor c : constructors)
+                Constructor<?> constructor = null;
+                for (Constructor<?> c : constructors)
                     if (c.getParameterTypes().length == 1 && c.getParameterTypes()[0] == RamSelector.class)
                         constructor = c;
 
                 if (constructor == null)
                     throw new IllegalStateException("Can't load the OptionFrame class, it needs to have a constructor with just a RamSelector as argument.");
 
-                frame = (AbstractOptionFrame)constructor.newInstance(this);
-                frame.setSelectedIndex(readRam());
+                this.frame = (AbstractOptionFrame)constructor.newInstance(this);
+                this.frame.setSelectedIndex(this.readRam());
             } catch (Exception e)
             {
                 System.err.println("[OpenLauncherLib] Can't display the Ram Selector !");
@@ -103,10 +121,11 @@ public class RamSelector
 
                 return null;
             }
+        }
 
-        frame.setVisible(true);
+        this.frame.setVisible(true);
 
-        return frame;
+        return this.frame;
     }
 
     /**
@@ -117,7 +136,7 @@ public class RamSelector
     @ModifiedByFlow
     public String[] getRamArguments()
     {
-        int maxRam = Integer.parseInt(frame == null ? RAM_ARRAY[readRam()].replace("Go", "") : RAM_ARRAY[frame.getSelectedIndex()].replace("Go", "")) * 1024;
+        int maxRam = Integer.parseInt(this.frame == null ? RAM_ARRAY[this.readRam()].replace("Go", "") : RAM_ARRAY[this.frame.getSelectedIndex()].replace("Go", "")) * 1024;
         int minRam = maxRam - 1024;
 
         if (maxRam - 1024 <= 0) minRam = 128;
@@ -132,29 +151,15 @@ public class RamSelector
      */
     private int readRam()
     {
-        BufferedReader br = null;
-        try
+        try(BufferedReader br = Files.newBufferedReader(this.file, StandardCharsets.UTF_8))
         {
-            br = new BufferedReader(new FileReader(file));
-            String ramText = br.readLine();
+            final String ramText = br.readLine();
 
-            if (ramText != null)
-                return Integer.parseInt(ramText);
-            else
-                LogUtil.err("warn", "ram-empty");
+            if (ramText != null) return Integer.parseInt(ramText);
+            else LogUtil.err("warn", "ram-empty");
         } catch (IOException e)
         {
             System.err.println("[OpenLauncherLib] WARNING: Can't read ram : " + e);
-        } finally
-        {
-            if (br != null)
-                try
-                {
-                    br.close();
-                } catch (IOException e)
-                {
-                    System.err.println("[OpenLauncherLib] WARNING: Can't close the file : " + e);
-                }
         }
 
         return 0;
@@ -165,27 +170,14 @@ public class RamSelector
      */
     public void save()
     {
-        if (frame == null)
-            return;
+        if (this.frame == null) return;
 
-        BufferedWriter bw = null;
-        try
+        try(BufferedWriter bw = Files.newBufferedWriter(this.file, StandardCharsets.UTF_8))
         {
-            bw = new BufferedWriter(new FileWriter(file));
-            bw.write(String.valueOf(frame.getSelectedIndex()));
+            bw.write(String.valueOf(this.frame.getSelectedIndex()));
         } catch (IOException e)
         {
             System.err.println("[OpenLauncherLib] WARNING: Can't save ram : " + e);
-        } finally
-        {
-            if (bw != null)
-                try
-                {
-                    bw.close();
-                } catch (IOException e)
-                {
-                    System.err.println("[OpenLauncherLib] WARNING: Can't close the file : " + e);
-                }
         }
     }
 
@@ -193,11 +185,11 @@ public class RamSelector
      * Return the file where to save the ram
      *
      * @return The file where the ram is saved
-     * @see #setFile(File)
+     * @see #setFile(Path)
      */
-    public File getFile()
+    public Path getFile()
     {
-        return file;
+        return this.file;
     }
 
     /**
@@ -206,7 +198,7 @@ public class RamSelector
      * @param file The new file where the ram is saved
      * @see #getFile()
      */
-    public void setFile(File file)
+    public void setFile(Path file)
     {
         this.file = file;
     }
@@ -219,7 +211,7 @@ public class RamSelector
      */
     public Class<? extends JFrame> getFrameClass()
     {
-        return frameClass;
+        return this.frameClass;
     }
 
     /**

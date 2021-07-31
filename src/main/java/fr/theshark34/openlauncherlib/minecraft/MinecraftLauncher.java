@@ -60,10 +60,7 @@ public class MinecraftLauncher
         LogUtil.info("mc-ext", infos.getGameVersion().getName());
         LogUtil.info("mc-check", infos.getGameDir().toString());
 
-        if (authInfos == null)
-        {
-            throw new IllegalArgumentException("authInfos == null");
-        }
+        if (authInfos == null) throw new IllegalArgumentException("authInfos == null");
 
         checkFolder(folder, infos.getGameDir());
 
@@ -74,26 +71,26 @@ public class MinecraftLauncher
         final List<Path> toRemove = new ArrayList<>();
         
         libs.forEach(f -> {
+            final String fileName = f.getFileName().toString();
             if(infos.getGameVersion().getGameType().equals(GameType.V1_13_HIGHER_FORGE))
             {
-                if(f.getFileName().toString().contains("asm"))
+                if(fileName.contains("asm"))
                 {
-                    if(f.getFileName().toString().contains("6") && !infos.getGameVersion().getName().contains("1.14"))
+                    if(fileName.contains("6") && !infos.getGameVersion().getName().contains("1.14"))
                         toRemove.add(f);
                 }
-                else if(f.getFileName().toString().contains("guava"))
+                else if(fileName.contains("guava"))
                 {
-                    if(f.getFileName().toString().contains("20") || f.getFileName().toString().contains("25"))
+                    if(fileName.contains("20") || fileName.contains("25"))
                         toRemove.add(f);
                 }
             }
             else if(infos.getGameVersion().getGameType().equals(GameType.V1_7_10) && infos.getGameTweaks().length > 0 && infos.getGameTweaks()[0] == GameTweak.FORGE)
             {
-                if(f.getFileName().toString().contains("guava"))
-                {
-                    if(f.getFileName().toString().contains("15"))
-                        toRemove.add(f);
-                }
+                if(!fileName.contains("guava")) return;
+
+                if(fileName.contains("15"))
+                    toRemove.add(f);
             }
         });
         
@@ -110,11 +107,13 @@ public class MinecraftLauncher
         vmArgs.add("-Dfml.ignorePatchDiscrepancies=true");
 
         if (infos.getGameTweaks() != null)
+        {
             for (GameTweak tweak : infos.getGameTweaks())
             {
                 args.add("--tweakClass");
                 args.add(tweak.getTweakClass(infos));
             }
+        }
 
         final ExternalLaunchProfile profile = new ExternalLaunchProfile(mainClass, classpath, vmArgs, args, true, infos.getServerName(), infos.getGameDir());
         LogUtil.info("done");
@@ -157,7 +156,7 @@ public class MinecraftLauncher
     {
         try(final Stream<Path> children = Files.list(path))
         {
-            return children == null || children.count() <= 0;
+            return children == null || !children.findAny().isPresent();
         }
     }
 }
