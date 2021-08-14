@@ -5,16 +5,14 @@ import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
 import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.minecraft.GameFolder;
+import fr.theshark34.openlauncherlib.util.LogUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
@@ -26,6 +24,10 @@ public class NoFramework
     private final String clientJar;
     private List<String> additionalVmArgs;
     private List<String> additionalArgs;
+    private String customVanillaJsonFileName = "";
+    private String customForgeJsonFileName = "";
+    private String serverName = "";
+    private SafeConsumer<ExternalLauncher> lastCallback;
 
     private static class Parameters
     {
@@ -33,22 +35,54 @@ public class NoFramework
         private JSONObject processing;
     }
 
-    public enum Type
-    {
+    public enum Type {
         VM,
         GAME
     }
 
+    public interface SafeConsumer<T> {
+
+        void accept(T t) throws Exception;
+
+        default SafeConsumer<T> andThen(SafeConsumer<? super T> after)
+        {
+            Objects.requireNonNull(after);
+            return t -> { this.accept(t); after.accept(t); };
+        }
+    }
+
+    /**
+     * Construct a new NoFramework object.
+     * @param gameDir the path of the game directory.
+     * @param infos auth information.
+     * @param folder the folders' name.
+     */
     public NoFramework(Path gameDir, AuthInfos infos, GameFolder folder)
     {
         this(gameDir, infos, folder, new ArrayList<>(), new ArrayList<>());
     }
 
+    /**
+     * Construct a new NoFramework object.
+     * @param gameDir the path of the game directory.
+     * @param infos auth information.
+     * @param folder the folders' name.
+     * @param additionalArgs some additional arguments.
+     * @param type the type of arguments to add. Can be GAME or VM.
+     */
     public NoFramework(Path gameDir, AuthInfos infos, GameFolder folder, List<String> additionalArgs, Type type)
     {
         this(gameDir, infos, folder, type == Type.VM ? additionalArgs : new ArrayList<>(), type == Type.GAME ? additionalArgs : new ArrayList<>());
     }
 
+    /**
+     * Construct a new NoFramework object.
+     * @param gameDir the path of the game directory.
+     * @param infos auth information.
+     * @param folder the folders' name.
+     * @param additionalVmArgs some additional arguments.
+     * @param additionalArgs some additional VM arguments.
+     */
     public NoFramework(Path gameDir, AuthInfos infos, GameFolder folder, List<String> additionalVmArgs, List<String> additionalArgs)
     {
         this.gameDir = gameDir;
@@ -71,27 +105,43 @@ public class NoFramework
         this.keyValue.put("${natives_directory}", parameters -> this.gameDir.resolve(folder.getNativesFolder()).toString());
     }
 
-    public void launch(String version, String forgeVersion) throws Exception
+    /**
+     * Launch the game for the specified versions.
+     * @param version Minecraft version (like 1.17.1)
+     * @param forgeVersion Forge version (like 37.0.33), do NOT pass a version like 1.17.1-37.0.33!
+     * @return the launched process
+     * @throws Exception throws an exception if an error has occurred.
+     */
+    public Process launch(String version, String forgeVersion) throws Exception
     {
-        final JSONObject vanilla = new JSONReader(Logger.getLogger("OpenLauncherLib"), this.gameDir.resolve(version + ".json")).toJSONObject();
-        final JSONObject forge = new JSONReader(Logger.getLogger("OpenLauncherLib"), this.gameDir.resolve(version + "-forge-" + forgeVersion + ".json")).toJSONObject();
+        final Logger logger = Logger.getLogger("OpenLauncherLib");
+        final Path vanillaJson = this.customVanillaJsonFileName.equals("") ? this.gameDir.resolve(version + ".json") : this.gameDir.resolve(this.customVanillaJsonFileName);
+        final JSONObject vanilla = new JSONReader(logger, vanillaJson).toJSONObject();
+        final Path forgeJson = this.customForgeJsonFileName.equals("") ? this.gameDir.resolve(version + "-forge-" + forgeVersion + ".json") : this.gameDir.resolve(this.customForgeJsonFileName);
+        final JSONObject forge = new JSONReader(logger, forgeJson).toJSONObject();
+
+        LogUtil.info("no-framework");
 
         final ExternalLauncher launcher = new ExternalLauncher(new ExternalLaunchProfile(
                 forge.getString("mainClass"),
-                getClassPath(vanilla, forge),
-                getVmArgs(vanilla, forge),
-                getArgs(vanilla, forge),
+                this.getClassPath(vanilla, forge),
+                this.getVmArgs(vanilla, forge),
+                this.getArgs(vanilla, forge),
                 true,
-                "testlauncherupdater",
+                this.serverName.equals("") ? "Minecraft " + version : this.serverName,
                 this.gameDir
         ));
-        launcher.launch().waitFor();
+
+        if(this.lastCallback != null)
+            this.lastCallback.accept(launcher);
+
+        return launcher.launch();
     }
 
     private List<String> getVmArgs(JSONObject vanilla, JSONObject forge)
     {
-        final List<String> result = new ArrayList<>(getVmArgsFor(vanilla, vanilla));
-        result.addAll(getVmArgsFor(forge, vanilla));
+        final List<String> result = new ArrayList<>(this.getVmArgsFor(vanilla, vanilla));
+        result.addAll(this.getVmArgsFor(forge, vanilla));
         result.addAll(this.additionalVmArgs);
         return result;
     }
@@ -113,7 +163,7 @@ public class NoFramework
 
                 if(arg.contains("minecraft.launcher") || arg.contains("${classpath}") || arg.equals("-cp")) continue;
 
-                sb.add(map(arg, parameters));
+                sb.add(this.map(arg, parameters));
             }
         }
 
@@ -124,8 +174,8 @@ public class NoFramework
     {
         final List<String> cp = new ArrayList<>();
 
-        appendLibraries(cp, vanilla);
-        appendLibraries(cp, forge);
+        this.appendLibraries(cp, forge);
+        this.appendLibraries(cp, vanilla);
 
         cp.add(this.gameDir.resolve("client.jar").toString());
 
@@ -136,8 +186,8 @@ public class NoFramework
     {
         object.getJSONArray("libraries").forEach(jsonElement -> {
 
-            final Path path = libraries.resolve(((JSONObject)jsonElement).getJSONObject("downloads").getJSONObject("artifact").getString("path"));
-            final String str =  path + File.pathSeparator;
+            final Path path = this.libraries.resolve(((JSONObject)jsonElement).getJSONObject("downloads").getJSONObject("artifact").getString("path"));
+            final String str = path + File.pathSeparator;
             if(!sb.contains(str) && Files.exists(path))
                 sb.add(str);
         });
@@ -150,7 +200,7 @@ public class NoFramework
         parameters.processing = forge;
 
         final List<String> result = new ArrayList<>(getArgs(vanilla, parameters));
-        result.addAll(getArgs(forge, parameters));
+        result.addAll(this.getArgs(forge, parameters));
         result.addAll(this.additionalArgs);
         return result;
     }
@@ -164,7 +214,7 @@ public class NoFramework
         for (Object element : array)
         {
             if(element instanceof String)
-                sb.add(map((String)element, parameters));
+                sb.add(this.map((String)element, parameters));
         }
 
         return sb;
@@ -197,6 +247,26 @@ public class NoFramework
         return this.additionalVmArgs;
     }
 
+    public String getCustomVanillaJsonFileName()
+    {
+        return this.customVanillaJsonFileName;
+    }
+
+    public String getCustomForgeJsonFileName()
+    {
+        return this.customForgeJsonFileName;
+    }
+
+    public String getServerName()
+    {
+        return this.serverName;
+    }
+
+    public SafeConsumer<ExternalLauncher> getLastCallback()
+    {
+        return this.lastCallback;
+    }
+
     public void setAdditionalArgs(List<String> additionalArgs)
     {
         this.additionalArgs = additionalArgs;
@@ -205,5 +275,25 @@ public class NoFramework
     public void setAdditionalVmArgs(List<String> additionalVmArgs)
     {
         this.additionalVmArgs = additionalVmArgs;
+    }
+
+    public void setCustomVanillaJsonFileName(String customVanillaJsonFileName)
+    {
+        this.customVanillaJsonFileName = customVanillaJsonFileName;
+    }
+
+    public void setCustomForgeJsonFileName(String customForgeJsonFileName)
+    {
+        this.customForgeJsonFileName = customForgeJsonFileName;
+    }
+
+    public void setServerName(String serverName)
+    {
+        this.serverName = serverName;
+    }
+
+    public void setLastCallback(SafeConsumer<ExternalLauncher> lastCallback)
+    {
+        this.lastCallback = lastCallback;
     }
 }

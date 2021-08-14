@@ -1,5 +1,5 @@
 {
-  "hi-ext": "OpenLauncherLib 3.2.1 by Adrien 'Litarvan' Navratil and Flow (FlowArg) Arg - External Launching System",
+  "hi-ext": "OpenLauncherLib 3.2.2 by Adrien 'Litarvan' Navratil and Flow (FlowArg) Arg - External Launching System",
   "options": "Options",
   "ram": "RAM",
   "warn": "Warning",
@@ -30,5 +30,6 @@
   "forge-optifine": "WARNING: You selected Forge tweak with Optifine/Shader, they are ONLY FOR VANILLA, the game wil probably not start, so for security, Optifine/Shader was/were disabled",
   "tweak-deprec": "WARNING: You selected GameTweaks other than forge with Minecraft 1.13 or greater, the tweaking system has been deleted since, game will probably not start",
   "forge-old": "WARNING: You selected Forge tweaking with a version under or equals as 1.5.2, forge is supposed to be installed in the jar (not with a tweaker), the game MAY NOT START !",
-  "no-tweak-forge": "No Forge Tweak available for this version of the game. Please, remove the Forge Tweak. Closing program..."
+  "no-tweak-forge": "No Forge Tweak available for this version of the game. Please, remove the Forge Tweak. Closing program...",
+  "no-framework": "NoFramework by Flow Arg, https://discord.gg/yvv78kV. My work is free so consider support me at https://paypal.me/Philouse"
 }
