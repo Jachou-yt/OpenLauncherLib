@@ -267,31 +267,55 @@ public class NoFramework
         return this.lastCallback;
     }
 
+    /**
+     * Define some additional args (like window size or server ip/port)
+     * @param additionalArgs args to add.
+     */
     public void setAdditionalArgs(List<String> additionalArgs)
     {
         this.additionalArgs = additionalArgs;
     }
 
+    /**
+     * Define some additional VM args (like RAM with -Xmx2G)
+     * @param additionalVmArgs VM args to add.
+     */
     public void setAdditionalVmArgs(List<String> additionalVmArgs)
     {
         this.additionalVmArgs = additionalVmArgs;
     }
 
+    /**
+     * Define a custom json file's path (start is {@link #gameDir}). (Vanilla)
+     * @param customVanillaJsonFileName custom json file's path.
+     */
     public void setCustomVanillaJsonFileName(String customVanillaJsonFileName)
     {
         this.customVanillaJsonFileName = customVanillaJsonFileName;
     }
 
+    /**
+     * Define a custom json file's path (start is {@link #gameDir}). (Forge)
+     * @param customForgeJsonFileName custom json file's path.
+     */
     public void setCustomForgeJsonFileName(String customForgeJsonFileName)
     {
         this.customForgeJsonFileName = customForgeJsonFileName;
     }
 
+    /**
+     * Define a custom serverName for Mac users. Default is Minecraft {version}
+     * @param serverName the server name.
+     */
     public void setServerName(String serverName)
     {
         this.serverName = serverName;
     }
 
+    /**
+     * Define a callback called before launch. You can directly interact with a {@link ExternalLauncher} object.
+     * @param lastCallback the last callback.
+     */
     public void setLastCallback(SafeConsumer<ExternalLauncher> lastCallback)
     {
         this.lastCallback = lastCallback;
