@@ -95,14 +95,14 @@ public class NoFramework
         this.keyValue.put("${classpath_separator}", parameters -> File.pathSeparator);
         this.keyValue.put("${auth_player_name}", parameters -> infos.getUsername());
         this.keyValue.put("${version_name}", parameters -> parameters.processing.getString("id"));
-        this.keyValue.put("${game_directory}", parameters -> this.gameDir.toString());
-        this.keyValue.put("${assets_root}", parameters -> this.gameDir.resolve(folder.getAssetsFolder()).toString());
+        this.keyValue.put("${game_directory}", parameters -> this.gameDir.toAbsolutePath().toString());
+        this.keyValue.put("${assets_root}", parameters -> this.gameDir.resolve(folder.getAssetsFolder()).toAbsolutePath().toString());
         this.keyValue.put("${assets_index_name}", parameters -> parameters.vanilla.getJSONObject("assetIndex").getString("id"));
         this.keyValue.put("${auth_uuid}", parameters -> infos.getUuid());
         this.keyValue.put("${auth_access_token}", parameters -> infos.getAccessToken());
         this.keyValue.put("${user_type}", parameters -> "mojang");
         this.keyValue.put("${version_type}", parameters -> "release");
-        this.keyValue.put("${natives_directory}", parameters -> this.gameDir.resolve(folder.getNativesFolder()).toString());
+        this.keyValue.put("${natives_directory}", parameters -> this.gameDir.resolve(folder.getNativesFolder()).toAbsolutePath().toString());
     }
 
     /**
@@ -177,7 +177,7 @@ public class NoFramework
         this.appendLibraries(cp, forge);
         this.appendLibraries(cp, vanilla);
 
-        cp.add(this.gameDir.resolve("client.jar").toString());
+        cp.add(this.gameDir.toAbsolutePath().resolve("client.jar").toString());
 
         return this.toString(cp);
     }
@@ -187,7 +187,7 @@ public class NoFramework
         object.getJSONArray("libraries").forEach(jsonElement -> {
 
             final Path path = this.libraries.resolve(((JSONObject)jsonElement).getJSONObject("downloads").getJSONObject("artifact").getString("path"));
-            final String str = path + File.pathSeparator;
+            final String str = path.toAbsolutePath() + File.pathSeparator;
             if(!sb.contains(str) && Files.exists(path))
                 sb.add(str);
         });
