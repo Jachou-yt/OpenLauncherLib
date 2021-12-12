@@ -20,6 +20,7 @@ package fr.theshark34.openlauncherlib.minecraft.util;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * The Minecraft Game Dir Generator
@@ -46,7 +47,7 @@ public class GameDirGenerator
      */
     public static Path createGameDir(String serverName, boolean inLinuxLocalShare)
     {
-        final String os = System.getProperty("os.name").toLowerCase();
+        final String os = Objects.requireNonNull(System.getProperty("os.name").toLowerCase());
         if (os.contains("win")) return Paths.get(System.getenv("APPDATA"), '.' + serverName);
         else if (os.contains("mac")) return Paths.get(System.getProperty("user.home"), "Library", "Application Support", serverName);
         else

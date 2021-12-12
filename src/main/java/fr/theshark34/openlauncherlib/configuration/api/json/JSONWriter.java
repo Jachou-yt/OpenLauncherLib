@@ -112,6 +112,7 @@ public final class JSONWriter implements Closeable
         writer.flush();
     }
 
+    @Override
     public void close() throws IOException
     {
         writer.close();

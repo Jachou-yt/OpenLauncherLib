@@ -375,7 +375,7 @@ public abstract class GameType implements IForgeArgumentsProvider
 
     private static String getAssetIndex(GameType type, GameVersion gameVersion)
     {
-        if(type == GameType.V1_8_HIGHER)
+        if(type.equals(GameType.V1_8_HIGHER))
         {
             String version = gameVersion.getName();
 
@@ -401,5 +401,11 @@ public abstract class GameType implements IForgeArgumentsProvider
             return o.getName().equals(this.getName());
         }
         else return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return this.getName().hashCode();
     }
 }

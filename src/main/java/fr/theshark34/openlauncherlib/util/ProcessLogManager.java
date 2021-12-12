@@ -21,6 +21,7 @@ package fr.theshark34.openlauncherlib.util;
 import fr.flowarg.openlauncherlib.ModifiedByFlow;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -46,6 +47,11 @@ public class ProcessLogManager extends Thread
      * The reader
      */
     private final BufferedReader reader;
+
+    /**
+     * Input stream reader
+     */
+    private final InputStreamReader inputStreamReader;
 
     /**
      * The file where to write the logs (optional)
@@ -87,7 +93,8 @@ public class ProcessLogManager extends Thread
      */
     public ProcessLogManager(InputStream input, Path toWrite)
     {
-        this.reader = new BufferedReader(new InputStreamReader(input));
+        this.inputStreamReader = new InputStreamReader(input, StandardCharsets.UTF_8);
+        this.reader = new BufferedReader(this.inputStreamReader);
         this.toWrite = toWrite;
 
         if(this.toWrite == null) return;
@@ -135,6 +142,7 @@ public class ProcessLogManager extends Thread
         try
         {
             this.writer.close();
+            this.inputStreamReader.close();
         } catch (IOException ignored) {}
     }
 

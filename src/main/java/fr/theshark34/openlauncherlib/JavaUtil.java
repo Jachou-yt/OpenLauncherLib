@@ -23,6 +23,7 @@ import fr.flowarg.openlauncherlib.ModifiedByFlow;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * The Java Util
@@ -63,7 +64,7 @@ public class JavaUtil
         if (javaCommand == null)
         {
             final Path java = Paths.get(System.getProperty("java.home"), "bin", "java");
-            if (System.getProperty("os.name").toLowerCase().contains("win"))
+            if (Objects.requireNonNull(System.getProperty("os.name")).toLowerCase().contains("win"))
                 javaCommand = "\"" + java + "\"";
             else javaCommand = java.toString();
         }

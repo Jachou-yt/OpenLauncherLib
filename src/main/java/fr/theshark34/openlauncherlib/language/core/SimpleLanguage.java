@@ -52,6 +52,7 @@ public class SimpleLanguage implements Language
      *
      * @return the name of language.
      */
+    @Override
     public String getName()
     {
         return name.get();

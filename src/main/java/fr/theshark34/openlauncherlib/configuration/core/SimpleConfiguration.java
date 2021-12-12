@@ -257,10 +257,13 @@ public class SimpleConfiguration implements Configuration
     @Override
     public void save() throws IOException
     {
-        if (this.file == null) return;
-        JSONWriter writer = new JSONWriter(this.file);
-        writer.write(object);
-        writer.flush();
-        writer.close();
+        if (this.file == null)
+            return;
+
+        try(JSONWriter writer = new JSONWriter(this.file))
+        {
+            writer.write(object);
+            writer.flush();
+        }
     }
 }
