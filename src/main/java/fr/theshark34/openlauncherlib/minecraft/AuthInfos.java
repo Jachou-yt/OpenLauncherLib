@@ -111,6 +111,7 @@ public class AuthInfos
      *
      * @param username    The player username
      * @param accessToken The access token given by the authentication
+     * @param clientToken The (optional) client token given to the Authenticator
      * @param uuid        The player UUID
      * @param authXUID The auth xbox id from the microsoft authenticator
      * @param clientId The client id from the microsoft authenticator
