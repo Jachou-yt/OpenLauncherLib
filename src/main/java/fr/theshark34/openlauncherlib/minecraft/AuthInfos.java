@@ -48,6 +48,16 @@ public class AuthInfos
     private String clientToken;
 
     /**
+     * The (optional) client id from the microsoft authenticator
+     */
+    private String clientId;
+
+    /**
+     * The (optional) auth xbox id from the microsoft authenticator
+     */
+    private String authXUID;
+
+    /**
      * The uuid given by the authentication
      */
     private final String uuid;
@@ -71,15 +81,45 @@ public class AuthInfos
      *
      * @param username    The player username
      * @param accessToken The access token given by the authentication
+     * @param uuid        The player UUID
+     * @param authXUID The auth xbox id from the microsoft authenticator
+     * @param clientId The client id from the microsoft authenticator
+     */
+    public AuthInfos(String username, String accessToken, String uuid, String authXUID, String clientId)
+    {
+        this(username, accessToken, uuid);
+        this.authXUID = authXUID;
+        this.clientId = clientId;
+    }
+
+    /**
+     * Basic constructor
+     *
+     * @param username    The player username
+     * @param accessToken The access token given by the authentication
      * @param clientToken The (optional) client token given to the Authenticator
      * @param uuid        The player UUID
      */
     public AuthInfos(String username, String accessToken, String clientToken, String uuid)
     {
-        this.username    = username;
-        this.accessToken = accessToken;
+        this(username, accessToken, uuid);
         this.clientToken = clientToken;
-        this.uuid        = uuid;
+    }
+
+    /**
+     * Basic constructor
+     *
+     * @param username    The player username
+     * @param accessToken The access token given by the authentication
+     * @param uuid        The player UUID
+     * @param authXUID The auth xbox id from the microsoft authenticator
+     * @param clientId The client id from the microsoft authenticator
+     */
+    public AuthInfos(String username, String accessToken, String clientToken, String uuid, String authXUID, String clientId)
+    {
+        this(username, accessToken, clientToken, uuid);
+        this.authXUID = authXUID;
+        this.clientId = clientId;
     }
 
     /**
@@ -112,5 +152,15 @@ public class AuthInfos
     public String getUuid()
     {
         return this.uuid;
+    }
+
+    public String getAuthXUID()
+    {
+        return this.authXUID;
+    }
+
+    public String getClientId()
+    {
+        return this.clientId;
     }
 }

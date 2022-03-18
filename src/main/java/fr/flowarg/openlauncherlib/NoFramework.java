@@ -91,7 +91,7 @@ public class NoFramework
         this.additionalVmArgs = additionalVmArgs;
         this.additionalArgs = additionalArgs;
 
-        this.keyValue.put("${library_directory}", parameters -> this.libraries.toString());
+        this.keyValue.put("${library_directory}", parameters -> this.libraries.toAbsolutePath().toString());
         this.keyValue.put("${classpath_separator}", parameters -> File.pathSeparator);
         this.keyValue.put("${auth_player_name}", parameters -> infos.getUsername());
         this.keyValue.put("${version_name}", parameters -> parameters.processing.getString("id"));
@@ -100,8 +100,10 @@ public class NoFramework
         this.keyValue.put("${assets_index_name}", parameters -> parameters.vanilla.getJSONObject("assetIndex").getString("id"));
         this.keyValue.put("${auth_uuid}", parameters -> infos.getUuid());
         this.keyValue.put("${auth_access_token}", parameters -> infos.getAccessToken());
-        this.keyValue.put("${user_type}", parameters -> "mojang");
+        this.keyValue.put("${user_type}", parameters -> "msa");
         this.keyValue.put("${version_type}", parameters -> "release");
+        this.keyValue.put("${clientid}", parameters -> infos.getClientId());
+        this.keyValue.put("${auth_xuid}", parameters -> infos.getAuthXUID());
         this.keyValue.put("${natives_directory}", parameters -> this.gameDir.resolve(folder.getNativesFolder()).toAbsolutePath().toString());
     }
 
