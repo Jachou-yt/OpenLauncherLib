@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.URI;
 import java.net.URL;
 
-public class Tools {
+public final class Tools {
     public static BufferedImage getBufferedImage(String fileName, Class mainClass) throws IOException {
         InputStream inputStream = mainClass.getClassLoader().getResourceAsStream(fileName);
         return ImageIO.read(inputStream);
