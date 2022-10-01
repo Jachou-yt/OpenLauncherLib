@@ -7,8 +7,8 @@ apply plugin: 'idea'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-group 'fr.flowarg'
-version '3.2.4'
+group 'fr.jachou'
+version '1.0.0'
 archivesBaseName = 'openlauncherlib'
 
 compileJava {
@@ -54,16 +54,16 @@ publishing {
                 artifactId = archivesBaseName
                 name = 'OpenLauncherLib'
                 description = 'A simple modern java launching library with minecraft support '
-                url = 'https://github.com/FlowArg/OpenLauncherLib'
+                url = 'https://github.com/Jachou-yt/OpenLauncherLib'
 
                 issueManagement {
                     system = 'github'
-                    url = 'https://github.com/FlowArg/OpenLauncherLib/issues'
+                    url = 'https://github.com/Jachou-yt/OpenLauncherLib/issues'
                 }
 
                 scm {
-                    connection = 'scm:git:git://github.com/FlowArg/OpenLauncherLib.git'
-                    developerConnection = 'scm:git:ssh://github.com:FlowArg/OpenLauncherLib.git'
+                    connection = 'scm:git:git://github.com/Jachou-yt/OpenLauncherLib.git'
+                    developerConnection = 'scm:git:ssh://github.com:Jachou-yt/OpenLauncherLib.git'
                     url = 'http://github.com/FlowArg/OpenLauncherLib/tree/master'
                 }
 
@@ -81,9 +81,9 @@ publishing {
 
                 developers {
                     developer {
-                        id = 'flowarg'
-                        name = 'Flow Arg'
-                        email = 'flow@flowarg.fr'
+                        id = 'jachou'
+                        name = 'Jachou'
+                        email = 'matisse.martayan@gmail.com'
                     }
                 }
             }
